@@ -8,7 +8,7 @@ import grupo5yomesumo.springboot.repository.EventoRepository
 class EventoService (
     val eventoRepository: EventoRepository
 ) {
-    fun getAllEventos(): List<Evento> = eventoRepository.eventos
 
+    fun getAllEventos(): List<Evento> = eventoRepository.findAll()
 
 }

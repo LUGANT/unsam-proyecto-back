@@ -19,11 +19,29 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("io.springfox:springfox-boot-starter:3.0.0")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	dependencies {
+
+		val kotestVersion = "5.4.2"
+
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("org.springframework.boot:spring-boot-starter-hateoas")
+		implementation("org.springframework.boot:spring-boot-starter-data-rest")
+		implementation("org.springframework.boot:spring-boot-starter-validation")
+		implementation("org.jetbrains.kotlin:kotlin-reflect")
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+		implementation("org.springframework.boot:spring-boot-starter-web-services")
+		implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+		implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2")
+		implementation("org.springdoc:springdoc-openapi-starter-common:2.2.0")
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+		implementation("org.springframework.boot:spring-boot-devtools")
+
+
+		testImplementation("org.springframework.boot:spring-boot-starter-test")
+		testImplementation("io.mockk:mockk:1.12.8")
+		testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+		testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+	}
 }
 
 tasks.withType<KotlinCompile> {

@@ -19,7 +19,7 @@ class Bootstrap(
         val futbolConLosPibes = Evento(anfitrion = "feli", actividad = "Futbol", fecha = LocalDate.now(), direccion = "calle trucha 123", solicitudes = mutableListOf("asd", "dsa"), aceptados = mutableListOf("jkl", "lkj"))
         val basquet3Vs3 = Evento(anfitrion = "masu", actividad = "Basquet", fecha = LocalDate.now(), direccion = "calle verdadera 321", solicitudes = mutableListOf("asd", "dsa"), aceptados = mutableListOf("jkl", "lkj"))
 
-        val savedUsers = arrayOf(
+        val savedEventos = arrayOf(
             futbolConLosPibes, basquet3Vs3
         ).map { eventoRepository.save(it) }
     }

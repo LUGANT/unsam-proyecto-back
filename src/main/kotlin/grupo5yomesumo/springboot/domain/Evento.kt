@@ -7,12 +7,12 @@ import java.time.LocalDate
 
 class Evento(
     override var id: Long = 0,
-    var anfitrion: String /*Usuario*/ = "",
-    var actividad: String /*Actividad*/ = "",
-    var fecha: LocalDate = LocalDate.now(),
-    var direccion: String = "",
-    val solicitudes: MutableList<String> /*MutableList<Usuario>*/ = mutableListOf(),
-    val aceptados: MutableList<String> /*MutableList<Usuario>*/ = mutableListOf(),
+    var anfitrion: String/*Usuario*/,
+    var actividad: String/*Actividad*/,
+    var fecha: LocalDate,
+    var direccion: String,
+    val solicitudes: MutableList<String>/*<Usuario>*/,
+    val aceptados: MutableList<String>/*<Usuario>*/,
 ): Entidad {
 
     fun activo(): Boolean = fecha.isAfter(LocalDate.now())

@@ -34,7 +34,7 @@ class CrudRepo<T:Entidad> {
 
     fun delete(objeto: T) = objetos.remove(objeto)
 
-    fun getById(id: Long): T = objetos.find { objeto -> objeto.id == id } ?: throw NotFoundException("No se ha encontrado el elemento con el id ${id}")
+    fun getById(id: Long): T = objetos.find { objeto -> objeto.id == id } ?: throw NotFoundException("No se ha encontrado el elemento con el id $id")
 
     fun update(objeto: T) {
         val objetoAActualizar = getById(objeto.id)

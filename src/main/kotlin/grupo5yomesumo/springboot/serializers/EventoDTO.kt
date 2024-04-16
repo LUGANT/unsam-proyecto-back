@@ -5,12 +5,12 @@ import java.time.LocalDate
 
 class EventoDTO(
     val id: Long,
-    val anfitrion: String /*Usuario*/ = "",
-    val actividad: String /*Actividad*/ = "",
-    val fecha: LocalDate = LocalDate.now(),
-    val direccion: String = "",
-    val solicitudes: List<String> /*MutableList<Usuario>*/ = mutableListOf(),
-    val aceptados: List<String> /*MutableList<Usuario>*/ = mutableListOf(),
+    val anfitrion: String/*Usuario*/,
+    val actividad: String/*Actividad*/,
+    val fecha: LocalDate,
+    val direccion: String,
+    val solicitudes: List<String>/*List<Usuario>*/,
+    val aceptados: List<String>/*List<Usuario>*/
 ) {
 
     constructor(evento: Evento): this (

@@ -7,19 +7,19 @@ import java.time.LocalDate
 
 class Evento(
     override var id: Long = 0,
-    var anfitrion: String/*Usuario*/,
+    var anfitrion: Usuario/*Usuario*/,
     var actividad: String/*Actividad*/,
     var fecha: LocalDate,
     var direccion: String,
-    val solicitudes: MutableList<String>/*<Usuario>*/,
-    val aceptados: MutableList<String>/*<Usuario>*/,
+    val solicitudes: MutableList<Usuario>/*<Usuario>*/,
+    val aceptados: MutableList<Usuario>/*<Usuario>*/,
 ): Entidad {
 
     fun activo(): Boolean = fecha.isAfter(LocalDate.now())
 
-    fun participantes(): List<String/*Usuario*/> = aceptados + anfitrion
+    fun participantes(): List<Usuario/*Usuario*/> = aceptados + anfitrion
 
-    fun responderSolicitud(invitado: String/*Usuario*/, respuesta: Boolean) {
+    fun responderSolicitud(invitado: Usuario/*Usuario*/, respuesta: Boolean) {
         validarResponderSolicitud(invitado)
         if (respuesta) {
             solicitudes.remove(invitado)
@@ -29,9 +29,9 @@ class Evento(
         }
     }
 
-    private fun solicitudPuedeSerRespondida(invitado: String/*Usuario*/): Boolean = invitado in solicitudes
+    private fun solicitudPuedeSerRespondida(invitado: Usuario/*Usuario*/): Boolean = invitado in solicitudes
 
-    private fun validarResponderSolicitud(invitado: String/*Usuario*/) {
+    private fun validarResponderSolicitud(invitado: Usuario/*Usuario*/) {
         if (!solicitudPuedeSerRespondida(invitado)) {
             throw BusinessException("El usuario ya no está interesado en participar en el evento.") //Business o NotFound???
         }

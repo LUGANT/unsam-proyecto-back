@@ -1,6 +1,9 @@
 package grupo5yomesumo.springboot.domain
 
+import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.Entidad
+import grupo5yomesumo.springboot.serializers.UsuarioDTO
+import java.time.LocalDate
 
 class Usuario(
     override var id: Long = 0,
@@ -8,6 +11,10 @@ class Usuario(
     val apellido: String,
     val username: String,
     val password: String,
-    ): Entidad {
-    /* Por ahora parece que no tiene alguna responsabilidad */
+): Entidad {
+
+    fun crearEvento(actividad: String, fecha: LocalDate, direccion: String): Evento{
+        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion)
+    }
+
 }

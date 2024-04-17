@@ -11,8 +11,8 @@ class Evento(
     var actividad: String/*Actividad*/,
     var fecha: LocalDate,
     var direccion: String,
-    val solicitudes: MutableList<Usuario>/*<Usuario>*/,
-    val aceptados: MutableList<Usuario>/*<Usuario>*/,
+    val solicitudes: MutableList<Usuario>/*<Usuario>*/ = mutableListOf(),
+    val aceptados: MutableList<Usuario>/*<Usuario>*/ = mutableListOf(),
 ): Entidad {
 
     fun activo(): Boolean = fecha.isAfter(LocalDate.now())
@@ -29,11 +29,22 @@ class Evento(
         }
     }
 
+    fun agregarSolicitud(invitado: Usuario){
+        validarAgregarSolicitud(invitado)
+        solicitudes.add(invitado)
+    }
+
     private fun solicitudPuedeSerRespondida(invitado: Usuario/*Usuario*/): Boolean = invitado in solicitudes
 
     private fun validarResponderSolicitud(invitado: Usuario/*Usuario*/) {
         if (!solicitudPuedeSerRespondida(invitado)) {
             throw BusinessException("El usuario ya no está interesado en participar en el evento.") //Business o NotFound???
+        }
+    }
+
+    private fun validarAgregarSolicitud(invitado: Usuario){
+        if(solicitudPuedeSerRespondida(invitado)){
+            throw BusinessException("El usuario ya se encuentra en la lista de solicitudes.")
         }
     }
 

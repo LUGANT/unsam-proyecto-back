@@ -9,5 +9,6 @@ class UsuarioService(
     val usuarioRepository: UsuarioRepository
 ){
     fun getAllUsuarios(): List<Usuario> = usuarioRepository.findAll()
+    fun getUsuario(usuarioId: Long): Usuario = usuarioRepository.getById(usuarioId)
 
 }

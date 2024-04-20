@@ -1,7 +1,9 @@
 package grupo5yomesumo.springboot
 
+import grupo5yomesumo.springboot.domain.Actividad
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Usuario
+import grupo5yomesumo.springboot.repository.ActividadRepository
 import grupo5yomesumo.springboot.repository.EventoRepository
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import grupo5yomesumo.springboot.service.EventoService
@@ -14,7 +16,8 @@ import java.time.LocalDate
 class Bootstrap(
     val eventoService: EventoService,
     val eventoRepository: EventoRepository,
-    val usuarioRepository: UsuarioRepository
+    val usuarioRepository: UsuarioRepository,
+    val actividadRepository: ActividadRepository
 ) : InitializingBean
 {
     override fun afterPropertiesSet() {
@@ -28,6 +31,16 @@ class Bootstrap(
         arrayOf(
             usuarioA, usuarioB
         ).forEach { usuarioRepository.save(it) }
+
+
+        //ACTIVIDADES
+        val basquet = Actividad(nombre = "Basquet", esGrupal = true)
+        val futbol = Actividad(nombre = "Futbol", esGrupal = true)
+
+        arrayOf(
+            basquet, futbol
+        ).forEach { actividadRepository.save(it) }
+
 
         val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = "Futbol", fecha = LocalDate.now(), direccion = "calle trucha 123", solicitudes = mutableListOf(usuarioC), aceptados = mutableListOf(usuarioD))
         val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = "Basquet", fecha = LocalDate.now(), direccion = "calle verdadera 321", solicitudes = mutableListOf(usuarioD), aceptados = mutableListOf(usuarioC))

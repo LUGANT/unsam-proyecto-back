@@ -5,6 +5,8 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.23"
 	kotlin("plugin.spring") version "1.9.23"
+	jacoco
+	war
 }
 
 group = "grupo-5-yo-me-sumo"
@@ -23,6 +25,7 @@ dependencies {
 
 		val kotestVersion = "5.4.2"
 
+		// Librerias
 		implementation("org.springframework.boot:spring-boot-starter-web")
 		implementation("org.springframework.boot:spring-boot-starter-hateoas")
 		implementation("org.springframework.boot:spring-boot-starter-data-rest")
@@ -36,9 +39,14 @@ dependencies {
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 		implementation("org.springframework.boot:spring-boot-devtools")
 
+		// Conexión a la base de datos
+		runtimeOnly("org.postgresql:postgresql")
+		implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+		providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
+		// Librerias para tests
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
-		testImplementation("io.mockk:mockk:1.12.8")
+//		testImplementation("io.mockk:mockk:1.12.8")
 		testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 		testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
 	}

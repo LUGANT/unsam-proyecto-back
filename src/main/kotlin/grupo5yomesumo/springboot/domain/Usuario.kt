@@ -13,7 +13,7 @@ class Usuario(
     val password: String,
 ): Entidad {
 
-    fun crearEvento(actividad: String, fecha: LocalDate, direccion: String): Evento{
+    fun crearEvento(actividad: Actividad, fecha: LocalDate, direccion: String): Evento{
         return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion)
     }
 

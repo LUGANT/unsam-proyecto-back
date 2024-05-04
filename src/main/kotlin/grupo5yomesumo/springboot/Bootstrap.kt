@@ -3,7 +3,7 @@ package grupo5yomesumo.springboot
 import grupo5yomesumo.springboot.domain.Actividad
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Usuario
-import grupo5yomesumo.springboot.repository.ActividadRepository
+import grupo5yomesumo.springboot.repository.Actividadrepository
 import grupo5yomesumo.springboot.repository.EventoRepository
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import grupo5yomesumo.springboot.service.EventoService
@@ -17,7 +17,7 @@ class Bootstrap(
     val eventoService: EventoService,
     val eventoRepository: EventoRepository,
     val usuarioRepository: UsuarioRepository,
-    val actividadRepository: ActividadRepository
+    val actividadRepository: Actividadrepository
 ) : InitializingBean
 {
     override fun afterPropertiesSet() {

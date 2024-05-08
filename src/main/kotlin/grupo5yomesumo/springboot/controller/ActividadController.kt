@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@RestController()
+@RestController
 @RequestMapping("actividad")
 @CrossOrigin("*")
 class ActividadController(
@@ -23,7 +23,7 @@ class ActividadController(
 
     @GetMapping("/{actividadId}")
     @Operation(summary = "Trae una actividad por id")
-    fun getActividadById(@PathVariable actividadId : Long) : Actividad = actividadService.getActividadById(actividadId)
+    fun getActividadById(@PathVariable actividadId : Long) : Actividad = actividadService.getActividad(actividadId)
 
     @GetMapping("filterGrupal")
     @Operation(summary = "Trae las actividades filtradas en si son en grupo")

@@ -19,8 +19,8 @@ class Usuario(
     @Column(length = 40)val password: String = "",
 ) {
 
-    fun crearEvento(actividad: Actividad, fecha: LocalDate, direccion: String): Evento{
-        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion)
+    fun crearEvento(actividad: Actividad, fecha: LocalDate, direccion: String, capacidadMaxima : Int): Evento{
+        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion, capacidadMaxima = capacidadMaxima)
     }
 
 }

@@ -12,7 +12,7 @@ class ActividadService(
 
     fun getAllActividades() : List<Actividad> = actividadRepository.findAll().toList()
 
-    fun getActividadById(actividadId : Long) : Actividad = actividadRepository.findById(actividadId).orElseThrow { NotFoundException("No se encontro actividad con el id $actividadId") }
+    fun getActividad(actividadId : Long) : Actividad = actividadRepository.findById(actividadId).orElseThrow { NotFoundException("No se encontro actividad con el id $actividadId") }
 
     fun getAllActividadesFilter(esGrupal : Boolean) =
         if (!esGrupal) getAllActividades()

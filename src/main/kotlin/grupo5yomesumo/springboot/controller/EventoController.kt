@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 
 @RestController()
@@ -37,5 +38,8 @@ class EventoController(
 
     @GetMapping("{eventoId}")
     fun getEvento(@PathVariable eventoId: Long) = eventoService.getEvento(eventoId)
+
+    @GetMapping("{eventoId}")
+    fun getEventoFilter(@PathVariable eventoId: Long, @RequestParam(value = "actividad") actividadId : Long) = eventoService.getEventoFilter(eventoId, actividadId)
 
 }

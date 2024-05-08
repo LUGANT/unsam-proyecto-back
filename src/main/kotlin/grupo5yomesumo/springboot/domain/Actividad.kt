@@ -1,10 +1,12 @@
 package grupo5yomesumo.springboot.domain
 
 import grupo5yomesumo.springboot.repository.Entidad
+import jakarta.persistence.*
 
+@Entity
 data class Actividad(
-    override var id : Long = 0,
-    val nombre : String,
-    val esGrupal : Boolean
-) : Entidad
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id : Long = 0,
+    @Column(length = 50) val nombre : String = "",
+    @Column val esGrupal : Boolean = false
+)
 

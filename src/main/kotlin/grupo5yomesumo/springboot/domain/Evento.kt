@@ -1,7 +1,6 @@
 package grupo5yomesumo.springboot.domain
 
 import grupo5yomesumo.springboot.domain.exceptions.BusinessException
-import grupo5yomesumo.springboot.repository.Entidad
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

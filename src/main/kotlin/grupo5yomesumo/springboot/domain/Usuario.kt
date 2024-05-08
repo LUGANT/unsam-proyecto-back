@@ -1,7 +1,6 @@
 package grupo5yomesumo.springboot.domain
 
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
-import grupo5yomesumo.springboot.repository.Entidad
 import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

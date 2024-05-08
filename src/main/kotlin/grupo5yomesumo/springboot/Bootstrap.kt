@@ -42,8 +42,8 @@ class Bootstrap(
         ).forEach { actividadRepository.save(it) }
 
 
-        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), direccion = "calle trucha 123", solicitudes = mutableListOf(usuarioC), aceptados = mutableListOf(usuarioD))
-        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), direccion = "calle verdadera 321", solicitudes = mutableListOf(usuarioD), aceptados = mutableListOf(usuarioC))
+        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), direccion = "calle trucha 123")
+        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), direccion = "calle verdadera 321")
 
         arrayOf(
             futbolConLosPibes, basquet3Vs3

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 import grupo5yomesumo.springboot.repository.EventoRepository
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class EventoService (
@@ -23,7 +24,13 @@ class EventoService (
         return eventos
     }
 
-    fun crearEvento(anfitrion: Usuario, actividad: Actividad, fecha: LocalDate, direccion: String, capacidadMaxima : Int){
+    fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, direccion: String, capacidadMaxima : Int){
+        val anfitrion: Usuario = usuarioRepository.findById(anfitrionId).orElseThrow { NotFoundException("No se encontro el usuario con el id $anfitrionId") }
+        val actividad : Actividad = actividadRepository.findById(actividadId).orElseThrow { NotFoundException("No se encontro una actividad con el id $actividadId") }
+
+        val dateFormater = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val fecha = LocalDate.parse(fechaUnparsed, dateFormater)
+
         val nuevoEvento = Evento(anfitrion = anfitrion, actividad = actividad, fecha = fecha, direccion = direccion, capacidadMaxima = capacidadMaxima)
         eventoRepository.save(nuevoEvento)
     }

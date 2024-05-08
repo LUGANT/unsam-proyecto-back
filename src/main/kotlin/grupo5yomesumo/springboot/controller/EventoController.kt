@@ -1,5 +1,6 @@
 package grupo5yomesumo.springboot.controller
 
+import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.serializers.EventoDTO
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 
 
 @RestController()
@@ -36,6 +39,30 @@ class EventoController(
 //    fun rechazarSolicitud(@PathVariable eventoId: Long, @PathVariable usuarioId: Long) = eventoService.rechazarSolicitud(eventoId, usuarioId)
 
     @GetMapping("{eventoId}")
-    fun getEvento(@PathVariable eventoId: Long) = eventoService.getEvento(eventoId)
+    @Operation(summary = "Devuelve evento por id")
+    fun getEvento(@PathVariable eventoId: Long) : Evento = eventoService.getEvento(eventoId)
+
+    @GetMapping("{eventoId}")
+    @Operation(summary = "Devuelve eventos con filtro")
+    fun getEventoFilter(@PathVariable eventoId: Long, @RequestParam(value = "actividad") actividadId : Long) : List<Evento> = eventoService.getEventoFilter(eventoId, actividadId)
+
+    @PostMapping("crear")
+    @Operation(summary = "Crea un evento")
+    fun crearEvento(@RequestBody eventoProps: CrearEventProps) = eventoService.crearEvento(
+        eventoProps.anfitrionId,
+        eventoProps.actividadId,
+        eventoProps.fecha,
+        eventoProps.direccion,
+        eventoProps.capacidadMaxima
+    )
 
 }
+
+data class CrearEventProps(
+    val anfitrionId: Long,
+    val actividadId: Long,
+    val fecha: String,
+    val hora: String,
+    val direccion: String,
+    val capacidadMaxima: Int,
+)

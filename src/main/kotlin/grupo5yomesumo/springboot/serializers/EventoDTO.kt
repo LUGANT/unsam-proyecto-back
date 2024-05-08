@@ -10,9 +10,7 @@ class EventoDTO(
     val anfitrion: Usuario,
     val actividad: Actividad,
     val fecha: LocalDate,
-    val direccion: String,
-    val solicitudes: List<Usuario>/*List<Usuario>*/,
-    val aceptados: List<Usuario>/*List<Usuario>*/
+    val direccion: String
 ) {
 
     constructor(evento: Evento): this (
@@ -20,9 +18,7 @@ class EventoDTO(
         anfitrion = evento.anfitrion,
         actividad = evento.actividad,
         fecha = evento.fecha,
-        direccion = evento.direccion,
-        solicitudes = evento.solicitudes,
-        aceptados = evento.aceptados
+        direccion = evento.direccion
     )
 
 }

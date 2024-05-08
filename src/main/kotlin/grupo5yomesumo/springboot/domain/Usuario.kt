@@ -1,7 +1,6 @@
 package grupo5yomesumo.springboot.domain
 
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
-import grupo5yomesumo.springboot.repository.Entidad
 import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -19,8 +18,8 @@ class Usuario(
     @Column(length = 40)val password: String = "",
 ) {
 
-    fun crearEvento(actividad: Actividad, fecha: LocalDate, direccion: String): Evento{
-        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion)
+    fun crearEvento(actividad: Actividad, fecha: LocalDate, direccion: String, capacidadMaxima : Int): Evento{
+        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion, capacidadMaxima = capacidadMaxima)
     }
 
 }

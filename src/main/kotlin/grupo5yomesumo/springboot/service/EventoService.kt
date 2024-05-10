@@ -18,7 +18,7 @@ class EventoService (
     val actividadRepository: Actividadrepository
 ) {
 
-    fun getEventoFilter(eventoId: Long, actividadId: Long): List<Evento> {
+    fun getEventoFilter(actividadId: Long): List<Evento> {
         val actividad : Actividad = actividadRepository.findById(actividadId).orElseThrow { NotFoundException("No se encontro una actividad con el id $actividadId") }
         val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
         return eventos

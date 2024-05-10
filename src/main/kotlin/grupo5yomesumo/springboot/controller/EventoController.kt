@@ -42,9 +42,13 @@ class EventoController(
     @Operation(summary = "Devuelve evento por id")
     fun getEvento(@PathVariable eventoId: Long) : Evento = eventoService.getEvento(eventoId)
 
-    @GetMapping("{eventoId}")
+    @GetMapping("")
     @Operation(summary = "Devuelve eventos con filtro")
-    fun getEventoFilter(@PathVariable eventoId: Long, @RequestParam(value = "actividad") actividadId : Long) : List<Evento> = eventoService.getEventoFilter(eventoId, actividadId)
+    fun getEventoFilter(@RequestParam(value = "actividad") actividadId : Long) : List<Evento> = eventoService.getEventoFilter(actividadId)
+
+    @GetMapping("usuario/{usuarioId}")
+    @Operation(summary = "Devuelve los eventos de un usuario específico.")
+    fun getEventosUsuario(@PathVariable usuarioId: Long): List<Evento> = eventoService.getEventosByAnfitrion(usuarioId)
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")

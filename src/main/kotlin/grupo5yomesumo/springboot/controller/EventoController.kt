@@ -38,9 +38,9 @@ class EventoController(
 //    @Operation(summary = "rechazar solicitud a un usuario")
 //    fun rechazarSolicitud(@PathVariable eventoId: Long, @PathVariable usuarioId: Long) = eventoService.rechazarSolicitud(eventoId, usuarioId)
 
-    @GetMapping("{eventoId}")
-    @Operation(summary = "Devuelve evento por id")
-    fun getEvento(@PathVariable eventoId: Long) : Evento = eventoService.getEvento(eventoId)
+//    @GetMapping("{eventoId}")
+//    @Operation(summary = "Devuelve evento por id")
+//    fun getEvento(@PathVariable eventoId: Long) : Evento = eventoService.getEvento(eventoId)
 
     @GetMapping("{eventoId}")
     @Operation(summary = "Devuelve eventos con filtro")

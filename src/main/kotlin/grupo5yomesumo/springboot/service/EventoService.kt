@@ -25,9 +25,10 @@ class EventoService (
     fun getEventosByAnfitrion(usuarioId: Long): List<Evento> {
         val anfitrion = usuarioService.getUsuario(usuarioId)
         return eventoRepository.findEventosByAnfitrion(anfitrion)
-        
+    }
+
     fun getEventoFilter(actividadId: Long): List<Evento> {
-        val actividad : Actividad = actividadRepository.findById(actividadId).orElseThrow { NotFoundException("No se encontro una actividad con el id $actividadId") }
+        val actividad : Actividad = actividadService.getActividad(actividadId)
         val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
         return eventos
     }
@@ -42,26 +43,5 @@ class EventoService (
         val nuevoEvento = Evento(anfitrion = anfitrion, actividad = actividad, fecha = fecha, direccion = direccion, capacidadMaxima = capacidadMaxima)
         eventoRepository.save(nuevoEvento)
     }
-
-//    fun aceptarSolicitud(eventoId: Long, usuarioId: Long) {
-//        val evento = eventoRepository.getById(eventoId)
-//        val invitado = usuarioRepository.findById(eventoId)
-//
-//        evento.responderSolicitud(invitado, true)
-//    }
-//
-//    fun rechazarSolicitud(eventoId: Long, usuarioId: Long) {
-//        val evento = eventoRepository.getById(eventoId)
-//        val invitado = usuarioRepository.getById(eventoId)
-//
-//        evento.responderSolicitud(invitado, false)
-//    }
-//
-//    fun enviarSolicitud(eventoId: Long, usuarioId: Long) {
-//        val evento = eventoRepository.getById(eventoId)
-//        val invitado = usuarioRepository.getById(eventoId)
-//
-//        evento.agregarSolicitud(invitado)
-//    }
 
 }

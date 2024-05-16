@@ -26,18 +26,6 @@ class EventoController(
     @Operation(summary = "Devuelve todos los eventos")
     fun getAllEventos(): List<EventoDTO> = eventoService.getAllEventos().map{ EventoDTO(it) }
 
-//    @PutMapping("{eventoId}/solicitud/aceptar/{usuarioId}")
-//    @Operation(summary = "acepta la solicitud de un usuario")
-//    fun aceptarSolicitud(@PathVariable eventoId: Long, @PathVariable usuarioId: Long) = eventoService.aceptarSolicitud(eventoId, usuarioId)
-//
-//    @PutMapping("{eventoId}/solicitud/enviar/{usuarioId}")
-//    @Operation(summary = "envia solicitud a un usuario")
-//    fun enviarSolicitud(@PathVariable eventoId: Long, @PathVariable usuarioId: Long) = eventoService.enviarSolicitud(eventoId, usuarioId)
-//
-//    @PutMapping("{eventoId}/solicitud/rechazar/{usuarioId}")
-//    @Operation(summary = "rechazar solicitud a un usuario")
-//    fun rechazarSolicitud(@PathVariable eventoId: Long, @PathVariable usuarioId: Long) = eventoService.rechazarSolicitud(eventoId, usuarioId)
-
     @GetMapping("")
     @Operation(summary = "Devuelve eventos con filtro")
     fun getEventoFilter(@RequestParam(value = "actividad") actividadId : Long) : List<Evento> = eventoService.getEventoFilter(actividadId)

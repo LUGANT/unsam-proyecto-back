@@ -22,14 +22,14 @@ class EventoService (
 
     fun getAllEventos(): List<Evento> = eventoRepository.findAll().toList()
 
-    fun getEventoFilter(actividadId: Long): List<Evento> {
-        val actividad: Actividad = actividadService.getActividad(actividadId)
-        return eventoRepository.findEventosByActividad(actividad)
-    }
-
     fun getEventosByAnfitrion(usuarioId: Long): List<Evento> {
         val anfitrion = usuarioService.getUsuario(usuarioId)
         return eventoRepository.findEventosByAnfitrion(anfitrion)
+        
+    fun getEventoFilter(actividadId: Long): List<Evento> {
+        val actividad : Actividad = actividadRepository.findById(actividadId).orElseThrow { NotFoundException("No se encontro una actividad con el id $actividadId") }
+        val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
+        return eventos
     }
 
     fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, direccion: String, capacidadMaxima : Int){

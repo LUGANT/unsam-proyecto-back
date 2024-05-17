@@ -43,6 +43,8 @@ dependencies {
 		runtimeOnly("org.postgresql:postgresql")
 		implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 		providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+		//Mongo
+		implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
 		// Librerias para tests
 		testImplementation("org.springframework.boot:spring-boot-starter-test")

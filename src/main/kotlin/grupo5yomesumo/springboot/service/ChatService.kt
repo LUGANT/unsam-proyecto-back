@@ -1,14 +1,14 @@
 package grupo5yomesumo.springboot.service
 
-import grupo5yomesumo.springboot.domain.Chat
-import grupo5yomesumo.springboot.repository.ChatRepository
+import grupo5yomesumo.springboot.domain.Mensaje
+import grupo5yomesumo.springboot.repository.mensajeRepository
 import org.springframework.stereotype.Service
 
 @Service
 class ChatService(
-    val chatRepository : ChatRepository
+    val mensajeRepository: mensajeRepository
 ) {
 
-    fun getChatByEvento(eventoId : Long) : Chat = chatRepository.getChatByEvento(eventoId)
+    fun getChatByEvento(eventoId : Long) : List<Mensaje> = mensajeRepository.getMensajesByEvento(eventoId)
 
 }

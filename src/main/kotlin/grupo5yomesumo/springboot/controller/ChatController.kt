@@ -1,7 +1,7 @@
 package grupo5yomesumo.springboot.controller
 
 
-import grupo5yomesumo.springboot.serializers.ChatDTO
+import grupo5yomesumo.springboot.domain.Mensaje
 import grupo5yomesumo.springboot.service.ChatService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.stereotype.Controller
@@ -19,7 +19,7 @@ class ChatController(
 
     @GetMapping("/{eventoId}")
     @Operation(summary = "Trae el chat de un evento especifico")
-    fun getChatByEvento(@PathVariable eventoId : Long) : ChatDTO = ChatDTO(chatService.getChatByEvento(eventoId))
+    fun getChatByEvento(@PathVariable eventoId : Long) : List<Mensaje> = (chatService.getChatByEvento(eventoId))
 
 
 }

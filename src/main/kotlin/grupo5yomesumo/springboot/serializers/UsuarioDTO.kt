@@ -7,12 +7,14 @@ class UsuarioDTO(
     val id: Long,
     val nombre: String,
     val apellido: String,
-    val username: String
+    val username: String,
+    val puntuacion : Double
 ) {
     constructor(usuario: Usuario):this(
         id = usuario.id,
         nombre = usuario.nombre,
         apellido = usuario.apellido,
-        username = usuario.username
+        username = usuario.username,
+        puntuacion = usuario.puntuacion
     )
 }

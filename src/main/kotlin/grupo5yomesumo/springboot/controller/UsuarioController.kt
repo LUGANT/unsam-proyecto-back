@@ -1,6 +1,7 @@
 package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Evento
+import grupo5yomesumo.springboot.serializers.EventoDTO
 import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import grupo5yomesumo.springboot.service.SolicitudService
 import grupo5yomesumo.springboot.service.UsuarioService
@@ -28,7 +29,7 @@ class UsuarioController(
 
     @GetMapping("{usuarioId}")
     @Operation(summary = "Get usuario en concreto")
-    fun getUsuario(@PathVariable usuarioId: Long) = usuarioService.getUsuario(usuarioId)
+    fun getUsuario(@PathVariable usuarioId: Long) : UsuarioDTO = UsuarioDTO(usuarioService.getUsuario(usuarioId))
 
     @PostMapping("solicitud/crear/{eventoId}/{solicitanteId}")
     @Operation(summary = "responde la solicitud de un evento")
@@ -46,7 +47,7 @@ class UsuarioController(
 
     @GetMapping("/{usuarioId}/solicitudes")
     @Operation(summary = "Devuelve los eventos a los cuales un usuario especifico hizo la solicitud")
-    fun solicitudesDeUsuario(@PathVariable usuarioId: Long) : List<Evento> = solicitudService.solicitudesDeUsuario(usuarioId)
+    fun solicitudesDeUsuario(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.solicitudesDeUsuario(usuarioId).map { EventoDTO(it)}
 
 
 }

@@ -33,7 +33,7 @@ class OpinionService(
     }
 
     private fun calcularPromedioPuntaje(usuario : Usuario){
-        opinionRepository.calcularPromedioPuntaje(usuario)
+        usuario.puntuacion = opinionRepository.calcularPromedioPuntaje(usuario)
     }
 
     private fun validarPuntaje(puntaje: Int) {

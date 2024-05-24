@@ -1,12 +1,16 @@
 package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Evento
+import grupo5yomesumo.springboot.domain.Solicitud
 import grupo5yomesumo.springboot.serializers.EventoDTO
+import grupo5yomesumo.springboot.serializers.SolicitudDTO
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import grupo5yomesumo.springboot.service.EventoService
+import grupo5yomesumo.springboot.service.SolicitudService
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @RequestMapping("evento")
 @CrossOrigin("*")
 class EventoController(
-    val eventoService: EventoService
+    val eventoService: EventoService,
+    val solicitudService: SolicitudService
 ) {
 
     @GetMapping("all")
@@ -28,15 +33,15 @@ class EventoController(
 
     @GetMapping("")
     @Operation(summary = "Devuelve eventos con filtro")
-    fun getEventoFilter(@RequestParam(value = "actividad") actividadId : Long) : List<Evento> = eventoService.getEventoFilter(actividadId)
+    fun getEventoFilter(@RequestParam(value = "actividad") actividadId : Long) : List<EventoDTO> = eventoService.getEventoFilter(actividadId).map { EventoDTO(it) }
 
     @GetMapping("{eventoId}")
     @Operation(summary = "Devuelve evento por id")
-    fun getEvento(@PathVariable eventoId: Long) : Evento = eventoService.getEvento(eventoId)
+    fun getEvento(@PathVariable eventoId: Long) : EventoDTO = EventoDTO(eventoService.getEvento(eventoId))
 
     @GetMapping("usuario/{usuarioId}")
     @Operation(summary = "Devuelve los eventos de un usuario específico.")
-    fun getEventosUsuario(@PathVariable usuarioId: Long): List<Evento> = eventoService.getEventosByAnfitrion(usuarioId)
+    fun getEventosUsuario(@PathVariable usuarioId: Long): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId).map { EventoDTO(it) }
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")
@@ -47,6 +52,14 @@ class EventoController(
         eventoProps.direccion,
         eventoProps.capacidadMaxima
     )
+
+    @GetMapping("{eventoId}/solicitudes")
+    @Operation(summary = "Devuelve las solicitudes de un evento")
+    fun getSolicitudesDeEvento(@PathVariable eventoId: Long) : List<SolicitudDTO> = solicitudService.getSolicitudesByEvento(eventoId).map { SolicitudDTO(it) }
+
+    @DeleteMapping("{eventoId}/borrar")
+    @Operation(summary = "Elimina un evento")
+    fun eliminarEvento(@PathVariable eventoId: Long) = eventoService.eliminarEvento(eventoId)
 
 }
 

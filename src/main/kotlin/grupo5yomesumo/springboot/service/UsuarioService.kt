@@ -3,6 +3,7 @@ package grupo5yomesumo.springboot.service
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.UsuarioRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,6 +16,8 @@ class UsuarioService(
             ?: throw NotFoundException("Usuario no encontrado")
         return usuario
     }
+    @Transactional
+    fun save(usuario: Usuario) = usuarioRepository.save(usuario)
 
     fun getAllUsuarios(): List<Usuario> = usuarioRepository.findAll().toList()
 

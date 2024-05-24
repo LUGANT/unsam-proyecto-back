@@ -18,7 +18,7 @@ class Bootstrap(
     val usuarioRepository: UsuarioRepository,
     val actividadRepository: Actividadrepository,
     val solicitudRepository: SolicitudRepository,
-    val mensajeRepository: mensajeRepository
+    val mensajeRepository: MensajeRepository
 ) : InitializingBean
 {
     override fun afterPropertiesSet() {
@@ -64,4 +64,5 @@ class Bootstrap(
     fun clearMongoRepositories(){
         mensajeRepository.deleteAll()
     }
+
 }

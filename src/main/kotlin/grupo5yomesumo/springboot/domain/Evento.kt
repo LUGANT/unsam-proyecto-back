@@ -15,7 +15,8 @@ class Evento(
     @ManyToOne var actividad: Actividad = Actividad(),
     @Column var fecha: LocalDate = LocalDate.now(),
     @Column var direccion: String = "",
-    @Column val capacidadMaxima: Int = 0
+    @Column val capacidadMaxima: Int = 0,
+    @Column val descripcion : String = ""
 ){
 
     fun activo(): Boolean = fecha.isAfter(LocalDate.now())

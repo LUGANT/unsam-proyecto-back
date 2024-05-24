@@ -1,6 +1,7 @@
 package grupo5yomesumo.springboot.service
 
 import grupo5yomesumo.springboot.domain.Opinion
+import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.OpinionRepository
 import org.apache.coyote.BadRequestException
@@ -26,6 +27,13 @@ class OpinionService(
         val usuario = usuarioService.getUsuario(usuarioId)
         val nuevaOpinion = Opinion(puntaje = puntaje, comentario = comentario, usuario = usuario)
         opinionRepository.save(nuevaOpinion)
+
+        calcularPromedioPuntaje(usuario)
+        usuarioService.save(usuario)
+    }
+
+    private fun calcularPromedioPuntaje(usuario : Usuario){
+        usuario.puntuacion = opinionRepository.calcularPromedioPuntaje(usuario)
     }
 
     private fun validarPuntaje(puntaje: Int) {

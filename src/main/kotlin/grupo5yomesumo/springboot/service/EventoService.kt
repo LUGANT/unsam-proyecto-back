@@ -8,6 +8,7 @@ import grupo5yomesumo.springboot.repository.Actividadrepository
 import org.springframework.stereotype.Service
 import grupo5yomesumo.springboot.repository.EventoRepository
 import grupo5yomesumo.springboot.repository.UsuarioRepository
+import jakarta.transaction.Transactional
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -33,6 +34,7 @@ class EventoService (
         return eventos
     }
 
+    @Transactional
     fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, direccion: String, capacidadMaxima : Int){
         val anfitrion: Usuario = usuarioService.getUsuario(anfitrionId)
         val actividad : Actividad = actividadService.getActividad(actividadId)
@@ -42,6 +44,12 @@ class EventoService (
 
         val nuevoEvento = Evento(anfitrion = anfitrion, actividad = actividad, fecha = fecha, direccion = direccion, capacidadMaxima = capacidadMaxima)
         eventoRepository.save(nuevoEvento)
+    }
+
+    @Transactional
+    fun eliminarEvento(eventoId : Long) {
+        val evento = getEvento(eventoId)
+        eventoRepository.delete(evento)
     }
 
 }

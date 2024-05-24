@@ -1,19 +1,12 @@
 package grupo5yomesumo.springboot.controller
 
-import grupo5yomesumo.springboot.domain.Evento
+import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.serializers.EventoDTO
 import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import grupo5yomesumo.springboot.service.SolicitudService
 import grupo5yomesumo.springboot.service.UsuarioService
 import io.swagger.v3.oas.annotations.Operation
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController()
 @RequestMapping("usuario")
@@ -22,6 +15,12 @@ class UsuarioController(
     val usuarioService: UsuarioService,
     val solicitudService: SolicitudService
 ) {
+
+    @PostMapping("login")
+    @Operation(summary = "Devuelve un usuario en base a un nombre y una contraseña")
+    fun getUser(
+        @RequestBody unlogedUser: Usuario
+    ) = UsuarioDTO(usuarioService.logIn(unlogedUser.username,unlogedUser.password))
 
     @GetMapping("")
     @Operation(summary = "Get todos los usuarios")

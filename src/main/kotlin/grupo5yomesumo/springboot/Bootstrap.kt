@@ -4,10 +4,7 @@ import grupo5yomesumo.springboot.domain.Actividad
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Solicitud
 import grupo5yomesumo.springboot.domain.Usuario
-import grupo5yomesumo.springboot.repository.Actividadrepository
-import grupo5yomesumo.springboot.repository.EventoRepository
-import grupo5yomesumo.springboot.repository.SolicitudRepository
-import grupo5yomesumo.springboot.repository.UsuarioRepository
+import grupo5yomesumo.springboot.repository.*
 import grupo5yomesumo.springboot.service.EventoService
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
@@ -20,11 +17,13 @@ class Bootstrap(
     val eventoRepository: EventoRepository,
     val usuarioRepository: UsuarioRepository,
     val actividadRepository: Actividadrepository,
-    val solicitudRepository: SolicitudRepository
+    val solicitudRepository: SolicitudRepository,
+    val mensajeRepository: MensajeRepository
 ) : InitializingBean
 {
     override fun afterPropertiesSet() {
         //EVENTOS
+        clearMongoRepositories()
 
         val usuarioA = Usuario(nombre = "Felipe", apellido = "Gamalleri", username = "feli", password = "1234")
         val usuarioB = Usuario(nombre = "Nicolas", apellido = "Masuyama", username = "masu", password = "1234")
@@ -61,4 +60,9 @@ class Bootstrap(
             solicitudAceptada
         ).forEach { solicitudRepository.save(it) }
     }
+
+    fun clearMongoRepositories(){
+        mensajeRepository.deleteAll()
+    }
+
 }

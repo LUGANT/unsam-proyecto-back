@@ -25,6 +25,23 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
+  mongo:
+    image: mongo:latest
+    container_name: yomesumo_mongo
+    hostname: yomesumo_mongo
+    ports:
+      - "27021:27017"
+    volumes:
+      - ./dockerUtils/mongo_init.js:/docker-entrypoint-initdb.d/01-mongo-init.js:ro
+      - yomesumo_mongo_db:/data/db
+      - yomesumo_mongo_log:/var/log/mongodb/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: yomesumo-mensajes
+
 volumes:
   db:
   pgadmin-data:
+  yomesumo_mongo_db:
+  yomesumo_mongo_log:

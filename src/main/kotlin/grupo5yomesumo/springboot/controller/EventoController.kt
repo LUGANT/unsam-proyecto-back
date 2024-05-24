@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import grupo5yomesumo.springboot.service.EventoService
 import grupo5yomesumo.springboot.service.SolicitudService
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -56,6 +57,9 @@ class EventoController(
     @Operation(summary = "Devuelve las solicitudes de un evento")
     fun getSolicitudesDeEvento(@PathVariable eventoId: Long) : List<SolicitudDTO> = solicitudService.getSolicitudesByEvento(eventoId).map { SolicitudDTO(it) }
 
+    @DeleteMapping("{eventoId}/borrar")
+    @Operation(summary = "Elimina un evento")
+    fun eliminarEvento(@PathVariable eventoId: Long) = eventoService.eliminarEvento(eventoId)
 
 }
 

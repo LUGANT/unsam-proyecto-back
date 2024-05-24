@@ -1,12 +1,14 @@
 package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Evento
+import grupo5yomesumo.springboot.domain.Solicitud
 import grupo5yomesumo.springboot.serializers.EventoDTO
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import grupo5yomesumo.springboot.service.EventoService
+import grupo5yomesumo.springboot.service.SolicitudService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @RequestMapping("evento")
 @CrossOrigin("*")
 class EventoController(
-    val eventoService: EventoService
+    val eventoService: EventoService,
+    val solicitudService: SolicitudService
 ) {
 
     @GetMapping("all")
@@ -47,6 +50,11 @@ class EventoController(
         eventoProps.direccion,
         eventoProps.capacidadMaxima
     )
+
+    @GetMapping("{eventoId}/solicitudes")
+    @Operation(summary = "Devuelve las solicitudes de un evento")
+    fun getSolicitudesDeEvento(@PathVariable eventoId: Long) : List<Solicitud> = solicitudService.getSolicitudesByEvento(eventoId)
+
 
 }
 

@@ -1,5 +1,6 @@
 package grupo5yomesumo.springboot.controller
 
+import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import grupo5yomesumo.springboot.service.SolicitudService
 import grupo5yomesumo.springboot.service.UsuarioService
@@ -42,4 +43,10 @@ class UsuarioController(
         @PathVariable solicitudId: Long,
         @RequestParam aceptada: Boolean
     ) = solicitudService.responder(solicitudId, aceptada)
+
+    @GetMapping("/{usuarioId}/solicitudes")
+    @Operation(summary = "Devuelve los eventos a los cuales un usuario especifico hizo la solicitud")
+    fun solicitudesDeUsuario(@PathVariable usuarioId: Long) : List<Evento> = solicitudService.solicitudesDeUsuario(usuarioId)
+
+
 }

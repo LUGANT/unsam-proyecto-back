@@ -39,6 +39,11 @@ dependencies {
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 		implementation("org.springframework.boot:spring-boot-devtools")
 
+		// Para seguridad
+		implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+		implementation("org.springframework.boot:spring-boot-starter-security")
+
+
 		// Conexión a la base de datos
 		runtimeOnly("org.postgresql:postgresql")
 		implementation("org.springframework.boot:spring-boot-starter-data-jpa")

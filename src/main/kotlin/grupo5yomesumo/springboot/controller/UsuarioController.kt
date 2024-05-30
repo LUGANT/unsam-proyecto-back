@@ -18,9 +18,15 @@ class UsuarioController(
 
     @PostMapping("login")
     @Operation(summary = "Devuelve un usuario en base a un nombre y una contraseña")
-    fun getUser(
+    fun login(
         @RequestBody unlogedUser: Usuario
     ) = UsuarioDTO(usuarioService.logIn(unlogedUser.username,unlogedUser.password))
+
+    @PostMapping("signup")
+    @Operation(summary = "Permite crear una cuenta")
+    fun singup(
+        @RequestBody usuario: Usuario
+    ) = usuarioService.signUp(usuario.username, usuario.password)
 
     @GetMapping("")
     @Operation(summary = "Get todos los usuarios")

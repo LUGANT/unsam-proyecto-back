@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 
 @Document
 data class Mensaje(
-    @Id val id: String,
+    @Id val id: String? = null,
     @Field("eventoId") val evento: Long,
     @Field("usuarioId") val usuario : Long,
     val horario : LocalDateTime,

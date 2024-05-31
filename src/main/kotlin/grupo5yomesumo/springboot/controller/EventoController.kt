@@ -3,6 +3,7 @@ package grupo5yomesumo.springboot.controller
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Solicitud
 import grupo5yomesumo.springboot.serializers.EventoDTO
+import grupo5yomesumo.springboot.serializers.EventoDetalladoDTO
 import grupo5yomesumo.springboot.serializers.SolicitudDTO
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -37,7 +38,11 @@ class EventoController(
 
     @GetMapping("{eventoId}")
     @Operation(summary = "Devuelve evento por id")
-    fun getEvento(@PathVariable eventoId: Long) : EventoDTO = EventoDTO(eventoService.getEvento(eventoId))
+    fun getEvento(@PathVariable eventoId: Long) : EventoDetalladoDTO {
+        val evento = eventoService.getEvento(eventoId)
+        val participantes =  solicitudService.solicitudesAceptadasDeEvento(eventoId)
+        return EventoDetalladoDTO(evento, participantes)
+    }
 
     @GetMapping("usuario/{usuarioId}")
     @Operation(summary = "Devuelve los eventos de un usuario específico.")

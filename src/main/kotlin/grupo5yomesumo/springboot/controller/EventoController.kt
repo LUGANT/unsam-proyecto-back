@@ -34,7 +34,7 @@ class EventoController(
 
     @GetMapping("")
     @Operation(summary = "Devuelve eventos con filtro")
-    fun getEventoFilter(@RequestParam(value = "actividad") actividadId : Long) : List<EventoDTO> = eventoService.getEventoFilter(actividadId).map { EventoDTO(it) }
+    fun getEventoFilter(@RequestParam(value = "actividad") actividadNombre : String) : List<EventoDTO> = eventoService.getEventoFilter(actividadNombre).map { EventoDTO(it) }
 
     @GetMapping("{eventoId}")
     @Operation(summary = "Devuelve evento por id")

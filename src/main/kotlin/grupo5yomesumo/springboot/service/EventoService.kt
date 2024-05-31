@@ -28,8 +28,8 @@ class EventoService (
         return eventoRepository.findEventosByAnfitrion(anfitrion)
     }
 
-    fun getEventoFilter(actividadId: Long): List<Evento> {
-        val actividad : Actividad = actividadService.getActividad(actividadId)
+    fun getEventoFilter(actividadNombre: String): List<Evento> {
+        val actividad : Actividad = actividadService.getActividadBynombre(actividadNombre)
         val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
         return eventos
     }

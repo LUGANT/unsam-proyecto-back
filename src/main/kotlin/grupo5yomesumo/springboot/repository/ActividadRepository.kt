@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository
 interface Actividadrepository : CrudRepository<Actividad, Long>{
 
     fun findActividadsByEsGrupalIsTrue() : List<Actividad>
+
+    fun findActividadByNombre(actividadNombre : String) : Actividad
 }

@@ -11,6 +11,7 @@ class EventoDTO(
     val actividad: Actividad,
     val fecha: LocalDate,
     val direccion: String,
+    val capacidadMaxima: Int,
     val descripcion : String
 ) {
 
@@ -20,6 +21,7 @@ class EventoDTO(
         actividad = evento.actividad,
         fecha = evento.fecha,
         direccion = evento.direccion,
+        capacidadMaxima = evento.capacidadMaxima,
         descripcion = evento.descripcion
     )
 

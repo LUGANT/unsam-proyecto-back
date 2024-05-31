@@ -16,8 +16,6 @@ class SolicitudService(
     val usuarioService: UsuarioService,
 ) {
 
-    fun findSolicitudesByUsuario(usuario : Usuario) = solicitudRepository.findSolicitudesByAnfitrion(usuario.id)
-
     fun getSolicitud(solicitudId: Long): Solicitud = solicitudRepository.findById(solicitudId).orElseThrow { NotFoundException("No se encontro la solicitud del id $solicitudId") }
 
     fun getSolicitudesByEvento(eventoId: Long) : List<Solicitud>{
@@ -47,6 +45,10 @@ class SolicitudService(
         return eventos
     }
 
-
+   fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud>{
+       val solicitud = solicitudRepository.findSolicitudesAceptadasByEvento(eventoId)
+       return solicitud.filter { it.estado == Estado.ACEPTADA }
+       // Por ahora es así, pero hay que ver de hacer la consulta en la base de datos
+   }
 
 }

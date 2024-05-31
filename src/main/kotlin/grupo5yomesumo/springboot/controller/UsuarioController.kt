@@ -26,7 +26,7 @@ class UsuarioController(
     @Operation(summary = "Permite crear una cuenta")
     fun singup(
         @RequestBody usuario: Usuario
-    ) = usuarioService.signUp(usuario.username, usuario.password)
+    ) = usuarioService.signUp(usuario)
 
     @GetMapping("")
     @Operation(summary = "Get todos los usuarios")

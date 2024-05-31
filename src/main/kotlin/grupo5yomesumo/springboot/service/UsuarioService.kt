@@ -1,6 +1,7 @@
 package grupo5yomesumo.springboot.service
 
 import grupo5yomesumo.springboot.domain.Usuario
+import grupo5yomesumo.springboot.domain.exceptions.BusinessException
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import jakarta.transaction.Transactional
@@ -24,8 +25,14 @@ class UsuarioService(
     fun getUsuario(usuarioId: Long): Usuario = usuarioRepository.findById(usuarioId).orElseThrow{NotFoundException("No se encontro el usuario con el id $usuarioId")}
 
     @Transactional
-    fun signUp(username: String, password: String) {
+    fun signUp(usuario: Usuario) {
+        validarUsername(usuario.username)
+        save(usuario)
+    }
 
+    fun validarUsername(username: String){
+        val existe: Boolean = usuarioRepository.existsUsuarioByUsername(username)
+        if (existe) throw BusinessException("Ya existe un usuario con ese nombre")
     }
 
 }

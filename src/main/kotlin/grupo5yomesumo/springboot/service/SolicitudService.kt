@@ -46,7 +46,9 @@ class SolicitudService(
     }
 
    fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud>{
-       return solicitudRepository.findSolicitudesAceptadasByEvento(eventoId)
+       val solicitud = solicitudRepository.findSolicitudesAceptadasByEvento(eventoId)
+       return solicitud.filter { it.estado == Estado.ACEPTADA }
+       // Por ahora es así, pero hay que ver de hacer la consulta en la base de datos
    }
 
 }

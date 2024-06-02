@@ -32,7 +32,7 @@ class EventoController(
     @Operation(summary = "Devuelve todos los eventos")
     fun getAllEventos(): List<EventoDTO> = eventoService.getAllEventos().map{ EventoDTO(it) }
 
-    @GetMapping("")
+    @GetMapping("/")
     @Operation(summary = "Devuelve eventos con filtro")
     fun getEventoFilter(@RequestParam(value = "actividad") actividadNombre : String) : List<EventoDTO> = eventoService.getEventoFilter(actividadNombre).map { EventoDTO(it) }
 

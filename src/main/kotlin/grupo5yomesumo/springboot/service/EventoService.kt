@@ -29,7 +29,8 @@ class EventoService (
     }
 
     fun getEventoFilter(actividadNombre: String): List<Evento> {
-        val actividad : Actividad = actividadService.getActividadBynombre(actividadNombre)
+        val actividadLettercase = actividadNombre.substring(0, 1).uppercase() + actividadNombre.substring(1).lowercase()
+        val actividad : Actividad = actividadService.getActividadBynombre(actividadLettercase)
         val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
         return eventos
     }

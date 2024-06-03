@@ -6,6 +6,7 @@ import grupo5yomesumo.springboot.domain.Solicitud
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.repository.*
 import grupo5yomesumo.springboot.service.EventoService
+import grupo5yomesumo.springboot.service.UsuarioService
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -18,7 +19,8 @@ class Bootstrap(
     val usuarioRepository: UsuarioRepository,
     val actividadRepository: Actividadrepository,
     val solicitudRepository: SolicitudRepository,
-    val mensajeRepository: MensajeRepository
+    val mensajeRepository: MensajeRepository,
+    val usuarioService: UsuarioService
 ) : InitializingBean
 {
     override fun afterPropertiesSet() {
@@ -32,7 +34,7 @@ class Bootstrap(
 
         arrayOf(
             usuarioA, usuarioB, usuarioC, usuarioD
-        ).forEach { usuarioRepository.save(it) }
+        ).forEach { usuarioService.signUp(it) }
 
 
         //ACTIVIDADES

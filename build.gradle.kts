@@ -27,6 +27,7 @@ dependencies {
 
 		// Librerias
 		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("org.springframework.boot:spring-boot-starter-security")
 		implementation("org.springframework.boot:spring-boot-starter-hateoas")
 		implementation("org.springframework.boot:spring-boot-starter-data-rest")
 		implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -38,6 +39,9 @@ dependencies {
 		implementation("org.springdoc:springdoc-openapi-starter-common:2.2.0")
 		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 		implementation("org.springframework.boot:spring-boot-devtools")
+
+
+
 
 		// Conexión a la base de datos
 		runtimeOnly("org.postgresql:postgresql")

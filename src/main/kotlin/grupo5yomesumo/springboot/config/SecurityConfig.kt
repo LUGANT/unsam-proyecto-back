@@ -21,9 +21,9 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .cors { it.disable() }
             .csrf { it.disable() }
-            .authorizeHttpRequests { auth ->
-                auth
+            .authorizeHttpRequests { it
                     .requestMatchers("/usuario/login", "/usuario/signup").permitAll()
                     .anyRequest().authenticated()
             }
@@ -31,7 +31,7 @@ class SecurityConfig(
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .userDetailsService(customUserDetailsService)
-            .httpBasic { }
+            .httpBasic {}
 
         return http.build()
     }

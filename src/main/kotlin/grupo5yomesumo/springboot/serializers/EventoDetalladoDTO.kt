@@ -10,7 +10,7 @@ class EventoDetalladoDTO(
     val actividad: Actividad,
     val fecha: String,
     val direccion: String,
-    val maximoParticipantes: Int,
+    val capacidadMaxima: Int,
     val descripcion: String,
     val participantes: List<ParticipanteDTO>
 ) {
@@ -20,7 +20,7 @@ class EventoDetalladoDTO(
         actividad = evento.actividad,
         fecha = "${evento.fecha.year}-${evento.fecha.month}-${evento.fecha.dayOfMonth}",
         direccion = evento.direccion,
-        maximoParticipantes = evento.capacidadMaxima,
+        capacidadMaxima = evento.capacidadMaxima,
         descripcion = evento.descripcion,
         participantes = solicitudesAceptadas.map { ParticipanteDTO(it.solicitante) }
     )

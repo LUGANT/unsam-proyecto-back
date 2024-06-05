@@ -18,18 +18,19 @@ class OpinionService(
 
     fun getOpinionesByUsuario(usuarioId: Long): List<Opinion> {
         val usuario = usuarioService.getUsuario(usuarioId)
-        return opinionRepository.findOpinionesByUsuario(usuario)
+        return opinionRepository.findOpinionesByUsuarioOpinado(usuario)
     }
 
     @Transactional
-    fun crearOpinion(puntaje: Int, comentario: String, usuarioId: Long) {
+    fun crearOpinion(puntaje: Int, comentario: String, opinadoId: Long, opinanteId: Long) {
         validarPuntaje(puntaje)
-        val usuario = usuarioService.getUsuario(usuarioId)
-        val nuevaOpinion = Opinion(puntaje = puntaje, comentario = comentario, usuario = usuario)
+        val opinado = usuarioService.getUsuario(opinadoId)
+        val opinante = usuarioService.getUsuario(opinanteId)
+        val nuevaOpinion = Opinion(puntaje = puntaje, comentario = comentario, usuarioOpinado = opinado, usuarioOpinante = opinante)
         opinionRepository.save(nuevaOpinion)
 
-        calcularPromedioPuntaje(usuario)
-        usuarioService.save(usuario)
+        calcularPromedioPuntaje(opinado)
+        usuarioService.save(opinado)
     }
 
     private fun calcularPromedioPuntaje(usuario : Usuario){

@@ -18,3 +18,13 @@ class UsuarioDTO(
         puntuacion = usuario.puntuacion
     )
 }
+
+class UsuarioMinDTO(
+    val id: Long,
+    val username : String
+){
+    constructor(usuario: Usuario):this(
+        id = usuario.id,
+        username = usuario.username
+    )
+}

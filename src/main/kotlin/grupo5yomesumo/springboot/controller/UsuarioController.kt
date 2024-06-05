@@ -54,5 +54,9 @@ class UsuarioController(
     @Operation(summary = "Devuelve los eventos a los cuales un usuario especifico hizo la solicitud")
     fun solicitudesDeUsuario(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.solicitudesDeUsuario(usuarioId).map { EventoDTO(it)}
 
-
+    @PatchMapping("/{usuarioId}/updateUsername")
+    @Operation(summary = "Cambia el username de un usuario especifico")
+    fun updateUsername(
+        @PathVariable usuarioId: Long,
+    @RequestParam(name = "nuevoUsername") nuevoUsername : String) = usuarioService.updateUsername(usuarioId, nuevoUsername)
 }

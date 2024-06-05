@@ -36,4 +36,12 @@ class UsuarioService(
         if (existe) throw BusinessException("Ya existe un usuario con ese nombre")
     }
 
+    @Transactional
+    fun updateUsername(usuarioId: Long, nuevoUsername : String){
+        val usuario = getUsuario(usuarioId)
+        validarUsername(nuevoUsername)
+        usuario.username = nuevoUsername
+        save(usuario)
+    }
+
 }

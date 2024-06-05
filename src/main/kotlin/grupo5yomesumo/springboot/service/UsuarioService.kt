@@ -5,6 +5,7 @@ import grupo5yomesumo.springboot.domain.exceptions.BusinessException
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import jakarta.transaction.Transactional
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -17,10 +18,10 @@ class UsuarioService(
 
     fun logIn(username: String, password: String): Usuario {
         val usuario = usuarioRepository.findByUsername(username)
-            ?: throw NotFoundException("Usuario no encontrado")
+            ?: throw UsernameNotFoundException("Usuario no encontrado")
 
         if (!passwordEncoder.matches(password, usuario.password)) {
-            throw BusinessException("Contraseña incorrecta")
+            throw UsernameNotFoundException("Contraseña incorrecta")
         }
 
         return usuario
@@ -42,7 +43,7 @@ class UsuarioService(
 
     fun validarUsername(username: String){
         val existe: Boolean = usuarioRepository.existsUsuarioByUsername(username)
-        if (existe) throw BusinessException("Ya existe un usuario con ese nombre")
+        if (existe) throw IllegalArgumentException("Ya existe un usuario con ese nombre")
     }
 
 }

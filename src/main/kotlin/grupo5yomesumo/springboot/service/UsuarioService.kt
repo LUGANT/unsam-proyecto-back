@@ -34,10 +34,10 @@ class UsuarioService(
     fun getUsuario(usuarioId: Long): Usuario = usuarioRepository.findById(usuarioId).orElseThrow{NotFoundException("No se encontro el usuario con el id $usuarioId")}
 
     @Transactional
-    fun signUp(usuario: Usuario) {
+    fun signUp(usuario: Usuario) : Usuario {
         validarUsername(usuario.username)
         usuario.password = passwordEncoder.encode(usuario.password)
-        save(usuario)
+        return save(usuario)
     }
 
     fun validarUsername(username: String){

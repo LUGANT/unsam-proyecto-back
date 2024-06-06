@@ -6,13 +6,13 @@ import grupo5yomesumo.springboot.domain.Usuario
 
 class SolicitudDTO(
     val id : Long,
-    val usuario : Usuario,
+    val usuario : ParticipanteDTO,
     val puntajeUsuario : Double,
     val evento : Evento
 ) {
     constructor(solicitud: Solicitud) : this(
         id = solicitud.id,
-        usuario = solicitud.solicitante,
+        usuario = ParticipanteDTO(solicitud.solicitante),
         puntajeUsuario = solicitud.solicitante.puntuacion,
         evento = solicitud.evento
     )

@@ -43,7 +43,7 @@ class UsuarioController(
     fun getUsuario(@PathVariable usuarioId: Long) : UsuarioDTO = UsuarioDTO(usuarioService.getUsuario(usuarioId))
 
     @PostMapping("solicitud/crear/{eventoId}/{solicitanteId}")
-    @Operation(summary = "responde la solicitud de un evento")
+    @Operation(summary = "crea la solicitud para un evento")
     fun crearSolicitud(
         @PathVariable eventoId: Long,
         @PathVariable solicitanteId: Long

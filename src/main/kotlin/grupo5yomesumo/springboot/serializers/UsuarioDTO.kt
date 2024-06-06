@@ -21,7 +21,7 @@ class UsuarioDTO(
 
 class UsuarioMinDTO(
     val id: Long,
-    val username : String
+    val username : String,
 ){
     constructor(usuario: Usuario):this(
         id = usuario.id,

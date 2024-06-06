@@ -2,6 +2,7 @@ package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Solicitud
+import grupo5yomesumo.springboot.domain.Ubicacion
 import grupo5yomesumo.springboot.serializers.EventoDTO
 import grupo5yomesumo.springboot.serializers.EventoDetalladoDTO
 import grupo5yomesumo.springboot.serializers.SolicitudDTO
@@ -56,7 +57,7 @@ class EventoController(
         eventoProps.fecha,
         eventoProps.hora,
         eventoProps.descripcion,
-        eventoProps.direccion,
+        eventoProps.ubicacion,
         eventoProps.capacidadMaxima
     )
 
@@ -76,6 +77,12 @@ data class CrearEventProps(
     val fecha: String,
     val hora: String,
     val descripcion: String,
-    val direccion: String,
+    val ubicacion: UbicacionProps,
     val capacidadMaxima: Int,
+)
+data class UbicacionProps(
+    val nombreCompletoLugar: String,
+    val barrio: String,
+    val lat: String,
+    val lon: String
 )

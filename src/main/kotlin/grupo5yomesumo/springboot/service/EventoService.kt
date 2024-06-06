@@ -1,17 +1,20 @@
 package grupo5yomesumo.springboot.service
 
+import grupo5yomesumo.springboot.controller.UbicacionProps
 import grupo5yomesumo.springboot.domain.Actividad
 import grupo5yomesumo.springboot.domain.Evento
+import grupo5yomesumo.springboot.domain.Ubicacion
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.Actividadrepository
 import org.springframework.stereotype.Service
 import grupo5yomesumo.springboot.repository.EventoRepository
+import grupo5yomesumo.springboot.repository.UbicacionRepository
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import jakarta.transaction.Transactional
+import org.springframework.data.geo.Point
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -19,7 +22,8 @@ import java.util.*
 class EventoService (
     val eventoRepository: EventoRepository,
     val actividadService: ActividadService,
-    val usuarioService: UsuarioService
+    val usuarioService: UsuarioService,
+    val ubicacionRepository: UbicacionRepository
 ) {
 
     fun getEvento(eventoId: Long): Evento = eventoRepository.findById(eventoId).orElseThrow { NotFoundException("No se encontro un evento con id $eventoId") }
@@ -39,7 +43,7 @@ class EventoService (
     }
 
     @Transactional
-    fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, horaUnparsed: String, descripcion: String, direccion: String, capacidadMaxima : Int){
+    fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, horaUnparsed: String, descripcion: String, ubicacionProps: UbicacionProps, capacidadMaxima : Int){
         val anfitrion: Usuario = usuarioService.getUsuario(anfitrionId)
         val actividad : Actividad = actividadService.getActividad(actividadId)
 
@@ -50,7 +54,15 @@ class EventoService (
         val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss 'GMT'Z", Locale.ENGLISH)
         val hora = LocalTime.parse(cleanedHoraString, formatterTime)
 
-        val nuevoEvento = Evento(anfitrion = anfitrion, actividad = actividad, descripcion = descripcion , fecha = fecha, hora = hora, direccion = direccion, capacidadMaxima = capacidadMaxima)
+        //UBICACION
+        val nombreLugar = ubicacionProps.nombreCompletoLugar
+        val barrio = ubicacionProps.barrio
+        val coordenadas = Point(ubicacionProps.lat.toDouble(), ubicacionProps.lon.toDouble())
+        val ubicacion = Ubicacion(nombreLugar = nombreLugar, barrio = barrio, coordenadas = coordenadas)
+        ubicacionRepository.save(ubicacion)
+
+
+        val nuevoEvento = Evento(anfitrion = anfitrion, actividad = actividad, descripcion = descripcion , fecha = fecha, hora = hora, ubicacion = ubicacion, capacidadMaxima = capacidadMaxima)
         eventoRepository.save(nuevoEvento)
     }
 

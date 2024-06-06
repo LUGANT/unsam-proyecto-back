@@ -19,8 +19,8 @@ class Usuario(
     @Column var puntuacion : Double = 0.0
 ) {
 
-    fun crearEvento(actividad: Actividad, fecha: LocalDate, direccion: String, capacidadMaxima : Int): Evento{
-        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, direccion = direccion, capacidadMaxima = capacidadMaxima)
+    fun crearEvento(actividad: Actividad, fecha: LocalDate, ubicacion: Ubicacion, capacidadMaxima : Int): Evento{
+        return Evento(anfitrion = this, actividad = actividad, fecha = fecha, ubicacion = ubicacion, capacidadMaxima = capacidadMaxima)
     }
 
 }

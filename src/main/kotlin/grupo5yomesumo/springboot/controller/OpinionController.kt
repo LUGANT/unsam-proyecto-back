@@ -15,7 +15,7 @@ class OpinionController(
 
     @GetMapping("{usuarioId}")
     @Operation(summary = "Devuelve todas las opiniones de un usuario.")
-    fun getOpinionesByUsuario(@PathVariable usuarioId: Long): List<OpinionDTO> = opinionService.getOpinionesByUsuario(usuarioId).map { OpinionDTO(it)}
+    fun getOpinionesDeUsuario(@PathVariable usuarioId: Long): List<OpinionDTO> = opinionService.getOpinionesByUsuario(usuarioId).map { OpinionDTO(it)}
 
     @PostMapping("nueva")
     @Operation(summary = "Crear nueva opinión.")

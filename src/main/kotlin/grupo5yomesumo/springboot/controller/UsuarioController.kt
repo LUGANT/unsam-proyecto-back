@@ -2,6 +2,7 @@ package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.serializers.EventoDTO
+import grupo5yomesumo.springboot.serializers.PerfilDTO
 import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import grupo5yomesumo.springboot.service.SolicitudService
 import grupo5yomesumo.springboot.service.UsuarioService
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin("*")
 class UsuarioController(
     val usuarioService: UsuarioService,
-    val solicitudService: SolicitudService
+    val solicitudService: SolicitudService,
+    val opinionController: OpinionController
 ) {
 
     @PostMapping("login")
@@ -31,6 +33,10 @@ class UsuarioController(
     @GetMapping("")
     @Operation(summary = "Get todos los usuarios")
     fun getAllUsuarios() = usuarioService.getAllUsuarios().map { UsuarioDTO(it) }
+
+    @GetMapping("{usuarioId}/perfil")
+    @Operation(summary = "Trae todos los datos para llenar el perfil de un usuario especifico")
+    fun getPerfil(@PathVariable usuarioId: Long) : PerfilDTO = PerfilDTO(getUsuario(usuarioId), opinionController.getOpinionesDeUsuario(usuarioId))
 
     @GetMapping("{usuarioId}")
     @Operation(summary = "Get usuario en concreto")

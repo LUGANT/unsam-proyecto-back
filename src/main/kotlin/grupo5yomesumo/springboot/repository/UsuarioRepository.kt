@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UsuarioRepository : CrudRepository<Usuario, Long> {
+
     fun findByUsernameAndPassword(username: String, password: String): Usuario?
 
     fun existsUsuarioByUsername(username: String): Boolean

@@ -9,6 +9,8 @@ import grupo5yomesumo.springboot.service.EventoService
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 
 @Component
@@ -44,9 +46,9 @@ class Bootstrap(
         ).forEach { actividadRepository.save(it) }
 
 
-        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), direccion = "calle trucha 123", capacidadMaxima = 10)
-        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), direccion = "calle verdadera 321", capacidadMaxima = 6)
-        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), direccion = "otra calle falsa 456", capacidadMaxima = 12)
+        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), hora = LocalTime.of(20, 30), direccion = "calle trucha 123", capacidadMaxima = 10)
+        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), hora = LocalTime.of(17, 0), direccion = "calle verdadera 321", capacidadMaxima = 6)
+        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.now(), direccion = "otra calle falsa 456", capacidadMaxima = 12)
 
         arrayOf(
             futbolConLosPibes, basquet3Vs3, eventoTerminado

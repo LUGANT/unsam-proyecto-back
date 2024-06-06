@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Entity
 class Evento(
@@ -14,6 +16,7 @@ class Evento(
     @ManyToOne var anfitrion: Usuario = Usuario(),
     @ManyToOne var actividad: Actividad = Actividad(),
     @Column var fecha: LocalDate = LocalDate.now(),
+    @Column var hora: LocalTime = LocalTime.now(),
     @Column var direccion: String = "",
     @Column val capacidadMaxima: Int = 0,
     @Column val descripcion : String = ""

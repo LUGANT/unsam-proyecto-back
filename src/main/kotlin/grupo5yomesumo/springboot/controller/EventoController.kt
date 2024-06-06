@@ -54,6 +54,8 @@ class EventoController(
         eventoProps.anfitrionId,
         eventoProps.actividadId,
         eventoProps.fecha,
+        eventoProps.hora,
+        eventoProps.descripcion,
         eventoProps.direccion,
         eventoProps.capacidadMaxima
     )
@@ -73,6 +75,7 @@ data class CrearEventProps(
     val actividadId: Long,
     val fecha: String,
     val hora: String,
+    val descripcion: String,
     val direccion: String,
     val capacidadMaxima: Int,
 )

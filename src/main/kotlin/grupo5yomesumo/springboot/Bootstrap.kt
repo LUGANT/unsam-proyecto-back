@@ -1,15 +1,13 @@
 package grupo5yomesumo.springboot
 
-import grupo5yomesumo.springboot.domain.Actividad
-import grupo5yomesumo.springboot.domain.Evento
-import grupo5yomesumo.springboot.domain.Solicitud
-import grupo5yomesumo.springboot.domain.Usuario
+import grupo5yomesumo.springboot.domain.*
 import grupo5yomesumo.springboot.repository.*
 import grupo5yomesumo.springboot.service.EventoService
 import grupo5yomesumo.springboot.service.UsuarioService
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalTime
 
 
 @Component
@@ -20,7 +18,8 @@ class Bootstrap(
     val actividadRepository: Actividadrepository,
     val solicitudRepository: SolicitudRepository,
     val mensajeRepository: MensajeRepository,
-    val usuarioService: UsuarioService
+    val usuarioService: UsuarioService,
+    val ubicacionRepository: UbicacionRepository
 ) : InitializingBean
 {
     override fun afterPropertiesSet() {
@@ -46,9 +45,9 @@ class Bootstrap(
         ).forEach { actividadRepository.save(it) }
 
 
-        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), direccion = "calle trucha 123", capacidadMaxima = 10)
-        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), direccion = "calle verdadera 321", capacidadMaxima = 6)
-        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), direccion = "otra calle falsa 456", capacidadMaxima = 12)
+        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), hora = LocalTime.of(20, 30), ubicacion = ubicacionRepository.save(Ubicacion()), capacidadMaxima = 10)
+        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), hora = LocalTime.of(17, 0), ubicacion = ubicacionRepository.save(Ubicacion()), capacidadMaxima = 6)
+        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.now(), ubicacion = ubicacionRepository.save(Ubicacion()), capacidadMaxima = 12)
 
         arrayOf(
             futbolConLosPibes, basquet3Vs3, eventoTerminado

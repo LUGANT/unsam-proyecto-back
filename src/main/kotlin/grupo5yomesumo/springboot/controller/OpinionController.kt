@@ -1,6 +1,7 @@
 package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Opinion
+import grupo5yomesumo.springboot.serializers.OpinionDTO
 import grupo5yomesumo.springboot.service.OpinionService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.*
@@ -14,7 +15,7 @@ class OpinionController(
 
     @GetMapping("{usuarioId}")
     @Operation(summary = "Devuelve todas las opiniones de un usuario.")
-    fun getOpinionesByUsuario(@PathVariable usuarioId: Long): List<Opinion> = opinionService.getOpinionesByUsuario(usuarioId)
+    fun getOpinionesDeUsuario(@PathVariable usuarioId: Long): List<OpinionDTO> = opinionService.getOpinionesByUsuario(usuarioId).map { OpinionDTO(it)}
 
     @PostMapping("nueva")
     @Operation(summary = "Crear nueva opinión.")
@@ -22,7 +23,8 @@ class OpinionController(
         opinionService.crearOpinion(
             opinionProps.puntaje,
             opinionProps.comentario,
-            opinionProps.usuarioId
+            opinionProps.usuarioId,
+            opinionProps.usuarioOpinadorId
         )
     }
 }
@@ -30,5 +32,6 @@ class OpinionController(
 data class CrearOpinionProps(
     val puntaje: Int,
     val comentario: String,
-    val usuarioId: Long
+    val usuarioId: Long,
+    val usuarioOpinadorId : Long
 )

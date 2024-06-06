@@ -3,13 +3,14 @@ package grupo5yomesumo.springboot.serializers
 import grupo5yomesumo.springboot.domain.Actividad
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Solicitud
+import grupo5yomesumo.springboot.domain.Ubicacion
 
 class EventoDetalladoDTO(
     val id: Long,
     val anfitrion: UsuarioDTO,
     val actividad: Actividad,
     val fecha: String,
-    val direccion: String,
+    val ubicacion: Ubicacion,
     val capacidadMaxima: Int,
     val descripcion: String,
     val participantes: List<ParticipanteDTO>
@@ -19,7 +20,7 @@ class EventoDetalladoDTO(
         anfitrion = UsuarioDTO(evento.anfitrion),
         actividad = evento.actividad,
         fecha = "${evento.fecha.year}-${evento.fecha.month}-${evento.fecha.dayOfMonth}",
-        direccion = evento.direccion,
+        ubicacion = evento.ubicacion,
         capacidadMaxima = evento.capacidadMaxima,
         descripcion = evento.descripcion,
         participantes = solicitudesAceptadas.map { ParticipanteDTO(it.solicitante) }

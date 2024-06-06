@@ -10,9 +10,9 @@ interface OpinionRepository: CrudRepository<Opinion, Long> {
 
     override fun findById(id: Long): Optional<Opinion>
 
-    fun findOpinionesByUsuario(usuario: Usuario) : List<Opinion>
+    fun findOpinionesByUsuarioOpinado(usuario: Usuario) : List<Opinion>
 
-    @Query("SELECT COALESCE(AVG(o.puntaje), 0) from Opinion o where o.usuario = :usuario")
+    @Query("SELECT COALESCE(AVG(o.puntaje), 0) from Opinion o where o.usuarioOpinado = :usuario")
     fun calcularPromedioPuntaje(@Param("usuario") usuario : Usuario) : Double
 
 }

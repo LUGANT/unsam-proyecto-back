@@ -7,7 +7,7 @@ import grupo5yomesumo.springboot.domain.Ubicacion
 
 class EventoDetalladoDTO(
     val id: Long,
-    val anfitrion: UsuarioDTO,
+    val anfitrion: UsuarioMinDTO,
     val actividad: Actividad,
     val fecha: String,
     val ubicacion: Ubicacion,
@@ -17,7 +17,7 @@ class EventoDetalladoDTO(
 ) {
     constructor(evento: Evento, solicitudesAceptadas: List<Solicitud>):this(
         id = evento.id,
-        anfitrion = UsuarioDTO(evento.anfitrion),
+        anfitrion = UsuarioMinDTO(evento.anfitrion),
         actividad = evento.actividad,
         fecha = "${evento.fecha.year}-${evento.fecha.month}-${evento.fecha.dayOfMonth}",
         ubicacion = evento.ubicacion,

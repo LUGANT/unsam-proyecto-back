@@ -22,9 +22,13 @@ class UsuarioDTO(
 class UsuarioMinDTO(
     val id: Long,
     val username : String,
+    val nombre: String,
+    val apellido: String
 ){
     constructor(usuario: Usuario):this(
         id = usuario.id,
-        username = usuario.username
+        username = usuario.username,
+        nombre = usuario.nombre,
+        apellido = usuario.apellido
     )
 }

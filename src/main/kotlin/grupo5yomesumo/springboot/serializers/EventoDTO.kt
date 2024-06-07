@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 class EventoDTO(
     val id: Long,
-    val anfitrion: Usuario,
+    val anfitrion: UsuarioMinDTO,
     val actividad: Actividad,
     val fecha: LocalDate,
     val ubicacion: Ubicacion,
@@ -18,7 +18,7 @@ class EventoDTO(
 
     constructor(evento: Evento): this (
         id = evento.id,
-        anfitrion = evento.anfitrion,
+        anfitrion = UsuarioMinDTO(evento.anfitrion),
         actividad = evento.actividad,
         fecha = evento.fecha,
         ubicacion = evento.ubicacion,

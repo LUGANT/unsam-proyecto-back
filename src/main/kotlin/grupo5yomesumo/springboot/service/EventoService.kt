@@ -47,12 +47,11 @@ class EventoService (
         val anfitrion: Usuario = usuarioService.getUsuario(anfitrionId)
         val actividad : Actividad = actividadService.getActividad(actividadId)
 
-        val formatterDate = DateTimeFormatter.ofPattern("EEE MMM dd yyyy", Locale.ENGLISH)
+        val formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val fecha = LocalDate.parse(fechaUnparsed, formatterDate)
 
-        val cleanedHoraString = horaUnparsed.replace(Regex("\\s*\\(.*\\)"), "")
-        val formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss 'GMT'Z", Locale.ENGLISH)
-        val hora = LocalTime.parse(cleanedHoraString, formatterTime)
+        val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
+        val hora = LocalTime.parse(horaUnparsed, formatterTime)
 
         //UBICACION
         val nombreLugar = ubicacionProps.nombreCompletoLugar

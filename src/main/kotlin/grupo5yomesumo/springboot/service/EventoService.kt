@@ -6,14 +6,12 @@ import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Ubicacion
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
-import grupo5yomesumo.springboot.repository.Actividadrepository
+import grupo5yomesumo.springboot.repository.*
 import org.springframework.stereotype.Service
-import grupo5yomesumo.springboot.repository.EventoRepository
-import grupo5yomesumo.springboot.repository.UbicacionRepository
-import grupo5yomesumo.springboot.repository.UsuarioRepository
 import jakarta.transaction.Transactional
 import org.springframework.data.geo.Point
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -41,6 +39,14 @@ class EventoService (
         val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
         return eventos
     }
+
+
+
+    fun getEventosTerminadosByAnfitrion(anfitrionId: Long) : List<Evento> {
+        val anfitrion = usuarioService.getUsuario(anfitrionId)
+        return eventoRepository.findEventosByAnfitrionAndFechaBefore(anfitrion, fecha = LocalDate.now())
+    }
+
 
     @Transactional
     fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, horaUnparsed: String, descripcion: String, ubicacionProps: UbicacionProps, capacidadMaxima : Int){

@@ -8,6 +8,7 @@ import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.SolicitudRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class SolicitudService(
@@ -45,10 +46,15 @@ class SolicitudService(
         return eventos
     }
 
-   fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud>{
+   fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud> {
        val solicitud = solicitudRepository.findSolicitudesAceptadasByEvento(eventoId)
        return solicitud.filter { it.estado == Estado.ACEPTADA }
        // Por ahora es así, pero hay que ver de hacer la consulta en la base de datos
    }
+
+    fun getEventosAsistidosPor(usuarioId: Long) :List<Evento> {
+        val usuario = usuarioService.getUsuario(usuarioId)
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
+    }
 
 }

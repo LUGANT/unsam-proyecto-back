@@ -45,9 +45,18 @@ class EventoController(
         return EventoDetalladoDTO(evento, participantes)
     }
 
+    //DEPRECATED NO IRÍA MAS
     @GetMapping("usuario/{usuarioId}")
     @Operation(summary = "Devuelve los eventos de un usuario específico.")
     fun getEventosUsuario(@PathVariable usuarioId: Long): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId).map { EventoDTO(it) }
+
+    @GetMapping("/{usuarioId}/eventosAsistidos")
+    @Operation(summary = "Devuelve los eventos a los que fue un usuario que ya pasaron")
+    fun getEventosAsistidos(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.getEventosAsistidosPor(usuarioId).map { EventoDTO(it) }
+
+    @GetMapping("/{anfitrionId}/eventosCreados")
+    @Operation(summary = "Devuelve los eventos que ya terminaron y creados por un usuario especifico")
+    fun getEventosCreadosTerminados(@PathVariable anfitrionId: Long) : List<EventoDTO> = eventoService.getEventosTerminadosByAnfitrion(anfitrionId).map { EventoDTO(it) }
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 import java.util.EnumSet
 
 
@@ -23,4 +24,8 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
     fun findSolicitudsBySolicitante(solicitante : Usuario) : List<Solicitud>
 
     fun findSolicitudsByEvento(evento: Evento) : List<Solicitud>
+
+    fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
+
+
 }

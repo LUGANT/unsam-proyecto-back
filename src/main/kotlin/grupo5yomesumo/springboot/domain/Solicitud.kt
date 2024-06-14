@@ -1,10 +1,7 @@
 package grupo5yomesumo.springboot.domain
 
 import grupo5yomesumo.springboot.domain.exceptions.BusinessException
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 
 @Entity
 class Solicitud(
@@ -12,8 +9,7 @@ class Solicitud(
     @ManyToOne val solicitante : Usuario = Usuario(),
     @ManyToOne val evento : Evento = Evento()
 ){
-    // ACA NO VA TRANSIENT
-    @Transient var estado : Estado = Estado.PENDIENTE
+    @Enumerated(EnumType.STRING) var estado : Estado = Estado.PENDIENTE
 
     private fun validarResponderSolicitud() {
         if (estado != Estado.PENDIENTE) throw BusinessException("La solicitud ya fue respondida")

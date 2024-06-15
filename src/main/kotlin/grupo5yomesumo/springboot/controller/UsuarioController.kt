@@ -1,5 +1,6 @@
 package grupo5yomesumo.springboot.controller
 
+import grupo5yomesumo.springboot.config.JwtUtil
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.serializers.EventoDTO
 import grupo5yomesumo.springboot.serializers.PerfilDTO
@@ -7,6 +8,11 @@ import grupo5yomesumo.springboot.serializers.UsuarioDTO
 import grupo5yomesumo.springboot.service.SolicitudService
 import grupo5yomesumo.springboot.service.UsuarioService
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.web.bind.annotation.*
 
 @RestController()
@@ -15,20 +21,43 @@ import org.springframework.web.bind.annotation.*
 class UsuarioController(
     val usuarioService: UsuarioService,
     val solicitudService: SolicitudService,
-    val opinionController: OpinionController
+    val opinionController: OpinionController,
+    private val authenticationManager: AuthenticationManager,
+    private val userDetailsService: UserDetailsService,
+    private val jwtUtil: JwtUtil
 ) {
 
     @PostMapping("login")
     @Operation(summary = "Devuelve un usuario en base a un nombre y una contraseña")
-    fun login(
-        @RequestBody unlogedUser: Usuario
-    ) = UsuarioDTO(usuarioService.logIn(unlogedUser.username,unlogedUser.password))
+    fun login(@RequestBody unlogedUser: Usuario): ResponseEntity<*> {
+        try {
+            // Autenticar el usuario
+            authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(unlogedUser.username, unlogedUser.password)
+            )
+        } catch (e: Exception) {
+            return ResponseEntity.status(401).body("Usuario o contraseña incorrectos")
+        }
+
+        // Cargar los detalles del usuario
+        val userDetails: UserDetails = userDetailsService.loadUserByUsername(unlogedUser.username)
+
+        // Generar el token JWT
+        val jwt: String = jwtUtil.generateToken(userDetails)
+
+        // Devolver el token en la respuesta
+        return ResponseEntity.ok(mapOf("token" to jwt))
+    }
 
     @PostMapping("signup")
     @Operation(summary = "Permite crear una cuenta")
-    fun singup(
-        @RequestBody usuario: Usuario
-    ) = usuarioService.signUp(usuario)
+    fun signup(@RequestBody usuario: Usuario): ResponseEntity<*> {
+        return try {
+            ResponseEntity.ok(usuarioService.signUp(usuario))
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(400).body(e.message)
+        }
+    }
 
     @GetMapping("")
     @Operation(summary = "Get todos los usuarios")

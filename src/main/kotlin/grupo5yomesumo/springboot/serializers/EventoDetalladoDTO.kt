@@ -7,22 +7,24 @@ import grupo5yomesumo.springboot.domain.Ubicacion
 
 class EventoDetalladoDTO(
     val id: Long,
-    val anfitrion: UsuarioDTO,
+    val anfitrion: UsuarioMinDTO,
     val actividad: Actividad,
     val fecha: String,
     val ubicacion: Ubicacion,
     val capacidadMaxima: Int,
     val descripcion: String,
-    val participantes: List<ParticipanteDTO>
+    val participantes: List<ParticipanteDTO>,
+    val habilitado: Boolean
 ) {
-    constructor(evento: Evento, solicitudesAceptadas: List<Solicitud>):this(
+    constructor(evento: Evento, solicitudesAceptadas: List<Solicitud>, habilitado: Boolean):this(
         id = evento.id,
-        anfitrion = UsuarioDTO(evento.anfitrion),
+        anfitrion = UsuarioMinDTO(evento.anfitrion),
         actividad = evento.actividad,
         fecha = "${evento.fecha.year}-${evento.fecha.month}-${evento.fecha.dayOfMonth}",
         ubicacion = evento.ubicacion,
         capacidadMaxima = evento.capacidadMaxima,
         descripcion = evento.descripcion,
-        participantes = solicitudesAceptadas.map { ParticipanteDTO(it.solicitante) }
+        participantes = solicitudesAceptadas.map { ParticipanteDTO(it.solicitante) },
+        habilitado = habilitado
     )
 }

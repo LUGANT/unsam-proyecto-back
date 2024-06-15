@@ -5,6 +5,7 @@ import grupo5yomesumo.springboot.repository.*
 import grupo5yomesumo.springboot.service.EventoService
 import grupo5yomesumo.springboot.service.UsuarioService
 import org.springframework.beans.factory.InitializingBean
+import org.springframework.data.geo.Point
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalTime
@@ -44,10 +45,17 @@ class Bootstrap(
             basquet, futbol
         ).forEach { actividadRepository.save(it) }
 
+        val sportivoBallester = Ubicacion(
+            nombreLugar = "Club Sportivo Ballester, Gral. Roca 3123, Villa Ballester, Buenos Aires Province B1653, Argentina",
+            coordenadas = Point(-34.550822, -58.561222),
+            barrio = "Villa Ballester"
+        )
+        ubicacionRepository.save(sportivoBallester)
 
-        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), hora = LocalTime.of(20, 30), ubicacion = ubicacionRepository.save(Ubicacion()), capacidadMaxima = 10)
-        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), hora = LocalTime.of(17, 0), ubicacion = ubicacionRepository.save(Ubicacion()), capacidadMaxima = 6)
-        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.now(), ubicacion = ubicacionRepository.save(Ubicacion()), capacidadMaxima = 12)
+
+        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now(), hora = LocalTime.of(20, 30), ubicacion = sportivoBallester, capacidadMaxima = 10)
+        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now(), hora = LocalTime.of(17, 0), ubicacion = sportivoBallester, capacidadMaxima = 6)
+        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.now(), ubicacion = sportivoBallester, capacidadMaxima = 12)
 
         arrayOf(
             futbolConLosPibes, basquet3Vs3, eventoTerminado

@@ -15,9 +15,9 @@ interface EventoRepository: CrudRepository<Evento, Long> {
 
     fun findEventosByAnfitrion(antifrion: Usuario): List<Evento>
 
-    fun findEventosByFechaBefore(fecha: LocalDate) : List<Evento>
-
     fun findEventosByAnfitrionAndFechaBefore(anfitrion: Usuario, fecha: LocalDate,) : List<Evento>
+
+    fun existsByAnfitrionAndId(anfitrion: Usuario, eventoId: Long) : Boolean
 
 }
 

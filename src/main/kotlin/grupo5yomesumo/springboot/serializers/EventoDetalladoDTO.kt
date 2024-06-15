@@ -13,9 +13,10 @@ class EventoDetalladoDTO(
     val ubicacion: Ubicacion,
     val capacidadMaxima: Int,
     val descripcion: String,
-    val participantes: List<ParticipanteDTO>
+    val participantes: List<ParticipanteDTO>,
+    val habilitado: Boolean
 ) {
-    constructor(evento: Evento, solicitudesAceptadas: List<Solicitud>):this(
+    constructor(evento: Evento, solicitudesAceptadas: List<Solicitud>, habilitado: Boolean):this(
         id = evento.id,
         anfitrion = UsuarioMinDTO(evento.anfitrion),
         actividad = evento.actividad,
@@ -23,6 +24,7 @@ class EventoDetalladoDTO(
         ubicacion = evento.ubicacion,
         capacidadMaxima = evento.capacidadMaxima,
         descripcion = evento.descripcion,
-        participantes = solicitudesAceptadas.map { ParticipanteDTO(it.solicitante) }
+        participantes = solicitudesAceptadas.map { ParticipanteDTO(it.solicitante) },
+        habilitado = habilitado
     )
 }

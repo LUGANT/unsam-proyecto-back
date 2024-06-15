@@ -27,5 +27,5 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
 
     fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
 
-
+    fun existsBySolicitanteAndEvento(solicitante: Usuario, evento : Evento) : Boolean
 }

@@ -57,4 +57,10 @@ class SolicitudService(
         return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
     }
 
+    fun habilitadaSolicitud(usuarioId : Long, eventoId: Long) : Boolean{
+        val usuario = usuarioService.getUsuario(usuarioId)
+        val evento = eventoService.getEvento(eventoId)
+        return !solicitudRepository.existsBySolicitanteAndEvento(usuario, evento) && !eventoService.eventoEsDeAnfitrion(evento, usuario)
+    }
+
 }

@@ -40,8 +40,6 @@ class EventoService (
         return eventos
     }
 
-
-
     fun getEventosTerminadosByAnfitrion(anfitrionId: Long) : List<Evento> {
         val anfitrion = usuarioService.getUsuario(anfitrionId)
         return eventoRepository.findEventosByAnfitrionAndFechaBefore(anfitrion, fecha = LocalDate.now())
@@ -76,5 +74,8 @@ class EventoService (
         val evento = getEvento(eventoId)
         eventoRepository.delete(evento)
     }
+
+    fun eventoEsDeAnfitrion(evento: Evento, usuario: Usuario) = eventoRepository.existsByAnfitrionAndId(usuario, evento.id)
+
 
 }

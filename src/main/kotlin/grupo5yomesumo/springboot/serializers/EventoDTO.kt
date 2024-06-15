@@ -27,3 +27,29 @@ class EventoDTO(
     )
 
 }
+
+class EventoHomeDTO(
+    val id: Long,
+    val anfitrion: UsuarioMinDTO,
+    val actividad: Actividad,
+    val fecha: LocalDate,
+    val ubicacion: Ubicacion,
+    val capacidadMaxima: Int,
+    val descripcion : String,
+    val habilitado: Boolean
+) {
+
+    constructor(evento: Evento, habilitado: Boolean): this (
+        id = evento.id,
+        anfitrion = UsuarioMinDTO(evento.anfitrion),
+        actividad = evento.actividad,
+        fecha = evento.fecha,
+        ubicacion = evento.ubicacion,
+        capacidadMaxima = evento.capacidadMaxima,
+        descripcion = evento.descripcion,
+        habilitado = habilitado
+    )
+
+}
+
+

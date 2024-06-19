@@ -25,7 +25,10 @@ class Evento(
     @Column val descripcion : String = ""
 ){
 
-    fun activo(): Boolean = fecha.isAfter(LocalDate.now())
+    fun activo(): Boolean {
+        val eventoDateTime = LocalDateTime.of(fecha, hora)
+        return eventoDateTime.isAfter(LocalDateTime.now())
+    }
 
 }
 

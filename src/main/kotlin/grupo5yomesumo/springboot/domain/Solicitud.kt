@@ -12,7 +12,8 @@ class Solicitud(
     @Enumerated(EnumType.STRING) var estado : Estado = Estado.PENDIENTE
 
     private fun validarResponderSolicitud() {
-        if (estado != Estado.PENDIENTE) throw BusinessException("La solicitud ya fue respondida")
+        if (estado != Estado.PENDIENTE) throw BusinessException("La solicitud ya fue respondida.")
+        if (!evento.activo()) throw BusinessException("El evento ya terminó o está en curso.")
     }
 
     fun responderSolicitud(aceptada: Boolean){

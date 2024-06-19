@@ -95,7 +95,27 @@ class UsuarioController(
         @PathVariable usuarioId: Long,
     @RequestParam(name = "nuevoUsername") nuevoUsername : String) = usuarioService.updateUsername(usuarioId, nuevoUsername)
 
- 
+    @GetMapping("user")
+    @Operation(summary = "Devuelve los detalles del usuario autenticado")
+    fun getUserDetails(@RequestHeader("Authorization") token: String): ResponseEntity<*> {
+        try {
+            // Validar el token y obtener el nombre de usuario
+            val username = jwtUtil.extractUsername(token.substring(7)) // Quitar "Bearer "
+
+            // Cargar los detalles del usuario
+            val user = usuarioService.getUsuarioByUsername(username)
+
+            // Crear la respuesta con los detalles del usuario
+            val response = mapOf(
+                "id" to user!!.id,
+                "username" to user.username,
+            )
+
+            return ResponseEntity.ok(response)
+        } catch (e: Exception) {
+            return ResponseEntity.status(401).body("Token inválido o expirado")
+        }
+    }
 
 
 }

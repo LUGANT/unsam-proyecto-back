@@ -54,4 +54,6 @@ class UsuarioService(
         save(usuario)
     }
 
+    fun getUsuarioByUsername(username: String) : Usuario? = usuarioRepository.findByUsername(username)
+
 }

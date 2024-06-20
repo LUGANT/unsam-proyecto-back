@@ -26,7 +26,7 @@ class UsuarioController(
 
     @PostMapping("signup")
     @Operation(summary = "Permite crear una cuenta")
-    fun singup(
+    fun signup(
         @RequestBody usuario: Usuario
     ) = usuarioService.signUp(usuario)
 
@@ -66,7 +66,18 @@ class UsuarioController(
         @PathVariable usuarioId: Long,
     @RequestParam(name = "nuevoUsername") nuevoUsername : String) = usuarioService.updateUsername(usuarioId, nuevoUsername)
 
- 
-
+    @PatchMapping("cambiarPassword")
+    @Operation(summary = "Cambia la contraseña del usuario")
+    fun updatePassword(@RequestBody cambioContrasenaRequest : CambioContrasenaRequest) =
+        usuarioService.updatePassword(
+            cambioContrasenaRequest.usuarioId,
+            cambioContrasenaRequest.contrasenaActual,
+            cambioContrasenaRequest.nuevaContrasena)
 
 }
+
+data class CambioContrasenaRequest(
+    val usuarioId: Long,
+    val contrasenaActual: String,
+    val nuevaContrasena: String
+)

@@ -42,9 +42,10 @@ class Bootstrap(
         val usuarioI = Usuario(nombre = "Sofia", apellido = "Martinez", username = "sofia", password = "1234")
         val usuarioJ = Usuario(nombre = "Carlos", apellido = "Lopez", username = "carlos", password = "1234")
 
+
         arrayOf(
             usuarioA, usuarioB, usuarioC, usuarioD, usuarioE, usuarioF, usuarioG, usuarioH, usuarioI, usuarioJ
-        ).forEach { usuarioRepository.save(it) }
+        ).forEach { usuarioService.signUp(it) }
 
         //ACTIVIDADES
         val basquet = Actividad(nombre = "Basquet", esGrupal = true)

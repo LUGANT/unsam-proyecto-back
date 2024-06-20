@@ -53,23 +53,24 @@ class UsuarioService(
         usuario.username = nuevoUsername
         save(usuario)
     }
-    
+
     fun findByUsername(username: String): Usuario = usuarioRepository.findUsuarioByUsername(username).orElseThrow { NotFoundException("No se encontró usuario con ese username") }
-    
+
 
     @Transactional
     fun updatePassword(usuarioId: Long, passwordVieja: String, passwordNueva: String){
         val usuario : Usuario = getUsuario(usuarioId)
 
-        if (usuario.password != passwordVieja){
+        if (!passwordEncoder.matches(passwordVieja, usuario.password)){
             throw BusinessException("La contraseña actual es incorrecta")
         }
 
-        if (usuario.password == passwordNueva){
-            throw BusinessException("La contraseña actual y la nueva son iguales")
+        if (passwordEncoder.matches(passwordNueva, usuario.password)) {
+            throw BusinessException("La contraseña nueva no puede ser igual a la actual")
         }
 
-        usuario.password = passwordNueva
+        val passwordNuevaEncriptada = passwordEncoder.encode(passwordNueva)
+        usuario.password = passwordNuevaEncriptada
         usuarioRepository.save(usuario)
     }
 

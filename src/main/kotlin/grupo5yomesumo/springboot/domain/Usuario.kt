@@ -15,7 +15,7 @@ class Usuario(
     @Column(length = 40)val nombre: String = "",
     @Column(length = 40)val apellido: String = "",
     @Column(length = 40) var username: String = "",
-    @Column(length = 40)val password: String = "",
+    @Column(length = 40) var password: String = "",
     @Column var puntuacion : Double = 0.0
 ) {
 

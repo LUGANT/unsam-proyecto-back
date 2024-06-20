@@ -90,6 +90,7 @@ data class CrearEventProps(
     val ubicacion: UbicacionProps,
     val capacidadMaxima: Int,
 )
+
 data class UbicacionProps(
     val nombreCompletoLugar: String,
     val barrio: String,

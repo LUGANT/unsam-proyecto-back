@@ -59,6 +59,7 @@ class UsuarioController(
         }
     }
 
+
     @GetMapping("")
     @Operation(summary = "Get todos los usuarios")
     fun getAllUsuarios() = usuarioService.getAllUsuarios().map { UsuarioDTO(it) }
@@ -117,5 +118,18 @@ class UsuarioController(
         }
     }
 
+    @PatchMapping("cambiarPassword")
+    @Operation(summary = "Cambia la contraseña del usuario")
+    fun updatePassword(@RequestBody cambioContrasenaRequest : CambioContrasenaRequest) =
+        usuarioService.updatePassword(
+            cambioContrasenaRequest.usuarioId,
+            cambioContrasenaRequest.contrasenaActual,
+            cambioContrasenaRequest.nuevaContrasena)
 
 }
+
+data class CambioContrasenaRequest(
+    val usuarioId: Long,
+    val contrasenaActual: String,
+    val nuevaContrasena: String
+)

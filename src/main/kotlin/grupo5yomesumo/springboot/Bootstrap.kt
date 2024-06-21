@@ -104,7 +104,7 @@ class Bootstrap(
         solicitudAceptada3.estado = Estado.ACEPTADA
 
         arrayOf(
-            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2
+            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2, solicitudAceptada3
         ).forEach { solicitudRepository.save(it) }
 
         //OPINIONES

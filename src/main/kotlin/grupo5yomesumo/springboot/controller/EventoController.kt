@@ -34,9 +34,17 @@ class EventoController(
     @Operation(summary = "Devuelve todos los eventos")
     fun getAllEventos(): List<EventoDTO> = eventoService.getAllEventos().map{ EventoDTO(it) }
 
+    @GetMapping("all/pagina/{pagina}")
+    @Operation(summary = "Devuelve todos los eventos")
+    fun getAllEventos(@PathVariable pagina: Int): List<EventoDTO> = eventoService.getAllEventos(pagina).map{ EventoDTO(it) }
+
     @GetMapping("/{usuarioId}")
     @Operation(summary = "Devuelve eventos con filtro")
     fun getEventoFilter(@PathVariable usuarioId: Long, @RequestParam(value = "actividad") actividadNombre : String) : List<EventoHomeDTO> = eventoService.getEventoFilter(actividadNombre).map { EventoHomeDTO(it, solicitudService.habilitadaSolicitud(usuarioId, it.id)) }
+
+    @GetMapping("/{usuarioId}/pagina/{pagina}")
+    @Operation(summary = "Devuelve eventos con filtro")
+    fun getEventoFilter(@PathVariable usuarioId: Long, @PathVariable pagina: Int, @RequestParam(value = "actividad") actividadNombre : String) : List<EventoHomeDTO> = eventoService.getEventoFilter(actividadNombre, pagina).map { EventoHomeDTO(it, solicitudService.habilitadaSolicitud(usuarioId, it.id)) }
 
     @GetMapping("{eventoId}/{usuarioId}")
     @Operation(summary = "Devuelve evento por id")
@@ -51,6 +59,11 @@ class EventoController(
     @Operation(summary = "Devuelve los eventos de un usuario específico.")
     fun getEventosUsuario(@PathVariable usuarioId: Long): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId).map { EventoDTO(it) }
 
+    @GetMapping("usuario/{usuarioId}/pagina/{pagina}")
+    @Operation(summary = "Devuelve los eventos de un usuario específico.")
+    fun getEventosUsuario(@PathVariable usuarioId: Long, @PathVariable pagina: Int): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId, pagina).map { EventoDTO(it) }
+
+    //paginacion - por hacer
     @GetMapping("/{usuarioId}/eventosAsistidos")
     @Operation(summary = "Devuelve los eventos a los que fue un usuario que ya pasaron")
     fun getEventosAsistidos(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.getEventosAsistidosPor(usuarioId).map { EventoDTO(it) }
@@ -58,6 +71,10 @@ class EventoController(
     @GetMapping("/{anfitrionId}/eventosCreados")
     @Operation(summary = "Devuelve los eventos que ya terminaron y creados por un usuario especifico")
     fun getEventosCreadosTerminados(@PathVariable anfitrionId: Long) : List<EventoDTO> = eventoService.getEventosTerminadosByAnfitrion(anfitrionId).map { EventoDTO(it) }
+
+    @GetMapping("/{anfitrionId}/eventosCreados/pagina/{pagina}")
+    @Operation(summary = "Devuelve los eventos que ya terminaron y creados por un usuario especifico")
+    fun getEventosCreadosTerminados(@PathVariable anfitrionId: Long, @PathVariable pagina: Int) : List<EventoDTO> = eventoService.getEventosTerminadosByAnfitrion(anfitrionId, pagina).map { EventoDTO(it) }
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")
@@ -78,6 +95,9 @@ class EventoController(
     @DeleteMapping("{eventoId}/borrar")
     @Operation(summary = "Elimina un evento")
     fun eliminarEvento(@PathVariable eventoId: Long) = eventoService.eliminarEvento(eventoId)
+
+//    @GetMapping("pagina/{numero}")
+//    fun getEventosPaginados(@PathVariable numero: Int) = eventoService.getAllEventos(numero)
 
 }
 

@@ -21,7 +21,7 @@ class SolicitudService(
 
     fun getSolicitudesByEvento(eventoId: Long) : List<Solicitud>{
         val evento = eventoService.getEvento(eventoId)
-        return solicitudRepository.findSolicitudsByEvento(evento)
+        return solicitudRepository.findSolicitudsByEventoAndEstado(evento, Estado.PENDIENTE)
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

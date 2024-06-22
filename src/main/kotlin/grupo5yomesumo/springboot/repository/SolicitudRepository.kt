@@ -21,9 +21,11 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
     @Query("select s from Solicitud s WHERE s.evento.id = :eventoId")
     fun findSolicitudesAceptadasByEvento(@Param("eventoId") eventoId: Long): List<Solicitud>
 
+    fun findSolicitudsByEvento(evento: Evento) : List<Solicitud>
+
     fun findSolicitudsBySolicitante(solicitante : Usuario) : List<Solicitud>
 
-    fun findSolicitudsByEvento(evento: Evento) : List<Solicitud>
+    fun findSolicitudsByEventoAndEstado(evento: Evento, estado : Estado) : List<Solicitud>
 
     fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
 

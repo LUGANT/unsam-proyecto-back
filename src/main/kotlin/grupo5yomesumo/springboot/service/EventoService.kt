@@ -21,7 +21,8 @@ class EventoService (
     val eventoRepository: EventoRepository,
     val actividadService: ActividadService,
     val usuarioService: UsuarioService,
-    val ubicacionRepository: UbicacionRepository
+    val ubicacionRepository: UbicacionRepository,
+    val solicitudRepository: SolicitudRepository
 ) {
 
     fun getEvento(eventoId: Long): Evento = eventoRepository.findById(eventoId).orElseThrow { NotFoundException("No se encontro un evento con id $eventoId") }
@@ -72,6 +73,9 @@ class EventoService (
     @Transactional
     fun eliminarEvento(eventoId : Long) {
         val evento = getEvento(eventoId)
+        val solicitudes = solicitudRepository.findSolicitudsByEvento(evento)
+        solicitudes.forEach { solicitudRepository.delete(it) }
+
         eventoRepository.delete(evento)
     }
 

@@ -41,6 +41,14 @@ class EventoService (
         return eventos
     }
 
+    //overload que no trae los eventos del anfitrion
+    fun getEventoFilter(actividadNombre: String, usuarioId: Long): List<Evento> {
+        val actividadLettercase = actividadNombre.substring(0, 1).uppercase() + actividadNombre.substring(1).lowercase()
+        val actividad : Actividad = actividadService.getActividadBynombre(actividadLettercase)
+        val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad.id,usuarioId)
+        return eventos
+    }
+
     fun getEventosTerminadosByAnfitrion(anfitrionId: Long) : List<Evento> {
         val anfitrion = usuarioService.getUsuario(anfitrionId)
         return eventoRepository.findEventosByAnfitrionAndFechaBefore(anfitrion, fecha = LocalDate.now())

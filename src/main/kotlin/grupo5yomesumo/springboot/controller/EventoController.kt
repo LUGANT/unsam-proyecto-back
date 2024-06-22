@@ -36,7 +36,7 @@ class EventoController(
 
     @GetMapping("/{usuarioId}")
     @Operation(summary = "Devuelve eventos con filtro")
-    fun getEventoFilter(@PathVariable usuarioId: Long, @RequestParam(value = "actividad") actividadNombre : String) : List<EventoHomeDTO> = eventoService.getEventoFilter(actividadNombre).map { EventoHomeDTO(it, solicitudService.habilitadaSolicitud(usuarioId, it.id)) }
+    fun getEventoFilter(@PathVariable usuarioId: Long, @RequestParam(value = "actividad") actividadNombre : String) : List<EventoHomeDTO> = eventoService.getEventoFilter(actividadNombre,usuarioId).map { EventoHomeDTO(it, solicitudService.habilitadaSolicitud(usuarioId, it.id)) }
 
     @GetMapping("{eventoId}/{usuarioId}")
     @Operation(summary = "Devuelve evento por id")

@@ -63,4 +63,8 @@ class SolicitudService(
         return !solicitudRepository.existsBySolicitanteAndEvento(usuario, evento) && !eventoService.eventoEsDeAnfitrion(evento, usuario)
     }
 
+    fun solicitudesPendientesDeEvento(eventoId: Long): Int{
+        return solicitudRepository.countSolicitudesPendientes(eventoId)
+    }
+
 }

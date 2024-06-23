@@ -30,4 +30,6 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
     fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
 
     fun existsBySolicitanteAndEvento(solicitante: Usuario, evento : Evento) : Boolean
+    @Query("SELECT COUNT (s) FROM Solicitud s WHERE s.evento.id = :eventoId AND s.estado = grupo5yomesumo.springboot.domain.Estado.PENDIENTE")
+    fun countSolicitudesPendientes(@Param("eventoId") eventoId: Long): Int
 }

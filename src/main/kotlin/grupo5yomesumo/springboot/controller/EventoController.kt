@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import grupo5yomesumo.springboot.service.EventoService
 import grupo5yomesumo.springboot.service.SolicitudService
+import jdk.jfr.Event
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -53,7 +54,7 @@ class EventoController(
     //NO IRIA MAS?
     @GetMapping("usuario/{usuarioId}")
     @Operation(summary = "Devuelve los eventos de un usuario específico.")
-    fun getEventosUsuario(@PathVariable usuarioId: Long): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId).map { EventoDTO(it) }
+    fun getEventosUsuario(@PathVariable usuarioId: Long): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId).map { it.toEventoDTO() }
 
     @GetMapping("/{usuarioId}/eventosAsistidos")
     @Operation(summary = "Devuelve los eventos a los que fue un usuario que ya pasaron")
@@ -82,6 +83,11 @@ class EventoController(
     @DeleteMapping("{eventoId}/borrar")
     @Operation(summary = "Elimina un evento")
     fun eliminarEvento(@PathVariable eventoId: Long) = eventoService.eliminarEvento(eventoId)
+
+    fun Evento.toEventoDTO(): EventoDTO{
+        val solicitudes = solicitudService.solicitudesPendientesDeEvento(this.id)
+        return EventoDTO(this,solicitudes)
+    }
 
 }
 

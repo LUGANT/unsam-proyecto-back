@@ -26,7 +26,7 @@ class SecurityConfig(private val jwtRequestFilter: JwtRequestFilter) {
             .cors { cors -> cors.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/usuario/signup", "/usuario/login", "/evento/home/*").permitAll()
+                    .requestMatchers("/usuario/signup", "/usuario/login", "/evento/all").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

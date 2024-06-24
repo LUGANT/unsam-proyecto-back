@@ -5,18 +5,28 @@ import grupo5yomesumo.springboot.domain.exceptions.BusinessException
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import jakarta.transaction.Transactional
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class UsuarioService(
-    val usuarioRepository: UsuarioRepository
+    val usuarioRepository: UsuarioRepository,
+    val passwordEncoder: PasswordEncoder
+
 ){
 
     fun logIn(username: String, password: String): Usuario {
-        val usuario = usuarioRepository.findByUsernameAndPassword(username, password)
-            ?: throw NotFoundException("Usuario no encontrado")
+        val usuario = usuarioRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("Usuario no encontrado")
+
+        if (!passwordEncoder.matches(password, usuario.password)) {
+            throw UsernameNotFoundException("Contraseña incorrecta")
+        }
+
         return usuario
     }
+
     @Transactional
     fun save(usuario: Usuario) = usuarioRepository.save(usuario)
 
@@ -25,15 +35,15 @@ class UsuarioService(
     fun getUsuario(usuarioId: Long): Usuario = usuarioRepository.findById(usuarioId).orElseThrow{NotFoundException("No se encontro el usuario con el id $usuarioId")}
 
     @Transactional
-    fun signUp(usuario: Usuario) : Usuario{
+    fun signUp(usuario: Usuario) : Usuario {
         validarUsername(usuario.username)
-        save(usuario)
-        return usuario
+        usuario.password = passwordEncoder.encode(usuario.password)
+        return save(usuario)
     }
 
     fun validarUsername(username: String){
         val existe: Boolean = usuarioRepository.existsUsuarioByUsername(username)
-        if (existe) throw BusinessException("Ya existe un usuario con ese nombre")
+        if (existe) throw IllegalArgumentException("Ya existe un usuario con ese nombre")
     }
 
     @Transactional
@@ -43,24 +53,27 @@ class UsuarioService(
         usuario.username = nuevoUsername
         save(usuario)
     }
-    
+
     fun findByUsername(username: String): Usuario = usuarioRepository.findUsuarioByUsername(username).orElseThrow { NotFoundException("No se encontró usuario con ese username") }
-    
+
 
     @Transactional
     fun updatePassword(usuarioId: Long, passwordVieja: String, passwordNueva: String){
         val usuario : Usuario = getUsuario(usuarioId)
 
-        if (usuario.password != passwordVieja){
+        if (!passwordEncoder.matches(passwordVieja, usuario.password)){
             throw BusinessException("La contraseña actual es incorrecta")
         }
 
-        if (usuario.password == passwordNueva){
-            throw BusinessException("La contraseña actual y la nueva son iguales")
+        if (passwordEncoder.matches(passwordNueva, usuario.password)) {
+            throw BusinessException("La contraseña nueva no puede ser igual a la actual")
         }
 
-        usuario.password = passwordNueva
+        val passwordNuevaEncriptada = passwordEncoder.encode(passwordNueva)
+        usuario.password = passwordNuevaEncriptada
         usuarioRepository.save(usuario)
     }
+
+    fun getUsuarioByUsername(username: String) : Usuario? = usuarioRepository.findByUsername(username)
 
 }

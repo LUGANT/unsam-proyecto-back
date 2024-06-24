@@ -3,6 +3,8 @@ package grupo5yomesumo.springboot
 import grupo5yomesumo.springboot.domain.*
 import grupo5yomesumo.springboot.repository.*
 import grupo5yomesumo.springboot.service.EventoService
+
+import grupo5yomesumo.springboot.service.UsuarioService
 import grupo5yomesumo.springboot.service.OpinionService
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.data.geo.Point
@@ -18,6 +20,7 @@ class Bootstrap(
     val actividadRepository: Actividadrepository,
     val solicitudRepository: SolicitudRepository,
     val mensajeRepository: MensajeRepository,
+    val usuarioService: UsuarioService,
     val ubicacionRepository: UbicacionRepository,
     val opinionRepository: OpinionRepository,
     val opinionService: OpinionService
@@ -39,9 +42,10 @@ class Bootstrap(
         val usuarioI = Usuario(nombre = "Sofia", apellido = "Martinez", username = "sofia", password = "1234")
         val usuarioJ = Usuario(nombre = "Carlos", apellido = "Lopez", username = "carlos", password = "1234")
 
+
         arrayOf(
             usuarioA, usuarioB, usuarioC, usuarioD, usuarioE, usuarioF, usuarioG, usuarioH, usuarioI, usuarioJ
-        ).forEach { usuarioRepository.save(it) }
+        ).forEach { usuarioService.signUp(it) }
 
         //ACTIVIDADES
         val basquet = Actividad(nombre = "Basquet", esGrupal = true)

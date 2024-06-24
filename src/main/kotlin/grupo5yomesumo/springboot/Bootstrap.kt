@@ -106,9 +106,11 @@ class Bootstrap(
         solicitudAceptada2.responderSolicitud(true)
         val solicitudAceptada3 = Solicitud(solicitante = usuarioF, evento = eventoTerminado)
         solicitudAceptada3.estado = Estado.ACEPTADA
+        val solicitudAceptada4 = Solicitud(solicitante = usuarioB, evento = eventoTerminado)
+        solicitudAceptada4.estado = Estado.ACEPTADA
 
         arrayOf(
-            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2, solicitudAceptada3
+            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2, solicitudAceptada3, solicitudAceptada4
         ).forEach { solicitudRepository.save(it) }
 
         //OPINIONES

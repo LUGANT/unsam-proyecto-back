@@ -13,7 +13,8 @@ class EventoDTO(
     val fecha: LocalDate,
     val ubicacion: Ubicacion,
     val capacidadMaxima: Int,
-    val descripcion : String
+    val descripcion: String,
+    val solicitudes: Int,
 ) {
 
     constructor(evento: Evento): this (
@@ -23,7 +24,19 @@ class EventoDTO(
         fecha = evento.fecha,
         ubicacion = evento.ubicacion,
         capacidadMaxima = evento.capacidadMaxima,
-        descripcion = evento.descripcion
+        descripcion = evento.descripcion,
+        solicitudes = 0
+    )
+
+    constructor(evento: Evento, solicitudes: Int): this(
+        id = evento.id,
+        anfitrion = UsuarioMinDTO(evento.anfitrion),
+        actividad = evento.actividad,
+        fecha = evento.fecha,
+        ubicacion = evento.ubicacion,
+        capacidadMaxima = evento.capacidadMaxima,
+        descripcion = evento.descripcion,
+        solicitudes = solicitudes
     )
 
 }

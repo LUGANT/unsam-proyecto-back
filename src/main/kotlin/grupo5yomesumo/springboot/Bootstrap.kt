@@ -3,6 +3,8 @@ package grupo5yomesumo.springboot
 import grupo5yomesumo.springboot.domain.*
 import grupo5yomesumo.springboot.repository.*
 import grupo5yomesumo.springboot.service.EventoService
+
+import grupo5yomesumo.springboot.service.UsuarioService
 import grupo5yomesumo.springboot.service.OpinionService
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.data.geo.Point
@@ -18,6 +20,7 @@ class Bootstrap(
     val actividadRepository: Actividadrepository,
     val solicitudRepository: SolicitudRepository,
     val mensajeRepository: MensajeRepository,
+    val usuarioService: UsuarioService,
     val ubicacionRepository: UbicacionRepository,
     val opinionRepository: OpinionRepository,
     val opinionService: OpinionService
@@ -39,9 +42,10 @@ class Bootstrap(
         val usuarioI = Usuario(nombre = "Sofia", apellido = "Martinez", username = "sofia", password = "1234")
         val usuarioJ = Usuario(nombre = "Carlos", apellido = "Lopez", username = "carlos", password = "1234")
 
+
         arrayOf(
             usuarioA, usuarioB, usuarioC, usuarioD, usuarioE, usuarioF, usuarioG, usuarioH, usuarioI, usuarioJ
-        ).forEach { usuarioRepository.save(it) }
+        ).forEach { usuarioService.signUp(it) }
 
         //ACTIVIDADES
         val basquet = Actividad(nombre = "Basquet", esGrupal = true)
@@ -79,13 +83,13 @@ class Bootstrap(
         ).forEach { ubicacionRepository.save(it) }
 
         //EVENTOS
-        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(20, 30), ubicacion = plazaMitre, capacidadMaxima = 10)
-        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(17, 25), ubicacion = plazaMitre, capacidadMaxima = 6)
-        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.of(14,0), ubicacion = sportivoBallester, capacidadMaxima = 12)
-        val tenisSingles = Evento(anfitrion = usuarioJ, actividad = tenisIndividual, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(15, 0), ubicacion = sportivoBallester, capacidadMaxima = 2)
-        val voleibolALaTarde = Evento(anfitrion = usuarioF, actividad = voleibol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(18, 0), ubicacion = sportivoBallester, capacidadMaxima = 4)
-        val ajedrezEnLaPlaza = Evento(anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(10, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
-        val pingPongEn4Dias = Evento(anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(4), hora = LocalTime.of(19, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val futbolConLosPibes = Evento(descripcion = "Fulbito tranqui con los pibes", anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(20, 30), ubicacion = plazaMitre, capacidadMaxima = 10)
+        val basquet3Vs3 = Evento(descripcion = "Basquet por la coca", anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(17, 25), ubicacion = plazaMitre, capacidadMaxima = 6)
+        val eventoTerminado = Evento(descripcion = "Partido de futbol en cancha de 7", anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.of(14,0), ubicacion = sportivoBallester, capacidadMaxima = 12)
+        val tenisSingles = Evento(descripcion = "Alguien para jugar al tenis porfa", anfitrion = usuarioJ, actividad = tenisIndividual, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(15, 0), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val voleibolALaTarde = Evento(descripcion = "Un voley entre amigos", anfitrion = usuarioF, actividad = voleibol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(18, 0), ubicacion = sportivoBallester, capacidadMaxima = 4)
+        val ajedrezEnLaPlaza = Evento(descripcion = "Juntada para jugadores de ajedrez", anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(10, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
+        val pingPongEn4Dias = Evento(descripcion = "Me pinto jugar al ping pong alguien le copa?", anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(4), hora = LocalTime.of(19, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
 
 
         arrayOf(

@@ -24,10 +24,9 @@ class EventoService (
     val ubicacionRepository: UbicacionRepository,
     val solicitudRepository: SolicitudRepository
 ) {
-
     fun getEvento(eventoId: Long): Evento = eventoRepository.findById(eventoId).orElseThrow { NotFoundException("No se encontro un evento con id $eventoId") }
 
-    fun getAllEventos(): List<Evento> = eventoRepository.findAll().toList()
+    fun getAllEventos(): List<Evento> = eventoRepository.findEventosByFechaGreaterThanEqual(LocalDate.now())
 
     fun getEventosByAnfitrion(usuarioId: Long): List<Evento> {
         val anfitrion = usuarioService.getUsuario(usuarioId)

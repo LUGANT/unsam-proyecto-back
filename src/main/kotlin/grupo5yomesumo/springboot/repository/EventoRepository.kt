@@ -27,5 +27,7 @@ interface EventoRepository: CrudRepository<Evento, Long> {
     @Query("SELECT e FROM Evento e WHERE NOT e.anfitrion.id = :id")
     fun findEventosNotAnfitrionId(@Param("id") usuarioId: Long): List<Evento>
 
+    fun findEventosByFechaGreaterThanEqual(fecha: LocalDate) : List<Evento>
+
 }
 

@@ -8,9 +8,9 @@ import java.util.Optional
 @Repository
 interface UsuarioRepository : CrudRepository<Usuario, Long> {
 
-    fun findByUsernameAndPassword(username: String, password: String): Usuario?
-
     fun existsUsuarioByUsername(username: String): Boolean
+
+    fun findByUsername(username: String) : Usuario?
 
     fun getUsuarioByUsername(username: String) : Usuario?
 

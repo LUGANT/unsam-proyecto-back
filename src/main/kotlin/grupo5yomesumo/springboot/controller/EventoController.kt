@@ -50,7 +50,7 @@ class EventoController(
         return EventoDetalladoDTO(evento, participantes, solicitudService.habilitadaSolicitud(usuarioId, eventoId))
     }
 
-    //NO IRIA MAS?
+    //ES EL QUE TRAE TUS EVENTOS, USAR ESTE ME IMAGINO!!
     @GetMapping("usuario/{usuarioId}")
     @Operation(summary = "Devuelve los eventos de un usuario específico.")
     fun getEventosUsuario(@PathVariable usuarioId: Long): List<EventoDTO> = eventoService.getEventosByAnfitrion(usuarioId).map { EventoDTO(it) }
@@ -59,9 +59,19 @@ class EventoController(
     @Operation(summary = "Devuelve los eventos a los que fue un usuario que ya pasaron")
     fun getEventosAsistidos(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.getEventosAsistidosPor(usuarioId).map { EventoDTO(it) }
 
+    //ESTE CREO QUE NO HACE FALTA
     @GetMapping("/{anfitrionId}/eventosCreados")
     @Operation(summary = "Devuelve los eventos que ya terminaron y creados por un usuario especifico")
     fun getEventosCreadosTerminados(@PathVariable anfitrionId: Long) : List<EventoDTO> = eventoService.getEventosTerminadosByAnfitrion(anfitrionId).map { EventoDTO(it) }
+
+    @GetMapping("/{usuarioId}/eventosPorAsistir")
+    @Operation(summary = "Devuelve los eventos a los cuales voy a ir como participante")
+    fun getEventosPorAsistir(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.getEventosPorAsistir(usuarioId).map { EventoDTO(it) }
+
+    @GetMapping("{usuarioId}/eventosPendientes")
+    @Operation(summary = "Devuelve los eventos a los cuales mande solicitud y está en pendiente")
+    fun getEventosPendientes(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.getEventosPendientes(usuarioId).map { EventoDTO(it)}
+
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")
@@ -83,7 +93,7 @@ class EventoController(
     @Operation(summary = "Elimina un evento")
     fun eliminarEvento(@PathVariable eventoId: Long) = eventoService.eliminarEvento(eventoId)
 
-}
+ }
 
 data class CrearEventProps(
     val anfitrionId: Long,

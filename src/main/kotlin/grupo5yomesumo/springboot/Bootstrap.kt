@@ -83,13 +83,13 @@ class Bootstrap(
         ).forEach { ubicacionRepository.save(it) }
 
         //EVENTOS
-        val futbolConLosPibes = Evento(anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(20, 30), ubicacion = plazaMitre, capacidadMaxima = 10)
-        val basquet3Vs3 = Evento(anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(17, 25), ubicacion = plazaMitre, capacidadMaxima = 6)
-        val eventoTerminado = Evento(anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.of(14,0), ubicacion = sportivoBallester, capacidadMaxima = 12)
-        val tenisSingles = Evento(anfitrion = usuarioJ, actividad = tenisIndividual, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(15, 0), ubicacion = sportivoBallester, capacidadMaxima = 2)
-        val voleibolALaTarde = Evento(anfitrion = usuarioF, actividad = voleibol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(18, 0), ubicacion = sportivoBallester, capacidadMaxima = 4)
-        val ajedrezEnLaPlaza = Evento(anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(10, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
-        val pingPongEn4Dias = Evento(anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(4), hora = LocalTime.of(19, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val futbolConLosPibes = Evento(descripcion = "Fulbito tranqui con los pibes", anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(20, 30), ubicacion = plazaMitre, capacidadMaxima = 10)
+        val basquet3Vs3 = Evento(descripcion = "Basquet por la coca", anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(17, 25), ubicacion = plazaMitre, capacidadMaxima = 6)
+        val eventoTerminado = Evento(descripcion = "Partido de futbol en cancha de 7", anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().minusDays(1), hora = LocalTime.of(14,0), ubicacion = sportivoBallester, capacidadMaxima = 12)
+        val tenisSingles = Evento(descripcion = "Alguien para jugar al tenis porfa", anfitrion = usuarioJ, actividad = tenisIndividual, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(15, 0), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val voleibolALaTarde = Evento(descripcion = "Un voley entre amigos", anfitrion = usuarioF, actividad = voleibol, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(18, 0), ubicacion = sportivoBallester, capacidadMaxima = 4)
+        val ajedrezEnLaPlaza = Evento(descripcion = "Juntada para jugadores de ajedrez", anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(10, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
+        val pingPongEn4Dias = Evento(descripcion = "Me pinto jugar al ping pong alguien le copa?", anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(4), hora = LocalTime.of(19, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
 
 
         arrayOf(
@@ -108,7 +108,7 @@ class Bootstrap(
         solicitudAceptada3.estado = Estado.ACEPTADA
 
         arrayOf(
-            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2
+            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2, solicitudAceptada3
         ).forEach { solicitudRepository.save(it) }
 
         //OPINIONES

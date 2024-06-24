@@ -21,7 +21,7 @@ class SolicitudService(
 
     fun getSolicitudesByEvento(eventoId: Long) : List<Solicitud>{
         val evento = eventoService.getEvento(eventoId)
-        return solicitudRepository.findSolicitudsByEvento(evento)
+        return solicitudRepository.findSolicitudsByEventoAndEstado(evento, Estado.PENDIENTE)
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
@@ -54,13 +54,23 @@ class SolicitudService(
 
     fun getEventosAsistidosPor(usuarioId: Long) :List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaBefore(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaLessThanEqual(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
     }
 
     fun habilitadaSolicitud(usuarioId : Long, eventoId: Long) : Boolean{
         val usuario = usuarioService.getUsuario(usuarioId)
         val evento = eventoService.getEvento(eventoId)
         return !solicitudRepository.existsBySolicitanteAndEvento(usuario, evento) && !eventoService.eventoEsDeAnfitrion(evento, usuario)
+    }
+
+    fun getEventosPorAsistir(usuarioId: Long) : List<Evento> {
+        val usuario = usuarioService.getUsuario(usuarioId)
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
+    }
+
+    fun getEventosPendientes(usuarioId: Long) : List<Evento> {
+        val usuario = usuarioService.getUsuario(usuarioId)
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.PENDIENTE, fecha = LocalDate.now()).map { eventoService.getEvento(it.id)}
     }
 
 }

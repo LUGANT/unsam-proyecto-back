@@ -21,9 +21,9 @@ class EventoService (
     val eventoRepository: EventoRepository,
     val actividadService: ActividadService,
     val usuarioService: UsuarioService,
-    val ubicacionRepository: UbicacionRepository
+    val ubicacionRepository: UbicacionRepository,
+    val solicitudRepository: SolicitudRepository
 ) {
-
     fun getEvento(eventoId: Long): Evento = eventoRepository.findById(eventoId).orElseThrow { NotFoundException("No se encontro un evento con id $eventoId") }
 
     fun getAllEventos(): List<Evento> = eventoRepository.findAll().toList()
@@ -37,6 +37,19 @@ class EventoService (
         val actividadLettercase = actividadNombre.substring(0, 1).uppercase() + actividadNombre.substring(1).lowercase()
         val actividad : Actividad = actividadService.getActividadBynombre(actividadLettercase)
         val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
+        return eventos
+    }
+
+    //overload que no trae los eventos del anfitrion
+    fun getEventoFilter(actividadNombre: String, usuarioId: Long): List<Evento> {
+        val actividadLettercase = actividadNombre.substring(0, 1).uppercase() + actividadNombre.substring(1).lowercase()
+        val actividad : Actividad = actividadService.getActividadBynombre(actividadLettercase)
+        val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad.id,usuarioId)
+        return eventos
+    }
+
+    fun getEventoHome(usuarioId: Long): List<Evento> {
+        val eventos : List<Evento> = eventoRepository.findEventosNotAnfitrionId(usuarioId)
         return eventos
     }
 
@@ -72,6 +85,9 @@ class EventoService (
     @Transactional
     fun eliminarEvento(eventoId : Long) {
         val evento = getEvento(eventoId)
+        val solicitudes = solicitudRepository.findSolicitudsByEvento(evento)
+        solicitudes.forEach { solicitudRepository.delete(it) }
+
         eventoRepository.delete(evento)
     }
 

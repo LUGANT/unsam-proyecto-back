@@ -49,7 +49,7 @@ class EventoService (
     }
 
     fun getEventoHome(usuarioId: Long): List<Evento> {
-        val eventos : List<Evento> = eventoRepository.findEventosNotAnfitrionId(usuarioId)
+        val eventos : List<Evento> = eventoRepository.findEventosHome(usuarioId)
         return eventos
     }
 

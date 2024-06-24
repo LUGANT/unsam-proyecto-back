@@ -54,7 +54,7 @@ class SolicitudService(
 
     fun getEventosAsistidosPor(usuarioId: Long) :List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaLessThanEqual(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaLessThanEqual(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id) }
     }
 
     fun habilitadaSolicitud(usuarioId : Long, eventoId: Long) : Boolean{
@@ -69,12 +69,12 @@ class SolicitudService(
 
     fun getEventosPorAsistir(usuarioId: Long) : List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.id) }
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id) }
     }
 
     fun getEventosPendientes(usuarioId: Long) : List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.PENDIENTE, fecha = LocalDate.now()).map { eventoService.getEvento(it.id)}
+        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.PENDIENTE, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id)}
     }
 
 }

@@ -5,6 +5,7 @@ import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Ubicacion
 import grupo5yomesumo.springboot.domain.Usuario
 import java.time.LocalDate
+import java.time.LocalTime
 
 class EventoDTO(
     val id: Long,
@@ -46,6 +47,7 @@ class EventoHomeDTO(
     val anfitrion: UsuarioMinDTO,
     val actividad: Actividad,
     val fecha: LocalDate,
+    val hora: LocalTime,
     val ubicacion: Ubicacion,
     val capacidadMaxima: Int,
     val descripcion : String,
@@ -57,6 +59,7 @@ class EventoHomeDTO(
         anfitrion = UsuarioMinDTO(evento.anfitrion),
         actividad = evento.actividad,
         fecha = evento.fecha,
+        hora = evento.hora,
         ubicacion = evento.ubicacion,
         capacidadMaxima = evento.capacidadMaxima,
         descripcion = evento.descripcion,

@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service
 import jakarta.transaction.Transactional
 import org.springframework.data.geo.Point
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 @Service
 class EventoService (

@@ -11,7 +11,8 @@ class OpinionDTO(
     val opinante: UsuarioMinDTO,
     val opinado: UsuarioMinDTO,
     val comentario: String,
-    val puntaje : Int
+    val puntaje : Int,
+    val fecha: LocalDate
 ) {
 
     constructor(opinion: Opinion): this (
@@ -19,7 +20,8 @@ class OpinionDTO(
         opinante = UsuarioMinDTO(opinion.usuarioOpinante),
         opinado = UsuarioMinDTO(opinion.usuarioOpinado),
         comentario = opinion.comentario,
-        puntaje = opinion.puntaje
+        puntaje = opinion.puntaje,
+        fecha = opinion.fecha
     )
 
 }

@@ -4,6 +4,6 @@ import grupo5yomesumo.springboot.domain.Opinion
 import grupo5yomesumo.springboot.domain.Usuario
 
 data class PerfilDTO(
-    val usuarioDTO: UsuarioDTO,
+    val usuario: UsuarioDTO,
     val opiniones : List<OpinionDTO>
 )

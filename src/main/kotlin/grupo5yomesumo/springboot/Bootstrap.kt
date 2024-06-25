@@ -113,6 +113,69 @@ class Bootstrap(
             solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2, solicitudAceptada3, solicitudAceptada4
         ).forEach { solicitudRepository.save(it) }
 
+        //NUEVAS SOLICITUDES
+        val solicitud4 = Solicitud(solicitante = usuarioG, evento = futbolConLosPibes)
+        val solicitud5 = Solicitud(solicitante = usuarioH, evento = tenisSingles)
+        val solicitud6 = Solicitud(solicitante = usuarioJ, evento = voleibolALaTarde)
+        val solicitudAceptada5 = Solicitud(solicitante = usuarioF, evento = basquet3Vs3)
+        solicitudAceptada5.responderSolicitud(true)
+        val solicitudAceptada6 = Solicitud(solicitante = usuarioC, evento = ajedrezEnLaPlaza)
+        solicitudAceptada6.responderSolicitud(true)
+        val solicitudAceptada7 = Solicitud(solicitante = usuarioG, evento = ajedrezEnLaPlaza)
+        solicitudAceptada7.responderSolicitud(true)
+        val solicitudAceptada8 = Solicitud(solicitante = usuarioH, evento = pingPongEn4Dias)
+        solicitudAceptada8.responderSolicitud(true)
+
+        arrayOf(
+            solicitud4, solicitud5, solicitud6, solicitudAceptada5, solicitudAceptada6, solicitudAceptada7, solicitudAceptada8
+        ).forEach { solicitudRepository.save(it) }
+
+        //TODAVIA MAS SOLICITUDES
+        val solicitud7 = Solicitud(solicitante = usuarioE, evento = tenisSingles)
+        val solicitud8 = Solicitud(solicitante = usuarioF, evento = pingPongEn4Dias)
+        val solicitud9 = Solicitud(solicitante = usuarioA, evento = futbolConLosPibes)
+        val solicitud10 = Solicitud(solicitante = usuarioB, evento = basquet3Vs3)
+        val solicitud11 = Solicitud(solicitante = usuarioC, evento = ajedrezEnLaPlaza)
+        val solicitud12 = Solicitud(solicitante = usuarioD, evento = voleibolALaTarde)
+        val solicitud14 = Solicitud(solicitante = usuarioH, evento = futbolConLosPibes)
+        val solicitud15 = Solicitud(solicitante = usuarioI, evento = basquet3Vs3)
+        val solicitud16 = Solicitud(solicitante = usuarioJ, evento = tenisSingles)
+        val solicitud17 = Solicitud(solicitante = usuarioE, evento = voleibolALaTarde)
+        val solicitud18 = Solicitud(solicitante = usuarioF, evento = ajedrezEnLaPlaza)
+        val solicitud19 = Solicitud(solicitante = usuarioA, evento = pingPongEn4Dias)
+        val solicitud21 = Solicitud(solicitante = usuarioC, evento = tenisSingles)
+        val solicitud22 = Solicitud(solicitante = usuarioD, evento = basquet3Vs3)
+        val solicitud23 = Solicitud(solicitante = usuarioG, evento = futbolConLosPibes)
+        val solicitud24 = Solicitud(solicitante = usuarioH, evento = ajedrezEnLaPlaza)
+        val solicitud25 = Solicitud(solicitante = usuarioI, evento = voleibolALaTarde)
+        val solicitud26 = Solicitud(solicitante = usuarioJ, evento = pingPongEn4Dias)
+        val solicitudAceptada9 = Solicitud(solicitante = usuarioE, evento = basquet3Vs3)
+        solicitudAceptada9.responderSolicitud(true)
+        val solicitudAceptada10 = Solicitud(solicitante = usuarioF, evento = futbolConLosPibes)
+        solicitudAceptada10.responderSolicitud(true)
+        val solicitudAceptada11 = Solicitud(solicitante = usuarioA, evento = ajedrezEnLaPlaza)
+        solicitudAceptada11.responderSolicitud(true)
+        val solicitudAceptada12 = Solicitud(solicitante = usuarioB, evento = voleibolALaTarde)
+        solicitudAceptada12.responderSolicitud(true)
+        val solicitudAceptada13 = Solicitud(solicitante = usuarioC, evento = pingPongEn4Dias)
+        solicitudAceptada13.responderSolicitud(true)
+        val solicitudAceptada15 = Solicitud(solicitante = usuarioG, evento = tenisSingles)
+        solicitudAceptada15.responderSolicitud(true)
+        val solicitudAceptada16 = Solicitud(solicitante = usuarioH, evento = basquet3Vs3)
+        solicitudAceptada16.responderSolicitud(true)
+        val solicitudAceptada17 = Solicitud(solicitante = usuarioI, evento = futbolConLosPibes)
+        solicitudAceptada17.responderSolicitud(true)
+        val solicitudAceptada19 = Solicitud(solicitante = usuarioE, evento = voleibolALaTarde)
+        solicitudAceptada19.responderSolicitud(true)
+
+        arrayOf(
+            solicitud7, solicitud8, solicitud9, solicitud10, solicitud11, solicitud12, solicitud14, solicitud15,
+            solicitud16, solicitud17, solicitud18, solicitud19, solicitud21, solicitud22, solicitud23, solicitud24,
+            solicitud25, solicitud26, solicitudAceptada9, solicitudAceptada10, solicitudAceptada11, solicitudAceptada12,
+            solicitudAceptada13, solicitudAceptada15, solicitudAceptada16, solicitudAceptada17,
+            solicitudAceptada19
+        ).forEach { solicitudRepository.save(it) }
+
         //OPINIONES
         opinionService.crearOpinion(5, "Un capo, re buena onda", usuarioF.id, usuarioC.id)
     }

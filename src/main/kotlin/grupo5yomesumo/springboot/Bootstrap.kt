@@ -44,20 +44,20 @@ class Bootstrap(
         ).forEach { usuarioRepository.save(it) }
 
         //ACTIVIDADES
-        val basquet = Actividad(nombre = "Basquet", esGrupal = true)
-        val futbol = Actividad(nombre = "Futbol", esGrupal = true)
-        val tenisIndividual = Actividad(nombre = "Tenis individual", esGrupal = false)
-        val tenisDobles = Actividad(nombre = "Tenis dobles", esGrupal = true)
-        val handball = Actividad(nombre = "Handball", esGrupal = true)
-        val voleibol = Actividad(nombre = "Voleibol", esGrupal = true)
-        val voleibolPlaya = Actividad(nombre = "Voleibol de playa", esGrupal = true)
-        val natacion = Actividad(nombre = "Natación", esGrupal = false)
-        val ciclismo = Actividad(nombre = "Ciclismo", esGrupal = false)
-        val ajedrez = Actividad(nombre = "Ajedrez", esGrupal = false)
-        val rugby = Actividad(nombre = "Rugby", esGrupal = true)
-        val pingPong = Actividad(nombre = "Ping Pong", esGrupal = false)
-        val beisbol = Actividad(nombre = "Béisbol", esGrupal = true)
-        val patinaje = Actividad(nombre = "Patinaje", esGrupal = false)
+        val basquet = Actividad(nombre = "Basquet", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val futbol = Actividad(nombre = "Futbol", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val tenisIndividual = Actividad(nombre = "Tenis individual", esGrupal = false, tipo = TipoActividad.DEPORTE)
+        val tenisDobles = Actividad(nombre = "Tenis dobles", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val handball = Actividad(nombre = "Handball", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val voleibol = Actividad(nombre = "Voleibol", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val voleibolPlaya = Actividad(nombre = "Voleibol de playa", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val natacion = Actividad(nombre = "Natación", esGrupal = false, tipo = TipoActividad.OTROS)
+        val ciclismo = Actividad(nombre = "Ciclismo", esGrupal = false, tipo = TipoActividad.OTROS)
+        val ajedrez = Actividad(nombre = "Ajedrez", esGrupal = false, tipo = TipoActividad.JUEGODEMESA)
+        val rugby = Actividad(nombre = "Rugby", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val pingPong = Actividad(nombre = "Ping Pong", esGrupal = false, tipo = TipoActividad.DEPORTE)
+        val beisbol = Actividad(nombre = "Béisbol", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val patinaje = Actividad(nombre = "Patinaje", esGrupal = false, tipo = TipoActividad.OTROS)
 
         arrayOf(
             basquet, futbol, tenisIndividual, tenisDobles, handball, voleibol, voleibolPlaya, natacion, ciclismo, ajedrez, rugby, pingPong, beisbol, patinaje

@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
-import java.time.LocalTime
 
 @Repository
 interface EventoRepository: CrudRepository<Evento, Long> {
@@ -27,7 +26,25 @@ interface EventoRepository: CrudRepository<Evento, Long> {
     @Query("SELECT e FROM Evento e WHERE NOT e.anfitrion.id = :id")
     fun findEventosNotAnfitrionId(@Param("id") usuarioId: Long): List<Evento>
 
-    @Query("SELECT e FROM Evento e WHERE (SELECT COUNT(s) FROM Solicitud s WHERE s.evento = e AND s.estado = 'ACEPTADA') < e.capacidadMaxima AND NOT e.anfitrion.id = :id")
+//    @Query("""SELECT e FROM Evento e
+//        WHERE (SELECT COUNT(s) FROM Solicitud s WHERE s.evento = e AND s.estado = 'ACEPTADA') < e.capacidadMaxima
+//        AND NOT e.anfitrion.id = :id
+//        """)
+//    fun findEventosHome(@Param("id") usuarioId: Long): List<Evento>
+
+    @Query("""SELECT e FROM Evento e 
+            WHERE NOT EXISTS (
+                SELECT s FROM Solicitud s
+                WHERE s.evento.id = e.id
+                AND s.solicitante.id = :id
+                AND s.estado = 'ACEPTADA'
+            ) AND (
+                SELECT COUNT(s) FROM Solicitud s 
+                WHERE s.evento.id = e.id 
+                AND s.estado = 'ACEPTADA'  
+            ) < e.capacidadMaxima
+            AND NOT e.anfitrion.id = :id
+        """)
     fun findEventosHome(@Param("id") usuarioId: Long): List<Evento>
 
     fun findEventosByFechaGreaterThanEqual(fecha: LocalDate) : List<Evento>

@@ -7,6 +7,7 @@ import grupo5yomesumo.springboot.repository.OpinionRepository
 import org.apache.coyote.BadRequestException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @Service
 class OpinionService(

@@ -79,10 +79,10 @@ class SolicitudService(
         val evento = eventoService.getEvento(eventoId)
         val usuario = usuarioService.getUsuario(usuarioId)
         return if(eventoService.eventoEsDeAnfitrion(evento, usuario)) {
-            solicitudRepository.findUsuariosParaOpinarPorAnfitrion(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now(), usuario).map { it.solicitante/*usuarioService.getUsuario(it.solicitante.id)*/ }
+            solicitudRepository.findSolicitudsByEventoAndEstadoAndEventoFechaBefore(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { it.solicitante }
         } else {
             val anfitrionYDemasParticipantes = mutableListOf(evento.anfitrion)
-            anfitrionYDemasParticipantes.addAll(solicitudRepository.findUsuariosParaOpinarPorParticipante(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now(), usuario).map { it.solicitante })
+            anfitrionYDemasParticipantes.addAll(solicitudRepository.findSolicitudsByEventoAndEstadoAndEventoFechaBeforeAndSolicitanteIsNot(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now(), usuario).map { it.solicitante })
             anfitrionYDemasParticipantes.distinct()
         }
     }

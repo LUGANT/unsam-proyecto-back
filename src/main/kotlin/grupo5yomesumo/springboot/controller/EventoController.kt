@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import grupo5yomesumo.springboot.service.EventoService
+import grupo5yomesumo.springboot.service.OpinionService
 import grupo5yomesumo.springboot.service.SolicitudService
 import jdk.jfr.Event
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -25,7 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @CrossOrigin("*")
 class EventoController(
     val eventoService: EventoService,
-    val solicitudService: SolicitudService
+    val solicitudService: SolicitudService,
+    val opinionService: OpinionService
 ) {
 
     @GetMapping("all")
@@ -72,7 +74,7 @@ class EventoController(
 
     @GetMapping("{eventoId}/opinar/{usuarioId}")
     @Operation(summary = "Devuelve los usuarios para opinar una vez que el evento termino")
-    fun getUsuariosParaOpinar(@PathVariable eventoId: Long, @PathVariable usuarioId: Long): List<UsuarioMinDTO> = solicitudService.getUsuariosParaOpinar(eventoId, usuarioId).map { UsuarioMinDTO(it) }
+    fun getUsuariosParaOpinar(@PathVariable eventoId: Long, @PathVariable usuarioId: Long): List<UsuarioMinDTO> = solicitudService.getUsuariosParaOpinar(eventoId, usuarioId).map { UsuarioMinDTO(it, opinionService.usuarioNoOpinable(it.id, usuarioId)) }
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")

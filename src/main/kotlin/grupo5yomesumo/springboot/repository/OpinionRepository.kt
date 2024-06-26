@@ -15,4 +15,6 @@ interface OpinionRepository: CrudRepository<Opinion, Long> {
     @Query("SELECT COALESCE(AVG(o.puntaje), 0) from Opinion o where o.usuarioOpinado = :usuario")
     fun calcularPromedioPuntaje(@Param("usuario") usuario : Usuario) : Double
 
+    fun existsOpinionByUsuarioOpinadoIdAndUsuarioOpinanteId(opinadoId: Long, opinante: Long): Boolean
+
 }

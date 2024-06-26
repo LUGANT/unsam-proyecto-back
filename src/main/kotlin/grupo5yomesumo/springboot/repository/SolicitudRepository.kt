@@ -40,10 +40,10 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
 
     fun findSolicitudsByEventoAndEstadoAndEventoFechaBeforeAndSolicitanteIsNot(evento: Evento, estado: Estado, fecha: LocalDate, solicitante: Usuario): List<Solicitud>
 
-    @Query("SELECT s FROM Solicitud s WHERE s.evento = :evento AND s.estado = :estado AND s.evento.fecha < :fecha AND s.solicitante NOT IN (SELECT o.usuarioOpinado FROM Opinion o WHERE o.usuarioOpinante = :usuario)")
-    fun findUsuariosParaOpinarPorAnfitrion(evento: Evento, estado: Estado, fecha: LocalDate, usuario: Usuario): List<Solicitud>
-
-    @Query("SELECT s FROM Solicitud s WHERE s.evento = :evento AND s.estado = :estado AND s.evento.fecha < :fecha AND s.solicitante <> :usuario AND s.solicitante NOT IN (SELECT o.usuarioOpinado FROM Opinion o WHERE o.usuarioOpinante = :usuario)")
-    fun findUsuariosParaOpinarPorParticipante(evento: Evento, estado: Estado, fecha: LocalDate, usuario: Usuario): List<Solicitud>
+//    @Query("SELECT s FROM Solicitud s WHERE s.evento = :evento AND s.estado = :estado AND s.evento.fecha < :fecha AND s.solicitante NOT IN (SELECT o.usuarioOpinado FROM Opinion o WHERE o.usuarioOpinante = :usuario)")
+//    fun findUsuariosParaOpinarPorAnfitrion(evento: Evento, estado: Estado, fecha: LocalDate, usuario: Usuario): List<Solicitud>
+//
+//    @Query("SELECT s FROM Solicitud s WHERE s.evento = :evento AND s.estado = :estado AND s.evento.fecha < :fecha AND s.solicitante <> :usuario AND s.solicitante NOT IN (SELECT o.usuarioOpinado FROM Opinion o WHERE o.usuarioOpinante = :usuario)")
+//    fun findUsuariosParaOpinarPorParticipante(evento: Evento, estado: Estado, fecha: LocalDate, usuario: Usuario): List<Solicitud>
 
 }

@@ -25,6 +25,7 @@ class OpinionService(
     @Transactional
     fun crearOpinion(puntaje: Int, comentario: String, opinadoId: Long, opinanteId: Long) {
         validarPuntaje(puntaje)
+        validarUsuarioYaOpinado(opinadoId, opinanteId)
         val opinado = usuarioService.getUsuario(opinadoId)
         val opinante = usuarioService.getUsuario(opinanteId)
         val nuevaOpinion = Opinion(puntaje = puntaje, comentario = comentario, usuarioOpinado = opinado, usuarioOpinante = opinante)
@@ -42,5 +43,11 @@ class OpinionService(
         if (!puntajeValido(puntaje)) throw BadRequestException("Debe insertar un puntaje válido.")
     }
 
-    private fun puntajeValido(puntaje: Int) = puntaje == 1 || puntaje == 2 || puntaje == 3 || puntaje == 4 || puntaje == 5
+    private fun puntajeValido(puntaje: Int) = puntaje in arrayOf(1, 2, 3, 4, 5)
+
+    fun validarUsuarioYaOpinado(opinadoId: Long, opinanteId: Long) {
+        if (usuarioNoOpinable(opinadoId, opinanteId)) throw BadRequestException("Ya dejaste una opinión sobre este usuario.")
+    }
+
+    fun usuarioNoOpinable(opinadoId: Long, opinanteId: Long) = opinionRepository.existsOpinionByUsuarioOpinadoIdAndUsuarioOpinanteId(opinadoId, opinanteId)
 }

@@ -9,5 +9,5 @@ interface Actividadrepository : CrudRepository<Actividad, Long>{
 
     fun findActividadsByEsGrupalIsTrue() : List<Actividad>
 
-    fun findActividadByNombre(actividadNombre : String) : Actividad
+    fun findActividadsByNombreContains(actividadNombre : String) : List<Actividad>
 }

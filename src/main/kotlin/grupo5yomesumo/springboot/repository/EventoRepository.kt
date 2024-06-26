@@ -14,8 +14,10 @@ interface EventoRepository: CrudRepository<Evento, Long> {
 
     fun findEventosByActividad(actividad: Actividad) : List<Evento>
 
-    @Query("SELECT e FROM Evento e WHERE e.actividad.id = :actividadId AND NOT e.anfitrion.id = :usuarioId ")
-    fun findEventosByActividad(@Param("actividadId") actividadId: Long, @Param("usuarioId") usuarioId: Long): List<Evento>
+//    @Query("SELECT e FROM Evento e WHERE e.actividad.id = :actividadId AND NOT e.anfitrion.id = :usuarioId ")
+//    fun findEventosByActividad(@Param("actividadId") actividadId: Long, @Param("usuarioId") usuarioId: Long): List<Evento>
+
+    fun findEventosByActividadIdInAndAnfitrionIsNot(actividadIds: List<Long>, usuario: Usuario): List<Evento>
 
     fun findEventosByAnfitrion(antifrion: Usuario): List<Evento>
 

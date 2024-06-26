@@ -28,7 +28,7 @@ class EventoService (
 
     fun getEventosByAnfitrion(usuarioId: Long): List<Evento> {
         val anfitrion = usuarioService.getUsuario(usuarioId)
-        return eventoRepository.findEventosByAnfitrion(anfitrion)
+        return eventoRepository.findEventosByAnfitrionAndFechaAfter(anfitrion, LocalDate.now())
     }
 
 //    fun getEventoFilter(actividadNombre: String): List<Evento> {

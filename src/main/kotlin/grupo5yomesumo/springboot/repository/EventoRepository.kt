@@ -23,6 +23,8 @@ interface EventoRepository: CrudRepository<Evento, Long> {
 
     fun findEventosByAnfitrionAndFechaBefore(anfitrion: Usuario, fecha: LocalDate,) : List<Evento>
 
+    fun findEventosByAnfitrionAndFechaAfter(anfitrion: Usuario, fecha: LocalDate) : List<Evento>
+
     fun existsByAnfitrionAndId(anfitrion: Usuario, eventoId: Long) : Boolean
 
     @Query("SELECT e FROM Evento e WHERE NOT e.anfitrion.id = :id")

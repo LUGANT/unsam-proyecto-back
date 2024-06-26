@@ -100,37 +100,9 @@ class Bootstrap(
         val solicitud1 = Solicitud(solicitante = usuarioE, evento = futbolConLosPibes)
         val solicitud2 = Solicitud(solicitante = usuarioI, evento = voleibolALaTarde)
         val solicitud3 = Solicitud(solicitante = usuarioC, evento = basquet3Vs3)
-        val solicitudAceptada1 = Solicitud(solicitante = usuarioD, evento = basquet3Vs3)
-        solicitudAceptada1.responderSolicitud(true)
-        val solicitudAceptada2 = Solicitud(solicitante = usuarioA, evento = ajedrezEnLaPlaza)
-        solicitudAceptada2.responderSolicitud(true)
-        val solicitudAceptada3 = Solicitud(solicitante = usuarioF, evento = eventoTerminado)
-        solicitudAceptada3.estado = Estado.ACEPTADA
-        val solicitudAceptada4 = Solicitud(solicitante = usuarioB, evento = eventoTerminado)
-        solicitudAceptada4.estado = Estado.ACEPTADA
-
-        arrayOf(
-            solicitud1, solicitud2, solicitud3, solicitudAceptada1, solicitudAceptada2, solicitudAceptada3, solicitudAceptada4
-        ).forEach { solicitudRepository.save(it) }
-
-        //NUEVAS SOLICITUDES
         val solicitud4 = Solicitud(solicitante = usuarioG, evento = futbolConLosPibes)
         val solicitud5 = Solicitud(solicitante = usuarioH, evento = tenisSingles)
         val solicitud6 = Solicitud(solicitante = usuarioJ, evento = voleibolALaTarde)
-        val solicitudAceptada5 = Solicitud(solicitante = usuarioF, evento = basquet3Vs3)
-        solicitudAceptada5.responderSolicitud(true)
-        val solicitudAceptada6 = Solicitud(solicitante = usuarioC, evento = ajedrezEnLaPlaza)
-        solicitudAceptada6.responderSolicitud(true)
-        val solicitudAceptada7 = Solicitud(solicitante = usuarioG, evento = ajedrezEnLaPlaza)
-        solicitudAceptada7.responderSolicitud(true)
-        val solicitudAceptada8 = Solicitud(solicitante = usuarioH, evento = pingPongEn4Dias)
-        solicitudAceptada8.responderSolicitud(true)
-
-        arrayOf(
-            solicitud4, solicitud5, solicitud6, solicitudAceptada5, solicitudAceptada6, solicitudAceptada7, solicitudAceptada8
-        ).forEach { solicitudRepository.save(it) }
-
-        //TODAVIA MAS SOLICITUDES
         val solicitud7 = Solicitud(solicitante = usuarioE, evento = tenisSingles)
         val solicitud8 = Solicitud(solicitante = usuarioF, evento = pingPongEn4Dias)
         val solicitud9 = Solicitud(solicitante = usuarioA, evento = futbolConLosPibes)
@@ -149,6 +121,22 @@ class Bootstrap(
         val solicitud24 = Solicitud(solicitante = usuarioH, evento = ajedrezEnLaPlaza)
         val solicitud25 = Solicitud(solicitante = usuarioI, evento = voleibolALaTarde)
         val solicitud26 = Solicitud(solicitante = usuarioJ, evento = pingPongEn4Dias)
+        val solicitudAceptada1 = Solicitud(solicitante = usuarioD, evento = basquet3Vs3)
+        solicitudAceptada1.responderSolicitud(true)
+        val solicitudAceptada2 = Solicitud(solicitante = usuarioA, evento = ajedrezEnLaPlaza)
+        solicitudAceptada2.responderSolicitud(true)
+        val solicitudAceptada3 = Solicitud(solicitante = usuarioF, evento = eventoTerminado)
+        solicitudAceptada3.estado = Estado.ACEPTADA
+        val solicitudAceptada4 = Solicitud(solicitante = usuarioB, evento = eventoTerminado)
+        solicitudAceptada4.estado = Estado.ACEPTADA
+        val solicitudAceptada5 = Solicitud(solicitante = usuarioF, evento = basquet3Vs3)
+        solicitudAceptada5.responderSolicitud(true)
+        val solicitudAceptada6 = Solicitud(solicitante = usuarioC, evento = ajedrezEnLaPlaza)
+        solicitudAceptada6.responderSolicitud(true)
+        val solicitudAceptada7 = Solicitud(solicitante = usuarioG, evento = ajedrezEnLaPlaza)
+        solicitudAceptada7.responderSolicitud(true)
+        val solicitudAceptada8 = Solicitud(solicitante = usuarioH, evento = pingPongEn4Dias)
+        solicitudAceptada8.responderSolicitud(true)
         val solicitudAceptada9 = Solicitud(solicitante = usuarioE, evento = basquet3Vs3)
         solicitudAceptada9.responderSolicitud(true)
         val solicitudAceptada10 = Solicitud(solicitante = usuarioF, evento = futbolConLosPibes)
@@ -169,11 +157,13 @@ class Bootstrap(
         solicitudAceptada19.responderSolicitud(true)
 
         arrayOf(
-            solicitud7, solicitud8, solicitud9, solicitud10, solicitud11, solicitud12, solicitud14, solicitud15,
-            solicitud16, solicitud17, solicitud18, solicitud19, solicitud21, solicitud22, solicitud23, solicitud24,
-            solicitud25, solicitud26, solicitudAceptada9, solicitudAceptada10, solicitudAceptada11, solicitudAceptada12,
-            solicitudAceptada13, solicitudAceptada15, solicitudAceptada16, solicitudAceptada17,
-            solicitudAceptada19
+            solicitud1, solicitud2, solicitud3, solicitud4, solicitud5, solicitud6, solicitud7, solicitud8, solicitud9,
+            solicitud10, solicitud11, solicitud12, solicitud14, solicitud15, solicitud16, solicitud17, solicitud18,
+            solicitud19, solicitud21, solicitud22, solicitud23, solicitud24, solicitud25, solicitud26,
+            solicitudAceptada1, solicitudAceptada2, solicitudAceptada3, solicitudAceptada4, solicitudAceptada5,
+            solicitudAceptada6, solicitudAceptada7, solicitudAceptada8, solicitudAceptada9, solicitudAceptada10,
+            solicitudAceptada11, solicitudAceptada12, solicitudAceptada13, solicitudAceptada15, solicitudAceptada16,
+            solicitudAceptada17, solicitudAceptada19
         ).forEach { solicitudRepository.save(it) }
 
         //OPINIONES

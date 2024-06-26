@@ -3,10 +3,7 @@ package grupo5yomesumo.springboot.controller
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Solicitud
 import grupo5yomesumo.springboot.domain.Ubicacion
-import grupo5yomesumo.springboot.serializers.EventoDTO
-import grupo5yomesumo.springboot.serializers.EventoDetalladoDTO
-import grupo5yomesumo.springboot.serializers.EventoHomeDTO
-import grupo5yomesumo.springboot.serializers.SolicitudDTO
+import grupo5yomesumo.springboot.serializers.*
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestMapping
@@ -73,6 +70,9 @@ class EventoController(
     @Operation(summary = "Devuelve los eventos a los cuales mande solicitud y está en pendiente")
     fun getEventosPendientes(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.getEventosPendientes(usuarioId).map { EventoDTO(it)}
 
+    @GetMapping("{eventoId}/opinar/{usuarioId}")
+    @Operation(summary = "Devuelve los usuarios para opinar una vez que el evento termino")
+    fun getUsuariosParaOpinar(@PathVariable eventoId: Long, @PathVariable usuarioId: Long): List<UsuarioMinDTO> = solicitudService.getUsuariosParaOpinar(eventoId, usuarioId).map { UsuarioMinDTO(it) }
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")

@@ -39,11 +39,9 @@ class SolicitudService(
         solicitudRepository.save(nuevaSolicitud)
     }
 
-    fun solicitudesDeUsuario(usuarioId: Long) : List<Evento>{
+    fun solicitudesDeUsuario(usuarioId: Long): List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
-
-        val eventos = solicitudRepository.findSolicitudsBySolicitante(usuario).map { solicitud -> eventoService.getEvento(solicitud.evento.id)}
-        return eventos
+        return solicitudRepository.findSolicitudsBySolicitante(usuario).map { solicitud -> eventoService.getEvento(solicitud.evento.id) }
     }
 
    fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud> {
@@ -75,6 +73,18 @@ class SolicitudService(
     fun getEventosPendientes(usuarioId: Long) : List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
         return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.PENDIENTE, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id)}
+    }
+
+    fun getUsuariosParaOpinar(eventoId: Long, usuarioId: Long): List<Usuario> {
+        val evento = eventoService.getEvento(eventoId)
+        val usuario = usuarioService.getUsuario(usuarioId)
+        return if(eventoService.eventoEsDeAnfitrion(evento, usuario)) {
+            solicitudRepository.findUsuariosParaOpinarPorAnfitrion(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now(), usuario).map { it.solicitante/*usuarioService.getUsuario(it.solicitante.id)*/ }
+        } else {
+            val anfitrionYDemasParticipantes = mutableListOf(evento.anfitrion)
+            anfitrionYDemasParticipantes.addAll(solicitudRepository.findUsuariosParaOpinarPorParticipante(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now(), usuario).map { it.solicitante })
+            anfitrionYDemasParticipantes.distinct()
+        }
     }
 
 }

@@ -24,22 +24,22 @@ class UsuarioMinDTO(
     val username : String,
     val nombre: String,
     val apellido: String,
-    val opinable: Boolean
+    val existeOpinion: Boolean
 ){
     constructor(usuario: Usuario):this(
         id = usuario.id,
         username = usuario.username,
         nombre = usuario.nombre,
         apellido = usuario.apellido,
-        opinable = true
+        existeOpinion = true
     )
 
-    constructor(usuario: Usuario, opinable: Boolean):this(
+    constructor(usuario: Usuario, existeOpinion: Boolean):this(
         id = usuario.id,
         username = usuario.username,
         nombre = usuario.nombre,
         apellido = usuario.apellido,
-        opinable = opinable
+        existeOpinion = existeOpinion
     )
 
 }

@@ -74,7 +74,7 @@ class EventoController(
 
     @GetMapping("{eventoId}/opinar/{usuarioId}")
     @Operation(summary = "Devuelve los usuarios para opinar una vez que el evento termino")
-    fun getUsuariosParaOpinar(@PathVariable eventoId: Long, @PathVariable usuarioId: Long): List<UsuarioMinDTO> = solicitudService.getUsuariosParaOpinar(eventoId, usuarioId).map { UsuarioMinDTO(it, opinionService.usuarioNoOpinable(it.id, usuarioId)) }
+    fun getUsuariosParaOpinar(@PathVariable eventoId: Long, @PathVariable usuarioId: Long): List<UsuarioMinDTO> = solicitudService.getUsuariosParaOpinar(eventoId, usuarioId).map { UsuarioMinDTO(it, opinionService.existeOpinion(it.id, usuarioId)) }
 
     @PostMapping("crear")
     @Operation(summary = "Crea un evento")

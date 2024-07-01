@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ReporteRepository: CrudRepository<Reporte, Long> {
 
-    fun existsReporteByReportadorAndOpinion(reportador: Usuario, opinion: Opinion) : Boolean
+    fun existsReporteByReportadorIdAndOpinionId(reportadorId: Long, opinionId: Long) : Boolean
 
 }

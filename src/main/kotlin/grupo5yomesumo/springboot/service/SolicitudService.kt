@@ -7,6 +7,7 @@ import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.SolicitudRepository
 import jakarta.transaction.Transactional
+import org.apache.coyote.BadRequestException
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -27,9 +28,16 @@ class SolicitudService(
     @Transactional(Transactional.TxType.REQUIRED)
     fun responder(solicitudId: Long, aceptada: Boolean){
         val solicitud = getSolicitud(solicitudId)
+        validarNoParticipa(solicitud)
         solicitud.responderSolicitud(aceptada)
         solicitudRepository.save(solicitud)
     }
+
+    fun validarNoParticipa(solicitud: Solicitud) {
+        if (usuarioParticipante(solicitud)) throw BadRequestException("Este usuario ya se encuentra participando del evento")
+    }
+
+    fun usuarioParticipante(solicitud: Solicitud) = solicitudRepository.existsBySolicitanteAndEventoAndEstado(solicitud.solicitante, solicitud.evento, Estado.ACEPTADA)
 
     @Transactional(Transactional.TxType.REQUIRED)
     fun crear(eventoId: Long, solicitanteId: Long){

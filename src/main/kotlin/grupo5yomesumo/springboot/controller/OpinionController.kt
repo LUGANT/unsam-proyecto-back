@@ -27,6 +27,11 @@ class OpinionController(
             opinionProps.usuarioOpinadorId
         )
     }
+
+    @PostMapping("reportar/{comentarioId}/{reportadorId}")
+    @Operation(summary = "Permite reportar un comentario")
+    fun reportarOpinion(@PathVariable comentarioId: Long, @PathVariable reportadorId: Long) = opinionService.reportarOpinion(comentarioId, reportadorId)
+
 }
 
 data class CrearOpinionProps(

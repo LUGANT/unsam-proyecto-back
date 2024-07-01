@@ -12,3 +12,10 @@ data class Opinion(
     @ManyToOne var usuarioOpinado: Usuario = Usuario(),
     @ManyToOne var usuarioOpinante : Usuario = Usuario()
 )
+
+@Entity
+data class Reporte(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = 0,
+    @ManyToOne val opinion: Opinion = Opinion(),
+    @ManyToOne val reportador: Usuario = Usuario()
+)

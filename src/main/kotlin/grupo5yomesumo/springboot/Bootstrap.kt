@@ -106,7 +106,6 @@ class Bootstrap(
         val solicitud7 = Solicitud(solicitante = usuarioE, evento = tenisSingles)
         val solicitud8 = Solicitud(solicitante = usuarioF, evento = pingPongEn4Dias)
         val solicitud9 = Solicitud(solicitante = usuarioA, evento = futbolConLosPibes)
-        val solicitud10 = Solicitud(solicitante = usuarioB, evento = basquet3Vs3)
         val solicitud11 = Solicitud(solicitante = usuarioC, evento = ajedrezEnLaPlaza)
         val solicitud12 = Solicitud(solicitante = usuarioD, evento = voleibolALaTarde)
         val solicitud14 = Solicitud(solicitante = usuarioH, evento = futbolConLosPibes)
@@ -157,8 +156,7 @@ class Bootstrap(
         solicitudAceptada19.responderSolicitud(true)
 
         arrayOf(
-            solicitud1, solicitud2, solicitud3, solicitud4, solicitud5, solicitud6, solicitud7, solicitud8, solicitud9,
-            solicitud10, solicitud11, solicitud12, solicitud14, solicitud15, solicitud16, solicitud17, solicitud18,
+            solicitud1, solicitud2, solicitud3, solicitud4, solicitud5, solicitud6, solicitud7, solicitud8, solicitud9, solicitud11, solicitud12, solicitud14, solicitud15, solicitud16, solicitud17, solicitud18,
             solicitud19, solicitud21, solicitud22, solicitud23, solicitud24, solicitud25, solicitud26,
             solicitudAceptada1, solicitudAceptada2, solicitudAceptada3, solicitudAceptada4, solicitudAceptada5,
             solicitudAceptada6, solicitudAceptada7, solicitudAceptada8, solicitudAceptada9, solicitudAceptada10,

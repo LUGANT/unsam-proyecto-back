@@ -1,8 +1,10 @@
 package grupo5yomesumo.springboot.service
 
+import grupo5yomesumo.springboot.domain.Sugerencia
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.BusinessException
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
+import grupo5yomesumo.springboot.repository.SugerenciaRepository
 import grupo5yomesumo.springboot.repository.UsuarioRepository
 import jakarta.transaction.Transactional
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -12,8 +14,8 @@ import org.springframework.stereotype.Service
 @Service
 class UsuarioService(
     val usuarioRepository: UsuarioRepository,
-    val passwordEncoder: PasswordEncoder
-
+    val passwordEncoder: PasswordEncoder,
+    val sugerenciaRepository: SugerenciaRepository
 ){
 
     fun logIn(username: String, password: String): Usuario {
@@ -75,5 +77,10 @@ class UsuarioService(
     }
 
     fun getUsuarioByUsername(username: String) : Usuario? = usuarioRepository.findByUsername(username)
+
+    @Transactional
+    fun addSugerencia(sugerencia: Sugerencia){
+        sugerenciaRepository.save(sugerencia)
+    }
 
 }

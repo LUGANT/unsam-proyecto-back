@@ -1,9 +1,12 @@
 package grupo5yomesumo.springboot.service
 
 import grupo5yomesumo.springboot.domain.Opinion
+import grupo5yomesumo.springboot.domain.Reporte
 import grupo5yomesumo.springboot.domain.Usuario
+import grupo5yomesumo.springboot.domain.exceptions.BusinessException
 import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.OpinionRepository
+import grupo5yomesumo.springboot.repository.ReporteRepository
 import org.apache.coyote.BadRequestException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,8 +15,29 @@ import java.time.LocalDate
 @Service
 class OpinionService(
     val opinionRepository: OpinionRepository,
-    val usuarioService: UsuarioService
+    val usuarioService: UsuarioService,
+    val reporteRepository: ReporteRepository
 ) {
+
+    @Transactional
+    fun reportarOpinion(opinionId: Long, reportadorId: Long){
+        val reportador = usuarioService.getUsuario(reportadorId)
+        val opinion = getOpinion(opinionId)
+
+        puedeReportar(reportador, opinion)
+
+        val reporte = Reporte(
+            reportador = reportador,
+            opinion = opinion
+        )
+        reporteRepository.save(reporte)
+    }
+
+    fun puedeReportar(reportante: Usuario, opinion: Opinion){
+        if (existeReporte(reportante, opinion)) throw BusinessException("No se puede volver a reportar el comentario más de una vez")
+    }
+
+    fun existeReporte(reportante: Usuario, opinion: Opinion) = reporteRepository.existsReporteByReportadorAndOpinion(reportante, opinion)
 
     fun getOpinion(opinionId: Long) = opinionRepository.findById(opinionId).orElseThrow { NotFoundException("No se pudo encontrar la opinión buscada.") }
 

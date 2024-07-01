@@ -55,12 +55,12 @@ class Bootstrap(
         val handball = Actividad(nombre = "Handball", esGrupal = true, tipo = TipoActividad.DEPORTE)
         val voleibol = Actividad(nombre = "Voleibol", esGrupal = true, tipo = TipoActividad.DEPORTE)
         val voleibolPlaya = Actividad(nombre = "Voleibol de playa", esGrupal = true, tipo = TipoActividad.DEPORTE)
-        val natacion = Actividad(nombre = "Natación", esGrupal = false, tipo = TipoActividad.OTROS)
+        val natacion = Actividad(nombre = "Natacion", esGrupal = false, tipo = TipoActividad.OTROS)
         val ciclismo = Actividad(nombre = "Ciclismo", esGrupal = false, tipo = TipoActividad.OTROS)
         val ajedrez = Actividad(nombre = "Ajedrez", esGrupal = false, tipo = TipoActividad.JUEGODEMESA)
         val rugby = Actividad(nombre = "Rugby", esGrupal = true, tipo = TipoActividad.DEPORTE)
         val pingPong = Actividad(nombre = "Ping Pong", esGrupal = false, tipo = TipoActividad.DEPORTE)
-        val beisbol = Actividad(nombre = "Béisbol", esGrupal = true, tipo = TipoActividad.DEPORTE)
+        val beisbol = Actividad(nombre = "Beisbol", esGrupal = true, tipo = TipoActividad.DEPORTE)
         val patinaje = Actividad(nombre = "Patinaje", esGrupal = false, tipo = TipoActividad.OTROS)
 
         arrayOf(

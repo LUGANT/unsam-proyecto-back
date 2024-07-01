@@ -17,7 +17,36 @@ interface EventoRepository: CrudRepository<Evento, Long> {
 //    @Query("SELECT e FROM Evento e WHERE e.actividad.id = :actividadId AND NOT e.anfitrion.id = :usuarioId ")
 //    fun findEventosByActividad(@Param("actividadId") actividadId: Long, @Param("usuarioId") usuarioId: Long): List<Evento>
 
-    fun findEventosByActividadIdInAndAnfitrionIsNot(actividadIds: List<Long>, usuario: Usuario): List<Evento>
+    @Query("""SELECT e FROM Evento e 
+            WHERE NOT EXISTS (
+                SELECT s FROM Solicitud s
+                WHERE s.evento.id = e.id
+                AND s.solicitante.id = :id
+                AND s.estado = 'ACEPTADA'
+            ) AND (
+                SELECT COUNT(s) FROM Solicitud s 
+                WHERE s.evento.id = e.id 
+                AND s.estado = 'ACEPTADA'  
+            ) < e.capacidadMaxima
+            AND NOT e.anfitrion.id = :id
+        """)
+    fun findEventosHome(@Param("id") usuarioId: Long): List<Evento>
+
+    @Query("""SELECT e FROM Evento e 
+            WHERE NOT EXISTS (
+                SELECT s FROM Solicitud s
+                WHERE s.evento.id = e.id
+                AND s.solicitante.id = :id
+                AND s.estado = 'ACEPTADA'
+            ) AND (
+                SELECT COUNT(s) FROM Solicitud s 
+                WHERE s.evento.id = e.id 
+                AND s.estado = 'ACEPTADA'  
+            ) < e.capacidadMaxima
+            AND NOT e.anfitrion.id = :id
+            AND e.actividad IN :actividades
+        """)
+    fun findEventosHomeFilter(@Param("id")usuarioId: Long, @Param("actividades")actividades: List<Actividad>): List<Evento>
 
     fun findEventosByAnfitrion(antifrion: Usuario): List<Evento>
 
@@ -35,21 +64,6 @@ interface EventoRepository: CrudRepository<Evento, Long> {
 //        AND NOT e.anfitrion.id = :id
 //        """)
 //    fun findEventosHome(@Param("id") usuarioId: Long): List<Evento>
-
-    @Query("""SELECT e FROM Evento e 
-            WHERE NOT EXISTS (
-                SELECT s FROM Solicitud s
-                WHERE s.evento.id = e.id
-                AND s.solicitante.id = :id
-                AND s.estado = 'ACEPTADA'
-            ) AND (
-                SELECT COUNT(s) FROM Solicitud s 
-                WHERE s.evento.id = e.id 
-                AND s.estado = 'ACEPTADA'  
-            ) < e.capacidadMaxima
-            AND NOT e.anfitrion.id = :id
-        """)
-    fun findEventosHome(@Param("id") usuarioId: Long): List<Evento>
 
     fun findEventosByFechaGreaterThanEqual(fecha: LocalDate) : List<Evento>
 

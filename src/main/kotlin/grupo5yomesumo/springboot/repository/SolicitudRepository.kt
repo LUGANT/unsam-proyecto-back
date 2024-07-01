@@ -18,21 +18,17 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
     @Query("SELECT s FROM Solicitud s WHERE s.evento.anfitrion.id = :usuarioId")
     fun findSolicitudesByAnfitrion(@Param("usuarioId") usuarioId: Long)
 
-    @Query("select s from Solicitud s WHERE s.evento.id = :eventoId")
-    fun findSolicitudesAceptadasByEvento(@Param("eventoId") eventoId: Long): List<Solicitud>
+    fun findSolicitudsByEventoIdAndEstado(eventoId: Long, estado: Estado): List<Solicitud>
 
     fun findSolicitudsByEvento(evento: Evento) : List<Solicitud>
 
     fun findSolicitudsBySolicitante(solicitante : Usuario) : List<Solicitud>
 
-    fun findSolicitudsByEventoAndEstado(evento: Evento, estado : Estado) : List<Solicitud>
-
     fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaLessThanEqual(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
 
     fun existsBySolicitanteAndEvento(solicitante: Usuario, evento : Evento) : Boolean
-    
-    @Query("SELECT COUNT (s) FROM Solicitud s WHERE s.evento.id = :eventoId AND s.estado = grupo5yomesumo.springboot.domain.Estado.PENDIENTE")
-    fun countSolicitudesPendientes(@Param("eventoId") eventoId: Long): Int
+
+    fun countSolicitudsByEventoIdAndEstado(eventoId: Long, estado: Estado): Int
 
     fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
 

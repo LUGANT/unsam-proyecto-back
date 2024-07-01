@@ -20,24 +20,30 @@ class SolicitudService(
 
     fun getSolicitud(solicitudId: Long): Solicitud = solicitudRepository.findById(solicitudId).orElseThrow { NotFoundException("No se encontro la solicitud del id $solicitudId") }
 
-    fun getSolicitudesByEvento(eventoId: Long) : List<Solicitud>{
-        val evento = eventoService.getEvento(eventoId)
-        return solicitudRepository.findSolicitudsByEventoAndEstado(evento, Estado.PENDIENTE)
-    }
+    fun getSolicitudesByEvento(eventoId: Long): List<Solicitud> = solicitudRepository.findSolicitudsByEventoIdAndEstado(eventoId, Estado.PENDIENTE)
 
     @Transactional(Transactional.TxType.REQUIRED)
     fun responder(solicitudId: Long, aceptada: Boolean){
         val solicitud = getSolicitud(solicitudId)
-        validarNoParticipa(solicitud)
+        if (aceptada) {
+        validarCantidadParticipantes(solicitud.evento)
+        validarNoParticipa(solicitud.solicitante, solicitud.evento)
+        }
         solicitud.responderSolicitud(aceptada)
         solicitudRepository.save(solicitud)
     }
 
-    fun validarNoParticipa(solicitud: Solicitud) {
-        if (usuarioParticipante(solicitud)) throw BadRequestException("Este usuario ya se encuentra participando del evento")
+    fun validarNoParticipa(solicitante: Usuario, evento: Evento) {
+        if (usuarioParticipante(solicitante, evento)) throw BadRequestException("Este usuario ya se encuentra participando del evento")
     }
 
-    fun usuarioParticipante(solicitud: Solicitud) = solicitudRepository.existsBySolicitanteAndEventoAndEstado(solicitud.solicitante, solicitud.evento, Estado.ACEPTADA)
+    fun usuarioParticipante(solicitante: Usuario, evento: Evento) = solicitudRepository.existsBySolicitanteAndEventoAndEstado(solicitante, evento, Estado.ACEPTADA)
+
+    fun validarCantidadParticipantes(evento: Evento) {
+        if (eventoLleno(evento)) throw BadRequestException("No puedes aceptar más solicitudes porque ya se completó la capacidad máxima")
+    }
+
+    fun eventoLleno(evento: Evento) = evento.estaLleno(solicitudRepository.countSolicitudsByEventoIdAndEstado(evento.id, Estado.ACEPTADA))
 
     @Transactional(Transactional.TxType.REQUIRED)
     fun crear(eventoId: Long, solicitanteId: Long){
@@ -52,11 +58,7 @@ class SolicitudService(
         return solicitudRepository.findSolicitudsBySolicitante(usuario).map { solicitud -> eventoService.getEvento(solicitud.evento.id) }
     }
 
-   fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud> {
-       val solicitud = solicitudRepository.findSolicitudesAceptadasByEvento(eventoId)
-       return solicitud.filter { it.estado == Estado.ACEPTADA }
-       // Por ahora es así, pero hay que ver de hacer la consulta en la base de datos
-   }
+   fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud> = solicitudRepository.findSolicitudsByEventoIdAndEstado(eventoId, Estado.ACEPTADA)
 
     fun getEventosAsistidosPor(usuarioId: Long) :List<Evento> {
         val usuario = usuarioService.getUsuario(usuarioId)
@@ -72,7 +74,7 @@ class SolicitudService(
     }
 
     fun solicitudesPendientesDeEvento(eventoId: Long): Int{
-        return solicitudRepository.countSolicitudesPendientes(eventoId)
+        return solicitudRepository.countSolicitudsByEventoIdAndEstado(eventoId, Estado.PENDIENTE)
     }
 
     fun getEventosPorAsistir(usuarioId: Long) : List<Evento> {

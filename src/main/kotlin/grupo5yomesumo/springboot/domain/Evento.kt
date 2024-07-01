@@ -30,6 +30,8 @@ class Evento(
         return eventoDateTime.isAfter(LocalDateTime.now())
     }
 
+    fun estaLleno(cantidadParticipantes: Int) = cantidadParticipantes >= capacidadMaxima
+
 }
 
 @Entity

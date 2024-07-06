@@ -2,6 +2,7 @@ package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.domain.Opinion
 import grupo5yomesumo.springboot.serializers.OpinionDTO
+import grupo5yomesumo.springboot.serializers.ReporteDTO
 import grupo5yomesumo.springboot.service.OpinionService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.*
@@ -31,6 +32,10 @@ class OpinionController(
     @PostMapping("reportar/{comentarioId}/{reportadorId}")
     @Operation(summary = "Permite reportar un comentario")
     fun reportarOpinion(@PathVariable comentarioId: Long, @PathVariable reportadorId: Long) = opinionService.reportarOpinion(comentarioId, reportadorId)
+
+    @GetMapping("getReportes")
+    @Operation(summary = "Trae todos los reportes")
+    fun getReportes() = opinionService.getReportes().map { ReporteDTO(it) }
 
 }
 

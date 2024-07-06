@@ -128,14 +128,17 @@ class UsuarioController(
             cambioContrasenaRequest.nuevaContrasena)
 
 
-    @PostMapping("/agregarSugerencia")
+    @PostMapping("agregarSugerencia")
     @Operation(summary = "Permite agregar una sugerencia al usuario")
-    fun addSugerencia(@RequestBody sugerencia: Sugerencia) = usuarioService.addSugerencia(sugerencia)
+    fun addSugerencia(@RequestBody sugerenciaProps: SugerenciaProps) = usuarioService.addSugerencia(sugerenciaProps)
 
 
 }
 
-
+data class SugerenciaProps(
+    val usuarioId: Long,
+    val sugerencia: String
+)
 
 data class CambioContrasenaRequest(
     val usuarioId: Long,

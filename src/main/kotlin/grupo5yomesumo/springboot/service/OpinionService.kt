@@ -19,6 +19,8 @@ class OpinionService(
     val reporteRepository: ReporteRepository
 ) {
 
+    fun getReportes() = reporteRepository.findAll()
+
     @Transactional
     fun reportarOpinion(opinionId: Long, reportadorId: Long){
         val reportador = usuarioService.getUsuario(reportadorId)

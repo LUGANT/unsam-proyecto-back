@@ -1,5 +1,6 @@
 package grupo5yomesumo.springboot.service
 
+import grupo5yomesumo.springboot.controller.SugerenciaProps
 import grupo5yomesumo.springboot.domain.Sugerencia
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.BusinessException
@@ -10,6 +11,7 @@ import jakarta.transaction.Transactional
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UsuarioService(
@@ -79,7 +81,12 @@ class UsuarioService(
     fun getUsuarioByUsername(username: String) : Usuario? = usuarioRepository.findByUsername(username)
 
     @Transactional
-    fun addSugerencia(sugerencia: Sugerencia){
+    fun addSugerencia(sugerenciaProps: SugerenciaProps){
+        val sugerencia = Sugerencia(
+            usuarioId = sugerenciaProps.usuarioId,
+            sugerencia = sugerenciaProps.sugerencia
+        )
+
         sugerenciaRepository.save(sugerencia)
     }
 

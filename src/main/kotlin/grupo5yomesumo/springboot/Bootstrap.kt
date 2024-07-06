@@ -166,6 +166,10 @@ class Bootstrap(
 
         //OPINIONES
         opinionService.crearOpinion(5, "Un capo, re buena onda", usuarioF.id, usuarioC.id)
+
+        //REPORTES
+        opinionService.reportarOpinion(opinionService.getOpinion(1).id, usuarioB.id)
+
     }
 
     fun clearMongoRepositories(){

@@ -1,11 +1,13 @@
 package grupo5yomesumo.springboot.domain
 
-import jakarta.persistence.Id
+import jakarta.persistence.GeneratedValue
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.FieldType
 
-@Document
+@Document(collection = "sugerencias")
 data class Sugerencia(
-    @Id val id: String,
-    val usuarioId: Long,
-    val sugerencia: String
+    @Id var id: String? = null,
+    val usuarioId: Long = 0,
+    val sugerencia: String = ""
 )

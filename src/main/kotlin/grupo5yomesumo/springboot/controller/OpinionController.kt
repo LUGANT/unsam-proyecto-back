@@ -33,10 +33,6 @@ class OpinionController(
     @Operation(summary = "Permite reportar un comentario")
     fun reportarOpinion(@PathVariable comentarioId: Long, @PathVariable reportadorId: Long) = opinionService.reportarOpinion(comentarioId, reportadorId)
 
-    @GetMapping("getReportes")
-    @Operation(summary = "Trae todos los reportes")
-    fun getReportes() = opinionService.getReportes().map { ReporteDTO(it) }
-
 }
 
 data class CrearOpinionProps(

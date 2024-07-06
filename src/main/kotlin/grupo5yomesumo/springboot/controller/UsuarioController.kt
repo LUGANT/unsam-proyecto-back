@@ -1,6 +1,7 @@
 package grupo5yomesumo.springboot.controller
 
 import grupo5yomesumo.springboot.config.JwtUtil
+import grupo5yomesumo.springboot.domain.Sugerencia
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.serializers.EventoDTO
 import grupo5yomesumo.springboot.serializers.PerfilDTO
@@ -126,7 +127,18 @@ class UsuarioController(
             cambioContrasenaRequest.contrasenaActual,
             cambioContrasenaRequest.nuevaContrasena)
 
+
+    @PostMapping("agregarSugerencia")
+    @Operation(summary = "Permite agregar una sugerencia al usuario")
+    fun addSugerencia(@RequestBody sugerenciaProps: SugerenciaProps) = usuarioService.addSugerencia(sugerenciaProps)
+
+
 }
+
+data class SugerenciaProps(
+    val usuarioId: Long,
+    val sugerencia: String
+)
 
 data class CambioContrasenaRequest(
     val usuarioId: Long,

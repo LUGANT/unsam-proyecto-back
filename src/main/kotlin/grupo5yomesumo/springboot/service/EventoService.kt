@@ -24,21 +24,10 @@ class EventoService (
 ) {
     fun getEvento(eventoId: Long): Evento = eventoRepository.findById(eventoId).orElseThrow { NotFoundException("No se encontro un evento con id $eventoId") }
 
-    fun getAllEventos(): List<Evento> = eventoRepository.findEventosByFechaGreaterThanEqual(LocalDate.now())
+    fun getAllEventos(): List<Evento> = eventoRepository.findAllEventosActivos()
 
-    fun getEventosByAnfitrion(usuarioId: Long): List<Evento> {
-        val anfitrion = usuarioService.getUsuario(usuarioId)
-        return eventoRepository.findEventosByAnfitrionAndFechaAfter(anfitrion, LocalDate.now())
-    }
+    fun getEventosByAnfitrion(usuarioId: Long): List<Evento> = eventoRepository.findEventosActivosByAnfitrion(usuarioId)
 
-//    fun getEventoFilter(actividadNombre: String): List<Evento> {
-//        val actividadLettercase = actividadNombre.substring(0, 1).uppercase() + actividadNombre.substring(1).lowercase()
-//        val actividad : Actividad = actividadService.getActividadBynombre(actividadLettercase)
-//        val eventos : List<Evento> = eventoRepository.findEventosByActividad(actividad)
-//        return eventos
-//    }
-
-    //overload que no trae los eventos del anfitrion
     fun getEventoFilter(actividadNombre: String, usuarioId: Long): List<Evento> {
         var actividadLettercase = actividadNombre.trim()
         actividadLettercase = actividadLettercase.substring(0, 1).uppercase() + actividadLettercase.substring(1).lowercase()
@@ -46,14 +35,9 @@ class EventoService (
         return eventoRepository.findEventosHomeFilter(usuarioId, actividad)
     }
 
-    fun getEventoHome(usuarioId: Long): List<Evento> {
-        return eventoRepository.findEventosHome(usuarioId)
-    }
+    fun getEventoHome(usuarioId: Long): List<Evento> = eventoRepository.findEventosHome(usuarioId)
 
-    fun getEventosTerminadosByAnfitrion(anfitrionId: Long) : List<Evento> {
-        val anfitrion = usuarioService.getUsuario(anfitrionId)
-        return eventoRepository.findEventosByAnfitrionAndFechaBefore(anfitrion, fecha = LocalDate.now())
-    }
+    fun getEventosTerminadosByAnfitrion(anfitrionId: Long) : List<Evento> = eventoRepository.findEventosTerminadosByAnfitrion(anfitrionId)
 
     @Transactional
     fun crearEvento(anfitrionId: Long, actividadId: Long, fechaUnparsed: String, horaUnparsed: String, descripcion: String, ubicacionProps: UbicacionProps, capacidadMaxima : Int){
@@ -81,13 +65,12 @@ class EventoService (
     @Transactional
     fun eliminarEvento(eventoId : Long) {
         val evento = getEvento(eventoId)
-        val solicitudes = solicitudRepository.findSolicitudsByEvento(evento)
+        val solicitudes = solicitudRepository.findSolicitudsByEventoId(eventoId)
         solicitudes.forEach { solicitudRepository.delete(it) }
 
         eventoRepository.delete(evento)
     }
 
-    fun eventoEsDeAnfitrion(evento: Evento, usuario: Usuario) = eventoRepository.existsByAnfitrionAndId(usuario, evento.id)
-
+    fun eventoEsDeAnfitrion(eventoId: Long, anfitrionId: Long) = eventoRepository.existsByAnfitrionIdAndId(anfitrionId, eventoId)
 
 }

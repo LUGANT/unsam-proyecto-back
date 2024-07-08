@@ -26,9 +26,11 @@ class Evento(
 ){
 
     fun activo(): Boolean {
-        val eventoDateTime = LocalDateTime.of(fecha, hora)
+        val eventoDateTime = getFechaCompleta(fecha, hora)
         return eventoDateTime.isAfter(LocalDateTime.now())
     }
+
+    private fun getFechaCompleta(fecha: LocalDate, hora: LocalTime): LocalDateTime = LocalDateTime.of(fecha, hora)
 
     fun estaLleno(cantidadParticipantes: Int) = cantidadParticipantes >= capacidadMaxima
 

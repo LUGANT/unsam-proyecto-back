@@ -53,48 +53,35 @@ class SolicitudService(
         solicitudRepository.save(nuevaSolicitud)
     }
 
-    fun solicitudesDeUsuario(usuarioId: Long): List<Evento> {
-        val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitante(usuario).map { solicitud -> eventoService.getEvento(solicitud.evento.id) }
-    }
+    fun solicitudesDeUsuario(usuarioId: Long): List<Evento> = solicitudRepository.findSolicitudsBySolicitanteId(usuarioId).map { it.evento }
 
    fun solicitudesAceptadasDeEvento(eventoId: Long): List<Solicitud> = solicitudRepository.findSolicitudsByEventoIdAndEstado(eventoId, Estado.ACEPTADA)
 
     fun getEventosAsistidosPor(usuarioId: Long) :List<Evento> {
-        val usuario = usuarioService.getUsuario(usuarioId)
-        val eventosCreadosTerminados = eventoService.getEventosTerminadosByAnfitrion(usuario.id)
-        val eventosAsistidos = solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaLessThanEqual(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id) }
+        val eventosCreadosTerminados = eventoService.getEventosTerminadosByAnfitrion(usuarioId)
+        val eventosAsistidos = solicitudRepository.findSolicitudesAceptadasBySolicitanteEventosTerminados(usuarioId).map { it.evento }
         return eventosAsistidos + eventosCreadosTerminados
     }
 
     fun habilitadaSolicitud(usuarioId : Long, eventoId: Long) : Boolean{
-        val usuario = usuarioService.getUsuario(usuarioId)
-        val evento = eventoService.getEvento(eventoId)
-        return !solicitudRepository.existsBySolicitanteAndEvento(usuario, evento) && !eventoService.eventoEsDeAnfitrion(evento, usuario)
+        return !solicitudRepository.existsBySolicitanteIdAndEventoId(usuarioId, eventoId) && !eventoService.eventoEsDeAnfitrion(eventoId, usuarioId)
     }
 
     fun solicitudesPendientesDeEvento(eventoId: Long): Int{
         return solicitudRepository.countSolicitudsByEventoIdAndEstado(eventoId, Estado.PENDIENTE)
     }
 
-    fun getEventosPorAsistir(usuarioId: Long) : List<Evento> {
-        val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id) }
-    }
+    fun getEventosPorAsistir(usuarioId: Long) : List<Evento> = solicitudRepository.findSolicitudesBySolicitanteAndEstadoEventosFuturos(usuarioId, estado = Estado.ACEPTADA).map { it.evento }.distinct()
 
-    fun getEventosPendientes(usuarioId: Long) : List<Evento> {
-        val usuario = usuarioService.getUsuario(usuarioId)
-        return solicitudRepository.findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(usuario, estado = Estado.PENDIENTE, fecha = LocalDate.now()).map { eventoService.getEvento(it.evento.id)}
-    }
+    fun getEventosPendientes(usuarioId: Long) : List<Evento> = solicitudRepository.findSolicitudesBySolicitanteAndEstadoEventosFuturos(usuarioId, estado = Estado.PENDIENTE).map { it.evento }.distinct()
 
     fun getUsuariosParaOpinar(eventoId: Long, usuarioId: Long): List<Usuario> {
         val evento = eventoService.getEvento(eventoId)
-        val usuario = usuarioService.getUsuario(usuarioId)
-        return if(eventoService.eventoEsDeAnfitrion(evento, usuario)) {
-            solicitudRepository.findSolicitudsByEventoAndEstadoAndEventoFechaBefore(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now()).map { it.solicitante }
+        return if(eventoService.eventoEsDeAnfitrion(eventoId, usuarioId)) {
+            solicitudRepository.findSolicitudesAceptadasByEventoEventosTerminados(eventoId).map { it.solicitante }
         } else {
             val anfitrionYDemasParticipantes = mutableListOf(evento.anfitrion)
-            anfitrionYDemasParticipantes.addAll(solicitudRepository.findSolicitudsByEventoAndEstadoAndEventoFechaBeforeAndSolicitanteIsNot(evento, estado = Estado.ACEPTADA, fecha = LocalDate.now(), usuario).map { it.solicitante })
+            anfitrionYDemasParticipantes.addAll(solicitudRepository.findSolicitudesAceptadasByEventoAndUsuarioNotAnfitrionEventosTerminados(eventoId, usuarioId).map { it.solicitante })
             anfitrionYDemasParticipantes.distinct()
         }
     }

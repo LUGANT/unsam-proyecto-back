@@ -20,28 +20,43 @@ interface SolicitudRepository : CrudRepository<Solicitud, Long> {
 
     fun findSolicitudsByEventoIdAndEstado(eventoId: Long, estado: Estado): List<Solicitud>
 
-    fun findSolicitudsByEvento(evento: Evento) : List<Solicitud>
+    fun findSolicitudsByEventoId(eventoId: Long) : List<Solicitud>
 
-    fun findSolicitudsBySolicitante(solicitante : Usuario) : List<Solicitud>
+    fun findSolicitudsBySolicitanteId(solicitanteId: Long) : List<Solicitud>
 
-    fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaLessThanEqual(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
+    @Query("""SELECT s from Solicitud s
+        WHERE s.solicitante.id = :solicitanteId
+        AND s.estado = 'ACEPTADA'
+        AND (s.evento.fecha < CURRENT_DATE OR (s.evento.fecha = CURRENT_DATE AND s.evento.hora < CURRENT_TIME))
+    """)
+    fun findSolicitudesAceptadasBySolicitanteEventosTerminados(@Param("solicitanteId")solicitanteId: Long) : List<Solicitud>
 
-    fun existsBySolicitanteAndEvento(solicitante: Usuario, evento : Evento) : Boolean
+    @Query("""SELECT s from Solicitud s
+        WHERE s.solicitante.id = :solicitanteId
+        AND s.estado = :estado
+        AND (s.evento.fecha > CURRENT_DATE OR (s.evento.fecha = CURRENT_DATE AND s.evento.hora > CURRENT_TIME))
+    """)
+    fun findSolicitudesBySolicitanteAndEstadoEventosFuturos(@Param("solicitanteId")solicitanteId: Long, @Param("estado")estado: Estado) : List<Solicitud>
+
+    @Query("""SELECT s from Solicitud s
+        WHERE s.evento.id = :eventoId
+        AND s.estado = 'ACEPTADA'
+        AND (s.evento.fecha < CURRENT_DATE OR (s.evento.fecha = CURRENT_DATE AND s.evento.hora < CURRENT_TIME))
+    """)
+    fun findSolicitudesAceptadasByEventoEventosTerminados(@Param("eventoId")eventoId: Long): List<Solicitud>
+
+    @Query("""SELECT s from Solicitud s
+        WHERE s.evento.id = :eventoId
+        AND s.estado = 'ACEPTADA'
+        AND (s.evento.fecha < CURRENT_DATE OR (s.evento.fecha = CURRENT_DATE AND s.evento.hora < CURRENT_TIME))
+        AND s.solicitante.id <> :solicitanteId
+    """)
+    fun findSolicitudesAceptadasByEventoAndUsuarioNotAnfitrionEventosTerminados(@Param("eventoId")eventoId: Long, @Param("solicitanteId")solicitanteId: Long): List<Solicitud>
 
     fun countSolicitudsByEventoIdAndEstado(eventoId: Long, estado: Estado): Int
 
-    fun findSolicitudsBySolicitanteAndEstadoAndEvento_FechaAfter(solicitante: Usuario, estado: Estado, fecha: LocalDate) : List<Solicitud>
-
-    fun findSolicitudsByEventoAndEstadoAndEventoFechaBefore(evento: Evento, estado: Estado, fecha: LocalDate): List<Solicitud>
-
-    fun findSolicitudsByEventoAndEstadoAndEventoFechaBeforeAndSolicitanteIsNot(evento: Evento, estado: Estado, fecha: LocalDate, solicitante: Usuario): List<Solicitud>
+    fun existsBySolicitanteIdAndEventoId(solicitanteId: Long, eventoId: Long) : Boolean
 
     fun existsBySolicitanteAndEventoAndEstado(solicitante: Usuario, evento: Evento, estado: Estado): Boolean
-
-//    @Query("SELECT s FROM Solicitud s WHERE s.evento = :evento AND s.estado = :estado AND s.evento.fecha < :fecha AND s.solicitante NOT IN (SELECT o.usuarioOpinado FROM Opinion o WHERE o.usuarioOpinante = :usuario)")
-//    fun findUsuariosParaOpinarPorAnfitrion(evento: Evento, estado: Estado, fecha: LocalDate, usuario: Usuario): List<Solicitud>
-//
-//    @Query("SELECT s FROM Solicitud s WHERE s.evento = :evento AND s.estado = :estado AND s.evento.fecha < :fecha AND s.solicitante <> :usuario AND s.solicitante NOT IN (SELECT o.usuarioOpinado FROM Opinion o WHERE o.usuarioOpinante = :usuario)")
-//    fun findUsuariosParaOpinarPorParticipante(evento: Evento, estado: Estado, fecha: LocalDate, usuario: Usuario): List<Solicitud>
 
 }

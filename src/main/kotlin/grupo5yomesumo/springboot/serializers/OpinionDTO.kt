@@ -12,16 +12,18 @@ class OpinionDTO(
     val opinado: UsuarioMinDTO,
     val comentario: String,
     val puntaje : Int,
-    val fecha: LocalDate
+    val fecha: LocalDate,
+    val existeReporte: Boolean
 ) {
 
-    constructor(opinion: Opinion): this (
+    constructor(opinion: Opinion, existeReporte: Boolean): this (
         id = opinion.id,
         opinante = UsuarioMinDTO(opinion.usuarioOpinante),
         opinado = UsuarioMinDTO(opinion.usuarioOpinado),
         comentario = opinion.comentario,
         puntaje = opinion.puntaje,
-        fecha = opinion.fecha
+        fecha = opinion.fecha,
+        existeReporte = existeReporte
     )
 
 }

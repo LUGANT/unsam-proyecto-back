@@ -25,8 +25,7 @@ class OpinionService(
     fun reportarOpinion(opinionId: Long, reportadorId: Long){
         val reportador = usuarioService.getUsuario(reportadorId)
         val opinion = getOpinion(opinionId)
-
-        puedeReportar(reportador, opinion)
+        validarPuedeReportar(reportadorId, opinionId)
 
         val reporte = Reporte(
             reportador = reportador,
@@ -35,13 +34,13 @@ class OpinionService(
         reporteRepository.save(reporte)
     }
 
-    fun puedeReportar(reportante: Usuario, opinion: Opinion){
-        if (existeReporte(reportante, opinion)) throw BusinessException("No se puede volver a reportar el comentario más de una vez")
+    fun validarPuedeReportar(reportanteId: Long, opinionId: Long) {
+        if (existeReporte(reportanteId, opinionId)) throw BusinessException("No se puede reportar el mismo comentario más de una vez")
     }
 
-    fun existeReporte(reportante: Usuario, opinion: Opinion) = reporteRepository.existsReporteByReportadorAndOpinion(reportante, opinion)
+    fun existeReporte(reportanteId: Long, opinionId: Long) = reporteRepository.existsReporteByReportadorIdAndOpinionId(reportanteId, opinionId)
 
-    fun getOpinion(opinionId: Long) = opinionRepository.findById(opinionId).orElseThrow { NotFoundException("No se pudo encontrar la opinión buscada.") }
+    fun getOpinion(opinionId: Long): Opinion = opinionRepository.findById(opinionId).orElseThrow { NotFoundException("No se pudo encontrar la opinión buscada.") }
 
     fun getOpinionesByUsuario(usuarioId: Long): List<Opinion> {
         val usuario = usuarioService.getUsuario(usuarioId)
@@ -51,6 +50,7 @@ class OpinionService(
     @Transactional
     fun crearOpinion(puntaje: Int, comentario: String, opinadoId: Long, opinanteId: Long) {
         validarPuntaje(puntaje)
+        validarPuedeOpinar(opinadoId, opinanteId)
         val opinado = usuarioService.getUsuario(opinadoId)
         val opinante = usuarioService.getUsuario(opinanteId)
         val nuevaOpinion = Opinion(puntaje = puntaje, comentario = comentario, usuarioOpinado = opinado, usuarioOpinante = opinante)
@@ -68,5 +68,11 @@ class OpinionService(
         if (!puntajeValido(puntaje)) throw BadRequestException("Debe insertar un puntaje válido.")
     }
 
-    private fun puntajeValido(puntaje: Int) = puntaje == 1 || puntaje == 2 || puntaje == 3 || puntaje == 4 || puntaje == 5
+    private fun puntajeValido(puntaje: Int) = puntaje in arrayOf(1, 2, 3, 4, 5)
+
+    fun validarPuedeOpinar(opinadoId: Long, opinanteId: Long) {
+        if (existeOpinion(opinadoId, opinanteId)) throw BadRequestException("Ya dejaste una opinión sobre este usuario.")
+    }
+
+    fun existeOpinion(opinadoId: Long, opinanteId: Long) = opinionRepository.existsOpinionByUsuarioOpinadoIdAndUsuarioOpinanteId(opinadoId, opinanteId)
 }

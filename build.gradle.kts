@@ -53,6 +53,10 @@ dependencies {
 		//Mongo
 		implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
+		//Netty Socket IO
+		implementation("com.corundumstudio.socketio:netty-socketio:2.0.3")
+//		implementation("com.corundumstudio.socketio:socketio-mongo")
+
 		// Librerias para tests
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 //		testImplementation("io.mockk:mockk:1.12.8")

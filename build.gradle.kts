@@ -55,7 +55,7 @@ dependencies {
 
 		//Netty Socket IO
 		implementation("com.corundumstudio.socketio:netty-socketio:2.0.3")
-//		implementation("com.corundumstudio.socketio:socketio-mongo")
+		implementation("org.mongodb:mongodb-driver-sync")
 
 		// Librerias para tests
 		testImplementation("org.springframework.boot:spring-boot-starter-test")

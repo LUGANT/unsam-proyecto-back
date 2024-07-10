@@ -18,21 +18,21 @@ class ChatController(
     val socketIOService: SocketIOService
 ) {
 
-    @GetMapping("{eventoId}")
-    @Operation(summary = "Trae el chat de un evento especifico")
-    fun getChatByEvento(@PathVariable eventoId : Long) : List<Mensaje> = chatService.getChatByEvento(eventoId)
+//    @GetMapping("{eventoId}")
+//    @Operation(summary = "Trae el chat de un evento especifico")
+//    fun getChatByEvento(@PathVariable eventoId : Long) : List<Mensaje> = chatService.getChatByEvento(eventoId)
+//
+//    @PostMapping("{eventoId}/newMessage")
+//    @Operation(summary = "Enviar un nuevo mensaje")
+//    fun postNuevoMensaje(@PathVariable eventoId : Long,
+//                         @RequestBody chatProps: ChatProps) = chatService.nuevoMensaje(eventoId, chatProps.usuarioId, chatProps.texto)
 
-    @PostMapping("{eventoId}/newMessage")
-    @Operation(summary = "Enviar un nuevo mensaje")
-    fun postNuevoMensaje(@PathVariable eventoId : Long,
-                         @RequestBody chatProps: ChatProps) = chatService.nuevoMensaje(eventoId, chatProps.usuarioId, chatProps.texto)
-
-    @GetMapping("/send")
-    fun sendMessage(): String {
-        // Aquí puedes usar el socketIOService para emitir eventos a los clientes conectados
-        socketIOService.broadcastMessage("chat message", SocketIOService.ChatMessage("Mensaje desde el servidor", 1))
-        return "Mensaje enviado a los clientes"
-    }
+//    @GetMapping("/send")
+//    fun sendMessage(): String {
+//        // Aquí puedes usar el socketIOService para emitir eventos a los clientes conectados
+//        socketIOService.broadcastMessage("chat message", SocketIOService.ChatMessage("Mensaje desde el servidor", 1))
+//        return "Mensaje enviado a los clientes"
+//    }
 
 }
 

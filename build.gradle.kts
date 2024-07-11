@@ -44,7 +44,9 @@ dependencies {
 		implementation ("javax.xml.bind:jaxb-api:2.3.1")
 		implementation ("org.glassfish.jaxb:jaxb-runtime:2.3.1")
 
-
+		// Web Sockets - Netty Socket IO
+		implementation("com.corundumstudio.socketio:netty-socketio:2.0.3")
+		implementation("org.mongodb:mongodb-driver-sync")
 
 		// Conexión a la base de datos
 		runtimeOnly("org.postgresql:postgresql")

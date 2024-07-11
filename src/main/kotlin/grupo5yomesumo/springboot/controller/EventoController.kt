@@ -40,8 +40,8 @@ class EventoController(
     fun getEventoFilter(
         @PathVariable usuarioId: Long,
         @RequestParam(value = "actividad") actividadNombre: String,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") size: Int
+        @RequestParam(value = "page", defaultValue = "0") page: Int,
+        @RequestParam(value = "size", defaultValue = "10") size: Int
     ): List<EventoHomeDTO> {
         val eventosPage: Page<Evento> = eventoService.getEventoFilter(actividadNombre, usuarioId, page, size)
         return eventosPage.content.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
@@ -51,8 +51,8 @@ class EventoController(
     @Operation(summary = "Devuelve eventos con filtro")
     fun getEventoHome(
         @PathVariable usuarioId: Long,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") size: Int
+        @RequestParam(value = "page", defaultValue = "0") page: Int,
+        @RequestParam(value = "size", defaultValue = "10") size: Int
     ): List<EventoHomeDTO> {
         val eventosPage: Page<Evento> = eventoService.getEventoHome(usuarioId, page, size)
         return eventosPage.content.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }

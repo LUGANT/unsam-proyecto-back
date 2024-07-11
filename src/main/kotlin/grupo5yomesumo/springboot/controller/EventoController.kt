@@ -12,6 +12,7 @@ import grupo5yomesumo.springboot.service.EventoService
 import grupo5yomesumo.springboot.service.OpinionService
 import grupo5yomesumo.springboot.service.SolicitudService
 import jdk.jfr.Event
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -36,11 +37,26 @@ class EventoController(
 
     @GetMapping("/{usuarioId}")
     @Operation(summary = "Devuelve eventos con filtro")
-    fun getEventoFilter(@PathVariable usuarioId: Long, @RequestParam(value = "actividad") actividadNombre : String) : List<EventoHomeDTO> = eventoService.getEventoFilter(actividadNombre,usuarioId).map { EventoHomeDTO(it, solicitudService.habilitadaSolicitud(usuarioId, it.id)) }
+    fun getEventoFilter(
+        @PathVariable usuarioId: Long,
+        @RequestParam(value = "actividad") actividadNombre: String,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): List<EventoHomeDTO> {
+        val eventosPage: Page<Evento> = eventoService.getEventoFilter(actividadNombre, usuarioId, page, size)
+        return eventosPage.content.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
+    }
 
     @GetMapping("/home/{usuarioId}")
     @Operation(summary = "Devuelve eventos con filtro")
-    fun getEventoHome(@PathVariable usuarioId: Long) : List<EventoHomeDTO> = eventoService.getEventoHome(usuarioId).map { EventoHomeDTO(it, solicitudService.habilitadaSolicitud(usuarioId, it.id)) }
+    fun getEventoHome(
+        @PathVariable usuarioId: Long,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): List<EventoHomeDTO> {
+        val eventosPage: Page<Evento> = eventoService.getEventoHome(usuarioId, page, size)
+        return eventosPage.content.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
+    }
 
     @GetMapping("{eventoId}/{usuarioId}")
     @Operation(summary = "Devuelve evento por id")

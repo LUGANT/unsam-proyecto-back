@@ -91,10 +91,27 @@ class Bootstrap(
         val ajedrezEnLaPlaza = Evento(descripcion = "Juntada para jugadores de ajedrez", anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(1), hora = LocalTime.of(10, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
         val pingPongEn4Dias = Evento(descripcion = "Me pinto jugar al ping pong alguien le copa?", anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(4), hora = LocalTime.of(19, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
 
+        //EVENTOS PARA PROBAR PAGINACION!!
+        val evento7 = Evento(descripcion = "Partido amistoso de futbol", anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now().plusDays(3), hora = LocalTime.of(16, 0), ubicacion = plazaMitre, capacidadMaxima = 10)
+        val evento8 = Evento(descripcion = "Torneo de basquet", anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(5), hora = LocalTime.of(18, 30), ubicacion = plazaMitre, capacidadMaxima = 6)
+        val evento9 = Evento(descripcion = "Desafío de tenis", anfitrion = usuarioJ, actividad = tenisIndividual, fecha = LocalDate.now().plusDays(3), hora = LocalTime.of(17, 0), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val evento10 = Evento(descripcion = "Voley nocturno", anfitrion = usuarioF, actividad = voleibol, fecha = LocalDate.now().plusDays(6), hora = LocalTime.of(20, 0), ubicacion = sportivoBallester, capacidadMaxima = 4)
+        val evento11 = Evento(descripcion = "Club de ajedrez", anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(9, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
+        val evento12 = Evento(descripcion = "Ping pong en la tarde", anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(7), hora = LocalTime.of(17, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val evento13 = Evento(descripcion = "Partido de futbol en cancha de 7", anfitrion = usuarioC, actividad = futbol, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(19, 0), ubicacion = sportivoBallester, capacidadMaxima = 12)
+        val evento14 = Evento(descripcion = "Basquet amistoso", anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(4), hora = LocalTime.of(16, 30), ubicacion = plazaMitre, capacidadMaxima = 6)
+        val evento15 = Evento(descripcion = "Torneo de tenis", anfitrion = usuarioJ, actividad = tenisIndividual, fecha = LocalDate.now().plusDays(5), hora = LocalTime.of(14, 0), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val evento16 = Evento(descripcion = "Partido de voley", anfitrion = usuarioF, actividad = voleibol, fecha = LocalDate.now().plusDays(3), hora = LocalTime.of(18, 0), ubicacion = sportivoBallester, capacidadMaxima = 4)
+        val evento17 = Evento(descripcion = "Ajedrez al aire libre", anfitrion = usuarioD, actividad = ajedrez, fecha = LocalDate.now().plusDays(6), hora = LocalTime.of(10, 0), ubicacion = plazaMitre, capacidadMaxima = 4)
+        val evento18 = Evento(descripcion = "Ping pong nocturno", anfitrion = usuarioB, actividad = pingPong, fecha = LocalDate.now().plusDays(8), hora = LocalTime.of(20, 30), ubicacion = sportivoBallester, capacidadMaxima = 2)
+        val evento19 = Evento(descripcion = "Futbol con amigos", anfitrion = usuarioA, actividad = futbol, fecha = LocalDate.now().plusDays(7), hora = LocalTime.of(21, 0), ubicacion = plazaMitre, capacidadMaxima = 10)
+        val evento20 = Evento(descripcion = "Basquet en la tarde", anfitrion = usuarioB, actividad = basquet, fecha = LocalDate.now().plusDays(2), hora = LocalTime.of(15, 0), ubicacion = plazaMitre, capacidadMaxima = 6)
 
         arrayOf(
             futbolConLosPibes, basquet3Vs3, eventoTerminado, tenisSingles, voleibolALaTarde, ajedrezEnLaPlaza, pingPongEn4Dias
         ).forEach { eventoRepository.save(it) }
+
+        arrayOf(evento7, evento8, evento9, evento10, evento11, evento12, evento13, evento14, evento15, evento16, evento17, evento18, evento19, evento20).forEach { eventoRepository.save(it) }
 
         //SOLICITUDES
         val solicitud1 = Solicitud(solicitante = usuarioE, evento = futbolConLosPibes)

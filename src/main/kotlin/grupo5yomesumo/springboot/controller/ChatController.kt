@@ -16,16 +16,7 @@ class ChatController(
 
     @GetMapping("{eventoId}")
     @Operation(summary = "Trae el chat de un evento especifico")
-    fun getChatByEvento(@PathVariable eventoId : Long) : List<Mensaje> = chatService.getChatByEvento(eventoId)
+    fun getChatByEvento(@PathVariable eventoId : Long) : List<Mensaje> = chatService.getHistorial(eventoId)
 
-    @PostMapping("{eventoId}/newMessage")
-    @Operation(summary = "Enviar un nuevo mensaje")
-    fun postNuevoMensaje(@PathVariable eventoId : Long,
-                         @RequestBody chatProps: ChatProps) = chatService.nuevoMensaje(eventoId, chatProps.usuarioId, chatProps.texto)
 
 }
-
-data class ChatProps(
-    val usuarioId: Long,
-    val texto: String
-)

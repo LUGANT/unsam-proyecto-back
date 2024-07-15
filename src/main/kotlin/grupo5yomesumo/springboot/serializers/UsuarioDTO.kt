@@ -8,14 +8,16 @@ class UsuarioDTO(
     val nombre: String,
     val apellido: String,
     val username: String,
-    val puntuacion : Double
+    val puntuacion : Double,
+    val usrImg: String
 ) {
     constructor(usuario: Usuario):this(
         id = usuario.id,
         nombre = usuario.nombre,
         apellido = usuario.apellido,
         username = usuario.username,
-        puntuacion = usuario.puntuacion
+        puntuacion = usuario.puntuacion,
+        usrImg = usuario.usrImg
     )
 }
 
@@ -24,14 +26,16 @@ class UsuarioMinDTO(
     val username : String,
     val nombre: String,
     val apellido: String,
-    val existeOpinion: Boolean
+    val existeOpinion: Boolean,
+    val usrImg: String
 ){
     constructor(usuario: Usuario):this(
         id = usuario.id,
         username = usuario.username,
         nombre = usuario.nombre,
         apellido = usuario.apellido,
-        existeOpinion = true
+        existeOpinion = true,
+        usrImg = usuario.usrImg
     )
 
     constructor(usuario: Usuario, existeOpinion: Boolean):this(
@@ -39,7 +43,8 @@ class UsuarioMinDTO(
         username = usuario.username,
         nombre = usuario.nombre,
         apellido = usuario.apellido,
-        existeOpinion = existeOpinion
+        existeOpinion = existeOpinion,
+        usrImg = usuario.usrImg
     )
 
 }

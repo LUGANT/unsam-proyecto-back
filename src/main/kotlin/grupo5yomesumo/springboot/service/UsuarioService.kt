@@ -1,6 +1,7 @@
 package grupo5yomesumo.springboot.service
 
 import grupo5yomesumo.springboot.controller.SugerenciaProps
+import grupo5yomesumo.springboot.controller.UsuarioProps
 import grupo5yomesumo.springboot.domain.Sugerencia
 import grupo5yomesumo.springboot.domain.Usuario
 import grupo5yomesumo.springboot.domain.exceptions.BusinessException
@@ -50,13 +51,7 @@ class UsuarioService(
         if (existe) throw IllegalArgumentException("Ya existe un usuario con ese nombre")
     }
 
-    @Transactional
-    fun updateUsername(usuarioId: Long, nuevoUsername : String){
-        val usuario = getUsuario(usuarioId)
-        validarUsername(nuevoUsername)
-        usuario.username = nuevoUsername
-        save(usuario)
-    }
+
 
     fun findByUsername(username: String): Usuario = usuarioRepository.findUsuarioByUsername(username).orElseThrow { NotFoundException("No se encontró usuario con ese username") }
 
@@ -88,6 +83,27 @@ class UsuarioService(
         )
 
         sugerenciaRepository.save(sugerencia)
+    }
+
+    @Transactional
+    fun updateUser(usuarioProps: UsuarioProps, usuarioId: Long){
+        val usuario = getUsuario(usuarioId)
+
+        if (usuarioProps.imgUrl.isNotEmpty()){
+            usuario.usrImg = usuarioProps.imgUrl
+            save(usuario)
+        }
+        if (usuarioProps.username.isNotEmpty()){
+            updateUsername(usuarioId, usuarioProps.username)
+        }
+    }
+
+    @Transactional
+    fun updateUsername(usuarioId: Long, nuevoUsername : String){
+        val usuario = getUsuario(usuarioId)
+        validarUsername(nuevoUsername)
+        usuario.username = nuevoUsername
+        save(usuario)
     }
 
 }

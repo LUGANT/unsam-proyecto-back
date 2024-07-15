@@ -91,11 +91,12 @@ class UsuarioController(
     @Operation(summary = "Devuelve los eventos a los cuales un usuario especifico hizo la solicitud")
     fun solicitudesDeUsuario(@PathVariable usuarioId: Long) : List<EventoDTO> = solicitudService.solicitudesDeUsuario(usuarioId).map { EventoDTO(it)}
 
-    @PatchMapping("/{usuarioId}/updateUsername")
-    @Operation(summary = "Cambia el username de un usuario especifico")
-    fun updateUsername(
-        @PathVariable usuarioId: Long,
-    @RequestParam(name = "nuevoUsername") nuevoUsername : String) = usuarioService.updateUsername(usuarioId, nuevoUsername)
+    //DEPRECATED!!!!
+//    @PatchMapping("/{usuarioId}/updateUsername")
+//    @Operation(summary = "Cambia el username de un usuario especifico")
+//    fun updateUsername(
+//        @PathVariable usuarioId: Long,
+//    @RequestParam(name = "nuevoUsername") nuevoUsername : String) = usuarioService.updateUsername(usuarioId, nuevoUsername)
 
     @GetMapping("user")
     @Operation(summary = "Devuelve los detalles del usuario autenticado")
@@ -132,8 +133,17 @@ class UsuarioController(
     @Operation(summary = "Permite agregar una sugerencia al usuario")
     fun addSugerencia(@RequestBody sugerenciaProps: SugerenciaProps) = usuarioService.addSugerencia(sugerenciaProps)
 
+    @PatchMapping("{usuarioId}/updateUser")
+    @Operation(summary =  "Actualiza la info de un usuario foto + username")
+    fun updateUsername(@PathVariable usuarioId: Long, @RequestBody usuarioProps: UsuarioProps) = usuarioService.updateUser(usuarioProps, usuarioId)
 
 }
+
+data class UsuarioProps(
+    val imgUrl: String,
+    val username: String
+)
+
 
 data class SugerenciaProps(
     val usuarioId: Long,

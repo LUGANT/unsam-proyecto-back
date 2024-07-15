@@ -3,6 +3,8 @@ package grupo5yomesumo.springboot.repository
 import grupo5yomesumo.springboot.domain.Actividad
 import grupo5yomesumo.springboot.domain.Evento
 import grupo5yomesumo.springboot.domain.Usuario
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
@@ -27,7 +29,7 @@ interface EventoRepository: CrudRepository<Evento, Long> {
             AND NOT e.anfitrion.id = :id
             AND (e.fecha > CURRENT_DATE OR (e.fecha = CURRENT_DATE AND e.hora > CURRENT_TIME))
         """)
-    fun findEventosHome(@Param("id") usuarioId: Long): List<Evento>
+    fun findEventosHome(@Param("id") usuarioId: Long, pageable: Pageable): Page<Evento>
 
     @Query("""SELECT e FROM Evento e 
             WHERE NOT EXISTS (
@@ -44,7 +46,7 @@ interface EventoRepository: CrudRepository<Evento, Long> {
             AND (e.fecha > CURRENT_DATE OR (e.fecha = CURRENT_DATE AND e.hora > CURRENT_TIME))
             AND e.actividad IN :actividades
         """)
-    fun findEventosHomeFilter(@Param("id")usuarioId: Long, @Param("actividades")actividades: List<Actividad>): List<Evento>
+    fun findEventosHomeFilter(@Param("id")usuarioId: Long, @Param("actividades")actividades: List<Actividad>, pageable: Pageable): Page<Evento>
 
     @Query("""SELECT e FROM Evento e
             WHERE e.anfitrion.id = :id

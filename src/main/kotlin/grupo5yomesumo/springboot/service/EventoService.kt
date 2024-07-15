@@ -9,6 +9,9 @@ import grupo5yomesumo.springboot.domain.exceptions.NotFoundException
 import grupo5yomesumo.springboot.repository.*
 import org.springframework.stereotype.Service
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.geo.Point
 import java.time.LocalDate
 import java.time.LocalTime
@@ -28,14 +31,18 @@ class EventoService (
 
     fun getEventosByAnfitrion(usuarioId: Long): List<Evento> = eventoRepository.findEventosActivosByAnfitrion(usuarioId)
 
-    fun getEventoFilter(actividadNombre: String, usuarioId: Long): List<Evento> {
+    fun getEventoFilter(actividadNombre: String, usuarioId: Long, page: Int, size: Int): Page<Evento> {
         var actividadLettercase = actividadNombre.trim()
         actividadLettercase = actividadLettercase.substring(0, 1).uppercase() + actividadLettercase.substring(1).lowercase()
         val actividad: List<Actividad> = actividadService.getActividadBynombre(actividadLettercase)
-        return eventoRepository.findEventosHomeFilter(usuarioId, actividad)
+        val pageable: Pageable = PageRequest.of(page, size)
+        return eventoRepository.findEventosHomeFilter(usuarioId, actividad, pageable)
     }
 
-    fun getEventoHome(usuarioId: Long): List<Evento> = eventoRepository.findEventosHome(usuarioId)
+    fun getEventoHome(usuarioId: Long, page: Int, size: Int): Page<Evento> {
+        val pageable: Pageable = PageRequest.of(page, size)
+        return eventoRepository.findEventosHome(usuarioId, pageable)
+    }
 
     fun getEventosTerminadosByAnfitrion(anfitrionId: Long) : List<Evento> = eventoRepository.findEventosTerminadosByAnfitrion(anfitrionId)
 

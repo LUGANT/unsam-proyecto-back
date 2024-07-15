@@ -16,7 +16,8 @@ class Usuario(
     @Column(length = 40)val apellido: String = "",
     @Column(length = 40)var username: String = "",
     @Column var password: String = "",
-    @Column var puntuacion : Double = 0.0
+    @Column var puntuacion : Double = 0.0,
+    @Column var usrImg : String = ""
 ) {
 
     fun crearEvento(actividad: Actividad, fecha: LocalDate, ubicacion: Ubicacion, capacidadMaxima : Int): Evento{

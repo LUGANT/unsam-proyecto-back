@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UsuarioService(
@@ -90,7 +89,7 @@ class UsuarioService(
         val usuario = getUsuario(usuarioId)
 
         if (usuarioProps.imgUrl.isNotEmpty()){
-            usuario.usrImg = usuarioProps.imgUrl
+            usuario.imgUrl = usuarioProps.imgUrl
             save(usuario)
         }
         if (usuarioProps.username.isNotEmpty()){

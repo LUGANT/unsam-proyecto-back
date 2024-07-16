@@ -1,7 +1,6 @@
 package grupo5yomesumo.springboot.serializers
 
 import grupo5yomesumo.springboot.domain.Usuario
-import org.apache.logging.log4j.util.StringMap
 
 class UsuarioDTO(
     val id: Long,
@@ -9,7 +8,7 @@ class UsuarioDTO(
     val apellido: String,
     val username: String,
     val puntuacion : Double,
-    val usrImg: String
+    val imgUrl: String
 ) {
     constructor(usuario: Usuario):this(
         id = usuario.id,
@@ -17,7 +16,7 @@ class UsuarioDTO(
         apellido = usuario.apellido,
         username = usuario.username,
         puntuacion = usuario.puntuacion,
-        usrImg = usuario.usrImg
+        imgUrl = usuario.imgUrl
     )
 }
 
@@ -27,7 +26,7 @@ class UsuarioMinDTO(
     val nombre: String,
     val apellido: String,
     val existeOpinion: Boolean,
-    val usrImg: String
+    val imgUrl: String
 ){
     constructor(usuario: Usuario):this(
         id = usuario.id,
@@ -35,7 +34,7 @@ class UsuarioMinDTO(
         nombre = usuario.nombre,
         apellido = usuario.apellido,
         existeOpinion = true,
-        usrImg = usuario.usrImg
+        imgUrl = usuario.imgUrl
     )
 
     constructor(usuario: Usuario, existeOpinion: Boolean):this(
@@ -44,7 +43,7 @@ class UsuarioMinDTO(
         nombre = usuario.nombre,
         apellido = usuario.apellido,
         existeOpinion = existeOpinion,
-        usrImg = usuario.usrImg
+        imgUrl = usuario.imgUrl
     )
 
 }

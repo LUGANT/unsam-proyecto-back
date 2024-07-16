@@ -3,12 +3,17 @@ package grupo5yomesumo.springboot.service
 import grupo5yomesumo.springboot.listeners.*
 import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOServer
+import grupo5yomesumo.springboot.domain.Mensaje
+import grupo5yomesumo.springboot.repository.MensajeRepository
+import grupo5yomesumo.springboot.serializers.MessageDTO
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import org.springframework.stereotype.Service
 
 @Service
-class SocketIOService {
+class SocketIOService(
+    var messageService: MessageService
+) {
 
     private val config = Configuration().apply {
         hostname = "localhost"
@@ -32,9 +37,10 @@ class SocketIOService {
     }
 
     fun addListeners(){
-        server.addEventListener("chat message", ChatMessage::class.java, MessageEventListener(server))
-        server.addEventListener("joinRoom", String::class.java, JoinRoomListener())
-        server.addEventListener("leaveRoom", String::class.java, LeaveRoomListener())
+        server.addEventListener("chat message", MessageDTO::class.java, MessageEventListener(server, messageService))
+        server.addEventListener("joinRoom", Long::class.java, JoinRoomListener())
+        server.addEventListener("leaveRoom", Long::class.java, LeaveRoomListener())
+        server.addEventListener("initial message", Long::class.java, InitMessagesListener(messageService))
     }
 
 }

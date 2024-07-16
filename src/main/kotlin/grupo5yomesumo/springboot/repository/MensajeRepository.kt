@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MensajeRepository : MongoRepository<Mensaje, String> {
 
-    fun getMensajesByEventoOrderByFechaAsc(evento: Long) : List<Mensaje>
+    fun getMensajeByEventoId(evento: Long): List<Mensaje>
 
-
+//    fun getMensajesByEventoOrderByFechaAsc(evento: Long) : List<Mensaje>
 
 }

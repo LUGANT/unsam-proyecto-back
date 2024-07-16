@@ -4,11 +4,11 @@ import com.corundumstudio.socketio.AckRequest
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.listener.DataListener
 
-class LeaveRoomListener: DataListener<String> {
+class LeaveRoomListener: DataListener<Long> {
 
-    override fun onData(client: SocketIOClient?, room: String?, ack: AckRequest?) {
-        client!!.leaveRoom(room)
-        println("Client " + client.sessionId + " left room: " + room)
+    override fun onData(client: SocketIOClient?, eventId: Long?, ack: AckRequest?) {
+        client!!.leaveRoom(eventId.toString())
+        println("Client " + client.sessionId + " left room: " + eventId)
     }
 
 }

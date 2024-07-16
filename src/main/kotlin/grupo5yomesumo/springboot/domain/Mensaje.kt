@@ -3,16 +3,15 @@ package grupo5yomesumo.springboot.domain
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 @Document
 data class Mensaje(
-    @Id val id: String? = null,
-    @Field("eventoId") val evento: Long,
-    @Field("usuarioId") val usuario : Long,
-    val username: String,
-    val fecha : LocalDate,
-    val horario : LocalTime,
-    val texto : String
+    @Id var id: String? = null,
+    var eventoId: Long,
+    var usuarioId : Long,
+    var username: String,
+    var userProfile: String = "",
+    var fechaHora: LocalDateTime = LocalDateTime.now(),
+    var texto : String
 )

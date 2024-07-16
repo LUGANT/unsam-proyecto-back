@@ -6,9 +6,7 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.changestream.OperationType
-import grupo5yomesumo.springboot.domain.Chat
 import grupo5yomesumo.springboot.domain.Mensaje
-import grupo5yomesumo.springboot.repository.ChatRepository
 import grupo5yomesumo.springboot.repository.MensajeRepository
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
@@ -19,12 +17,12 @@ import java.util.concurrent.Executors
 
 @Service
 class SocketIOService (
-    var chatRepository: ChatRepository
+    var mensajeRepository: MensajeRepository
 ) {
 
     private val mongoClient = MongoClients.create("mongodb://mongo:mongo@localhost:27021")
     private val database: MongoDatabase = mongoClient.getDatabase("yomesumo-mensajes")
-    private val collection: MongoCollection<Document> = database.getCollection("chat")
+    private val collection: MongoCollection<Document> = database.getCollection("mensaje")
     private val executor = Executors.newSingleThreadExecutor()
 
     private val config = Configuration().apply {
@@ -41,8 +39,8 @@ class SocketIOService (
     fun startServer() {
 
         server.addEventListener("eventoId", Long::class.java) { client, data, ackRequest ->
-            val mensajesAnteriores = chatRepository.findByEventoId(data)?.mensajes //el eventoId tendria que ser dinamico
-            if(mensajesAnteriores != null) {
+            val mensajesAnteriores = mensajeRepository.getMensajesByEventoId(data)
+            if (mensajesAnteriores.isNotEmpty()) {
                 client.sendEvent("initial messages", mensajesAnteriores)
             }
         }
@@ -52,27 +50,12 @@ class SocketIOService (
             // Crea el mensaje
             val mensaje = Mensaje(
                 usuarioId = data.usuarioId,
+                eventoId = data.eventoId,
 //                horario = data.horario,
                 texto = data.texto
             )
 
-            val chat = chatRepository.findByEventoId(data.eventoId)
-            if (chat != null) {
-                // Si existe el chat, agrega el mensaje a la lista
-                chat.mensajes.add(mensaje)
-                chatRepository.save(chat)
-                println("Mensaje Recibido: ${chat.mensajes.last().texto} a las --")
-
-            } else {
-                // Si no existe el chat, crea uno nuevo
-                val newChat = Chat(
-                    eventoId = data.eventoId,
-                    userIds = data.userIds,
-                    mensajes = mutableListOf(mensaje)
-                )
-                chatRepository.save(newChat)
-            }
-
+            mensajeRepository.save(mensaje)
 
             broadcastMessage("chat message", data)
 
@@ -85,7 +68,7 @@ class SocketIOService (
     }
 
     private fun listenForChanges() {
-        val changeStream = database.getCollection("chat").watch().iterator()
+        val changeStream = database.getCollection("mensaje").watch().iterator()
         println("Listening for changes...")
         while (changeStream.hasNext()) {
             val change = changeStream.next()

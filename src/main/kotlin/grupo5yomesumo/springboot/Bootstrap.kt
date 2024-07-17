@@ -33,7 +33,7 @@ class Bootstrap(
         //USUARIOS
         val usuarioA = Usuario(nombre = "Felipe", apellido = "Gamaleri", username = "feli", password = "1234", imgUrl = "https://res.cloudinary.com/dihzjepjh/image/upload/v1721161050/lpbdykyqs0pktxalxjjt.jpg")
         val usuarioB = Usuario(nombre = "Nicolas", apellido = "Masuyama", username = "masu", password = "1234", imgUrl = "https://media.admagazine.com/photos/637d11a6e63c8afac40e7a01/1:1/w_2896,h_2896,c_limit/1442809583")
-        val usuarioC = Usuario(nombre = "Lucas", apellido = "Antenni", username = "lugant", password = "1234")
+        val usuarioC = Usuario(nombre = "Lucas", apellido = "Antenni", username = "lugant", password = "1234", imgUrl = "https://cdn.dribbble.com/users/2598141/screenshots/7406172/media/19ac9fa78aa291abd219425bed233626.png?resize=400x0")
         val usuarioD = Usuario(nombre = "Rodrigo", apellido = "Tartaglia", username = "rodri", password = "1234")
         val usuarioE = Usuario(nombre = "Nicolas", apellido = "Stebner", username = "nico", password = "1234")
         val usuarioF = Usuario(nombre = "Gonzalo", apellido = "Mendez", username = "gonm", password = "1234")

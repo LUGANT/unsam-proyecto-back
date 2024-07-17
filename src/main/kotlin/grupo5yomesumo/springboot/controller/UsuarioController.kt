@@ -112,6 +112,7 @@ class UsuarioController(
             val response = mapOf(
                 "id" to user!!.id,
                 "username" to user.username,
+                "imgUrl" to user.imgUrl
             )
 
             return ResponseEntity.ok(response)

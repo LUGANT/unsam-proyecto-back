@@ -12,6 +12,6 @@ data class Mensaje(
     var usuarioId : Long,
     var username: String,
     var userProfile: String = "",
-    var fechaHora: LocalDateTime = LocalDateTime.now(),
+    var fechaHora: String = "",
     var texto : String
 )

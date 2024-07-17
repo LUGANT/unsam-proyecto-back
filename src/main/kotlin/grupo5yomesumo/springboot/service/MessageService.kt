@@ -29,6 +29,7 @@ class MessageService(
             usuarioId = message.usuarioId,
             texto = message.texto,
             username = message.username,
+            fechaHora = message.fechaHora
         )
         return mensaje
     }
@@ -39,8 +40,7 @@ class MessageService(
             eventoId = mensaje.eventoId,
             texto = mensaje.texto,
             username = mensaje.username,
-            fecha = mensaje.fechaHora.toLocalDate().toString(),
-            hora = mensaje.fechaHora.toLocalTime().toString()
+            fechaHora = mensaje.fechaHora,
         )
     }
 

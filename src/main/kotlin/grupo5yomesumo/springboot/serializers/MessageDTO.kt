@@ -12,6 +12,5 @@ data class MessageDTO @JsonCreator constructor (
     @JsonProperty("usuarioId") val usuarioId: Long = 0,
     @JsonProperty("userProfile") val userProfile: String = "",
     @JsonProperty("eventoId") val eventoId: Long = 0,
-    @JsonProperty("fecha") val fecha: String = "",
-    @JsonProperty("hora") val hora: String = ""
+    @JsonProperty("fechaHora") val fechaHora: String = ""
 )

@@ -11,7 +11,7 @@ data class Mensaje(
     var eventoId: Long,
     var usuarioId : Long,
     var username: String,
-    var userProfile: String = "",
+    var imgUrl: String = "",
     var fechaHora: LocalDateTime = LocalDateTime.now(),
     var texto : String
 )

@@ -14,9 +14,9 @@ class MessageService(
 
     fun getMessages(eventoId: Long): List<Mensaje> = mensajeRepository.getMensajeByEventoId(eventoId)
 
-    fun saveMessage(messageDTO: MessageDTO){
+    fun saveMessage(messageDTO: MessageDTO): Mensaje {
         val mensaje = fromDTOtoDomain(messageDTO)
-        mensajeRepository.save(mensaje)
+        return mensajeRepository.save(mensaje)
     }
 
     fun saveMessage(mensaje: Mensaje){
@@ -29,6 +29,7 @@ class MessageService(
             usuarioId = message.usuarioId,
             texto = message.texto,
             username = message.username,
+            imgUrl = message.imgUrl
         )
         return mensaje
     }
@@ -39,8 +40,9 @@ class MessageService(
             eventoId = mensaje.eventoId,
             texto = mensaje.texto,
             username = mensaje.username,
+            imgUrl = mensaje.imgUrl,
             fecha = mensaje.fechaHora.toLocalDate().toString(),
-            hora = mensaje.fechaHora.toLocalTime().toString()
+            hora = mensaje.fechaHora.toLocalTime().hour.toString() + ':' + mensaje.fechaHora.toLocalTime().minute.toString()
         )
     }
 

@@ -18,8 +18,8 @@ class MessageEventListener(
     override fun onData(client: SocketIOClient, message: MessageDTO, ack: AckRequest) {
         try {
             println("Received message: ${message!!.texto}")
-            service.saveMessage(message)
-            server.getRoomOperations(message.eventoId.toString()).sendEvent("chat message", message)
+            val mensaje = service.saveMessage(message)
+            server.getRoomOperations(message.eventoId.toString()).sendEvent("chat message", service.fromDomainToDTO(mensaje))
         } catch(e: RuntimeException) {
             throw GuardarMensajeException("Error al guardar mensaje", e)
         }

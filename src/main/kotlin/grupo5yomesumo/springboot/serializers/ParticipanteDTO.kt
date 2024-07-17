@@ -6,12 +6,14 @@ class ParticipanteDTO(
     val id: Long,
     val username: String,
     val nombre: String,
-    val apellido: String
+    val apellido: String,
+    val imgUrl: String
 ) {
     constructor(usuario: Usuario):this(
         id = usuario.id,
         username = usuario.username,
         nombre = usuario.nombre,
-        apellido = usuario.apellido
+        apellido = usuario.apellido,
+        imgUrl = usuario.imgUrl
     )
 }

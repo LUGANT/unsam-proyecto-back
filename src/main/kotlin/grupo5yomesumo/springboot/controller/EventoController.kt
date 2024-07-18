@@ -42,9 +42,9 @@ class EventoController(
         @RequestParam(value = "actividad") actividadNombre: String,
         @RequestParam(value = "page", defaultValue = "0") page: Int,
         @RequestParam(value = "size", defaultValue = "10") size: Int
-    ): List<EventoHomeDTO> {
+    ): Page<EventoHomeDTO> {
         val eventosPage: Page<Evento> = eventoService.getEventoFilter(actividadNombre, usuarioId, page, size)
-        return eventosPage.content.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
+        return eventosPage.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
     }
 
     @GetMapping("/home/{usuarioId}")
@@ -53,9 +53,9 @@ class EventoController(
         @PathVariable usuarioId: Long,
         @RequestParam(value = "page", defaultValue = "0") page: Int,
         @RequestParam(value = "size", defaultValue = "10") size: Int
-    ): List<EventoHomeDTO> {
+    ): Page<EventoHomeDTO> {
         val eventosPage: Page<Evento> = eventoService.getEventoHome(usuarioId, page, size)
-        return eventosPage.content.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
+        return eventosPage.map { evento -> EventoHomeDTO(evento, solicitudService.habilitadaSolicitud(usuarioId, evento.id)) }
     }
 
     @GetMapping("{eventoId}/{usuarioId}")

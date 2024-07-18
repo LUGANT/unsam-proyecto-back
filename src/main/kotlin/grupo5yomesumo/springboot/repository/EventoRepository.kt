@@ -63,7 +63,7 @@ interface EventoRepository: CrudRepository<Evento, Long> {
     @Query("""SELECT e FROM Evento e
             WHERE (e.fecha > CURRENT_DATE OR (e.fecha = CURRENT_DATE AND e.hora > CURRENT_TIME))
     """)
-    fun findAllEventosActivos() : List<Evento>
+    fun findAllEventosActivos(pageable: Pageable) : Page<Evento>
 
     fun existsByAnfitrionIdAndId(anfitrionId: Long, eventoId: Long) : Boolean
 

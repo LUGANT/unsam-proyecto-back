@@ -33,7 +33,9 @@ class EventoController(
 
     @GetMapping("all")
     @Operation(summary = "Devuelve todos los eventos")
-    fun getAllEventos(): List<EventoHomeDTO> = eventoService.getAllEventos().map{ EventoHomeDTO(it,false) }
+    fun getAllEventos(@RequestParam(value = "page", defaultValue = "0") page: Int,
+                      @RequestParam(value = "size", defaultValue = "10") size: Int
+    ): Page<EventoHomeDTO> = eventoService.getAllEventos(page, size).map{ EventoHomeDTO(it,false) }
 
     @GetMapping("/{usuarioId}")
     @Operation(summary = "Devuelve eventos con filtro")

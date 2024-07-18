@@ -27,7 +27,10 @@ class EventoService (
 ) {
     fun getEvento(eventoId: Long): Evento = eventoRepository.findById(eventoId).orElseThrow { NotFoundException("No se encontro un evento con id $eventoId") }
 
-    fun getAllEventos(): List<Evento> = eventoRepository.findAllEventosActivos()
+    fun getAllEventos(page: Int, size: Int): Page<Evento> {
+        val pageable: Pageable = PageRequest.of(page, size)
+        return eventoRepository.findAllEventosActivos(pageable)
+    }
 
     fun getEventosByAnfitrion(usuarioId: Long): List<Evento> = eventoRepository.findEventosActivosByAnfitrion(usuarioId)
 
